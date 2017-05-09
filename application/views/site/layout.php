@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+    <title><?php echo $title?></title>
 		<?php $this -> load ->view('site/head')?>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">

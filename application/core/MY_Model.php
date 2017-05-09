@@ -5,7 +5,7 @@ class MY_Model extends CI_Model {
 	var $table = '';
 	
 	// Key chinh cua table
-	var $key = 'id';
+	var $key = '';
 	
 	// Order mac dinh (VD: $order = array('id', 'desc))
 	var $order = '';
@@ -46,6 +46,7 @@ class MY_Model extends CI_Model {
 	 	return TRUE;
 	}
 	
+
 	/**
 	 * Cap nhat row tu dieu kien
 	 * $where : dieu kien
@@ -58,8 +59,8 @@ class MY_Model extends CI_Model {
 			return FALSE;
 		}
 		
-	 	$this->db->where($where);
-	 	$this->db->update($this->table, $data);
+	 	$this-> db->where($where);
+	 	$this-> db->update($this->table, $data);
 
 	 	return TRUE;
 	}
@@ -74,14 +75,13 @@ class MY_Model extends CI_Model {
 		{
 			return FALSE;
 		}
-		//neu la so
-		if(is_numeric($id))
+
+		if($id)
 		{
 			$where = array($this->key => $id);
 		}else
 		{
-		    //$id = 1,2,3...
-			$where = $this->key . " IN (".$id.") ";
+		 	$this->db->where($where);
 		}
 	 	$this->del_rule($where);
 		

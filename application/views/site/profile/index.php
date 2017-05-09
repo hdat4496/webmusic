@@ -1,8 +1,5 @@
 <section class="hbox stretch">
-<section class="content">
-
-
-
+  <section class="content">
     <!-- Main content -->
     <section class="content">
 
@@ -210,7 +207,7 @@
 
     </section>
     <!-- /.content -->
-</section>
+  </section>
 </section>
 
       <script src="<?php echo public_url()?>js/jquery-1.7.2.min.js"></script>

@@ -12,7 +12,7 @@
 		<?php $this -> load -> view('admin/header') ?>
 
 		<!--Content-->
-		<?php 	 $this-> load -> view($temp, $this-> data); ?>
+		<?php $this-> load -> view($temp, $this-> data); ?>
 		<!--End Content-->
 		
 		<?php $this -> load -> view('admin/footer') ?>

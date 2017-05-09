@@ -14,6 +14,7 @@ class MY_Controller extends CI_Controller
 		switch ($controller) {
 			case 'admin':
 			{
+				$this -> load -> helper('admin');
 				$this -> _check_login();
 				break;
 			}

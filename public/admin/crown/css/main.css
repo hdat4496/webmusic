@@ -1051,7 +1051,8 @@ table thead td.headerSortDown span { background: url(../images/icons/sortDown.pn
 .formNote { display: block; text-align: left; font-size: 11px; padding-top: 5px; color: #939393; }
 
 .req { margin-left: 5px; display: inline; color: #DB6464; }
-.disabled { color: #c0c0c0; }
+.disabled { color: #c0c0c0; 
+}
 
 
 .sliderSpecs > label { font-size: 11px; margin-right: 10px; }

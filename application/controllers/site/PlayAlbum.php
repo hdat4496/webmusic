@@ -1,12 +1,12 @@
 <?php 
 
-class PlayAlbum extends CI_Controller
+class PlayAlbum extends MY_Controller
 {
 	
 	function index()
 	{
-		$data = array();
 		$data['temp']= 'site/playalbum/index';
+		$data['title'] = 'Album';	
 		$this -> load -> view('site/layout',$data);
 	}
 }

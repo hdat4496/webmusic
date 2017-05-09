@@ -1,12 +1,12 @@
 <?php 
 
-class Home extends CI_Controller
+class Home extends MY_Controller
 {
 	
 	function index()
 	{
-		$data = array();
 		$data['temp']= 'site/home/index';
+		$data['title'] = 'Music';
 		$this -> load -> view('site/layout',$data);
 	}
 }
