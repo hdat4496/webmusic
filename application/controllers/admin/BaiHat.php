@@ -53,17 +53,21 @@ class BaiHat extends MY_Controller
             $input['like'] = array('tenBaiHat', $tenBaiHat);
         }
 
-
+        $maQuocGia = $this->input->get('quocgia');
+        if($maQuocGia)
+        {
+            $input['where']['maQuocGia'] = $maQuocGia;
+        }
 
         //lấy danh sách bài hát
         $list = $this-> BaiHat_model->get_list($input);
         $this->data['list'] = $list;
        
        
-        //Lấy danh sách chủ đề
-        $this-> load-> model('ChuDe_model');
-        $chude = $this->ChuDe_model->get_list();
-        $this->data['chude'] = $chude;
+        //Lấy danh sách quốc gia
+        $this-> load-> model('QuocGia_model');
+        $quocgia = $this->QuocGia_model->get_list();
+        $this->data['quocgia'] = $quocgia;
 
 		//lấy nội dung biến message
 		$message = $this -> session -> flashdata('message');

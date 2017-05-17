@@ -24,12 +24,12 @@
 							<td class="label" style="width:65px;"><label for="filter_id">Tên bài hát</label></td>
 							<td class="item" style="width:155px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="filter_tenBaiHat" type="text" style="width:155px;"></td>
 							
-							<td class="label" style="width:60px;"><label for="filter_status">Chủ đề</label></td>
+							<td class="label" style="width:60px;"><label for="filter_status">Quốc gia</label></td>
 							<td class="item">
-								<select name="chude">
+								<select name="quocgia">
 									<option value=""></option>	
-									<?php foreach ($chude as $row): ?>	
-										<option value="<?php echo $row->maChuDe?>" <?php echo ($this->input->get('chude') == $row->maChuDe ) ? 'selected' : ''?> ><?php echo $row->tenChuDe ?></option>}
+									<?php foreach ($quocgia as $row): ?>	
+										<option value="<?php echo $row->maQuocGia?>" <?php echo ($this->input->get('quocgia') == $row->maQuocGia ) ? 'selected' : ''?> ><?php echo $row->tenQuocGia ?></option>}
 									<?php endforeach; ?>															    
 								</select>
 							</td>
