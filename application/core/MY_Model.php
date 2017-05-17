@@ -218,7 +218,7 @@ class MY_Model extends CI_Model {
 	{
 		
 		// Thêm điều kiện cho câu truy vấn truyền qua biến $input['where'] 
-		//(vi du: $input['where'] = array('email' => 'hocphp@gmail.com'))
+		//(vi du: $input['where'] = array('email' => 'abc@gmail.com'))
 		if ((isset($input['where'])) && $input['where'])
 		{
 			$this->db->where($input['where']);

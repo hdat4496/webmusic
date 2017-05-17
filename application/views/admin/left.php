@@ -33,15 +33,15 @@
 
 		<li class="product">
 			<a href="admin/product.html" class="exp inactive">
-				<span>Sản phẩm</span>
+				<span>Bài hát</span>
 				<strong>3</strong>
 			</a>
 			<ul class="sub" style="display: none;">
 				<li>
-					<a href="admin/product.html">Sản phẩm</a>
+					<a href="<?php echo admin_url('BaiHat')?>">Bài hát</a>
 				</li>
 				<li>
-					<a href="admin/cat.html">Danh mục</a>
+					<a href="<?php echo admin_url('ChuDe')?>">Chủ đề</a>
 				</li>
 				<li>
 					<a href="admin/comment.html">Phản hồi</a>

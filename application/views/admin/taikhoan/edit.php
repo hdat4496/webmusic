@@ -33,8 +33,8 @@
 					<label class="formLeft" for="param_cat">Giới tính:<span class="req">*</span></label>
 					<div class="formRight">
 						<select name="gioiTinh" value="<?php echo $info->gioiTinh ?>" _autocheck="true" id="param_gioiTinh" class="left">
-							<option value="Nam">Nam</option>
-							<option value="Nữ">Nữ</option>      
+							<option value="Nam"  <?php echo ($info->gioiTinh)=='Nam' ? 'selected' : '';?>>Nam</option>
+							<option value="Nữ"  <?php echo ($info->gioiTinh=='Nữ') ? 'selected' : '';?>>Nữ</option>      
 						</select>
 						<span name="cat_autocheck" class="autocheck"></span>
 						<div name="cat_error" class="clear error"></div>

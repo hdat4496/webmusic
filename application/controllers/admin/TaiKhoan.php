@@ -196,7 +196,17 @@ class TaiKhoan extends MY_Controller
         redirect(admin_url('taiKhoan'));
     }
 
-
+    /*
+     * Thực hiện đăng xuất
+     */
+    function logout()
+    {
+        if($this->session->userdata('login'))
+        {
+            $this->session->unset_userdata('login');
+        }
+        redirect(admin_url('login'));
+    }
 
 
 
