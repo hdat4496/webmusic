@@ -79,7 +79,7 @@
 				<div class="formRow">
 					<label class="formLeft">Hình ảnh:<span class="req">*</span></label>
 					<div class="formRight">
-						<div class="left"><input type="file" id="image" name="imageURL"></div>
+						<div class="left"><input type="file" id="image" name="image"></div>
 						<div name="image_error" class="clear error"></div>
 					</div>
 					<div class="clear"></div>

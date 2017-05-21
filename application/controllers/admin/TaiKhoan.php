@@ -85,11 +85,18 @@ class TaiKhoan extends MY_Controller
 				//Thêm vào csdl
 				$taiKhoan = $this-> input-> post('taiKhoan');
 				$matKhau = $this-> input-> post('matKhau');
-				$hoTen = $this-> input-> post('hoTen');
-				$imageURL = 'urlabc';
+				$hoTen = $this-> input-> post('hoTen');	
 				$email = $this-> input-> post('email');
 				$gioiTinh = $this-> input-> post('gioiTinh');
-
+                //Lấy tên file ảnh được upload lên
+                $this -> load -> library('upload_library');
+                $upload_path = './upload/img';
+                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                }
 				$data = array(
 					'taiKhoan' => $taiKhoan,
 					'matKhau' => md5($matKhau),
@@ -148,7 +155,15 @@ class TaiKhoan extends MY_Controller
 				//cập nhật csdl
 				$matKhau = $this-> input-> post('matKhau');
 				$hoTen = $this-> input-> post('hoTen');
-				$imageURL = 'urlabc';
+                //Lấy tên file ảnh được upload lên
+                $this -> load -> library('upload_library');
+                $upload_path = './upload/img';
+                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                }
 				$gioiTinh = $this-> input-> post('gioiTinh');
 				$data = array(
 					'matKhau' => md5($matKhau),

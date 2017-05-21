@@ -2,6 +2,7 @@
 <?php $this -> load -> view('admin/baihat/head', $this-> data) ?>
 
 <div class="line"></div>
+
 <div class="wrapper" id="main_product">
 	<div class="widget">
 	
@@ -100,7 +101,7 @@
 						<a href="product/view/9.html" target="_blank" class="tipS" title="Xem chi tiết sản phẩm">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
 						</a>
-						<a href="admin/product/edit/9.html" title="Chỉnh sửa" class="tipS">
+						<a href="<?php echo admin_url('BaiHat/edit/').$row->maBaiHat?>" title="Chỉnh sửa" class="tipS">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">
 						</a>
 						
