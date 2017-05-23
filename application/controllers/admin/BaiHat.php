@@ -106,6 +106,15 @@ class BaiHat extends MY_Controller
         if($this-> input-> post())
         {
 
+            $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
+            $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
+            $this-> form_validation-> set_rules('chuDe','Tên chủ đề','required');
+            $this-> form_validation-> set_rules('sangTac','Sáng tác','required');
+            $this-> form_validation-> set_rules('trinhBay','Trình bày','required');
+
+            //Nhập liệu chính xác
+            if($this -> form_validation -> run())
+            {
 
                 //Thêm vào csdl
                 //$mabaihat = ;
@@ -115,7 +124,6 @@ class BaiHat extends MY_Controller
                 $maNSSangTac = $this-> input-> post('sangTac');
                 $maNSTrinhBay = $this-> input-> post('trinhBay');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
-
 
                 $this -> load -> library('upload_library');
                 //Lấy tên file nhạc được upload lên
@@ -137,12 +145,9 @@ class BaiHat extends MY_Controller
                     $imageURL= $upload_data['file_name'];
                 }
 
-
-
-
                 $ngayPhatHanh=date('Y-m-d H:i:s');
                 $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000058',
+                    'maBaiHat' => 'BH0000000000078',
                     'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
                     'imageURL' =>$imageURL ,
@@ -166,6 +171,7 @@ class BaiHat extends MY_Controller
                 }
                 //chuyển tới trang  danh sách tài khoản quản trị
                 redirect(admin_url('BaiHat'));
+            }
      
         }
         
@@ -275,8 +281,58 @@ class BaiHat extends MY_Controller
         $this->data['temp'] = 'admin/baihat/edit';
         $this->load->view('admin/main-layout', $this->data);       
     }
+    /*
+     * Xóa bài hát
+     */
+    function del()
+    {
+        $maBaiHat = $this -> uri -> rsegment(3);
+        $this->_del($maBaiHat);
+        $this-> session -> set_flashdata('message','Xóa bài hát thành công'); 
+        redirect(admin_url('BaiHat'));        
+    }
 
+    /*
+     * Xóa tất cả bài hát
+     */  
+    
+    function del_all()
+    {
+        $ids = $this ->input-> post('ids');
+        foreach($ids as $maBaiHat)
+        {
+            $this -> _del($maBaiHat);
+        }
 
+    } 
+    /*
+     *Xóa bài hát
+     */
+    private function _del($maBaiHat)
+    {
+        $baiHat = $this -> BaiHat_model-> get_info($maBaiHat);
+        if(!$baiHat)
+        {
+            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
+            redirect(admin_url('BaiHat'));                   
+        } 
+        //thực hiện xóa
+        $this -> BaiHat_model -> delete($maBaiHat);
+        //Xóa ảnh bài hát
+        $imageURL='./upload/img/'.$baiHat->imageURL;
+        if(file_exists($imageURL)) 
+        {
+            unlink($imageURL);
+        }
+
+        //Xóa file audio bài hát
+        $url='./upload/music/'.$baiHat->url;
+        if(file_exists($url)) 
+        {
+            unlink($url);
+        }
+    }
+ 
 }
 
 ?>

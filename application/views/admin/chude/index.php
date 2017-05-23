@@ -35,21 +35,21 @@
 				<tr>
 					<td colspan="7">
 					     <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="user/del_all.html">
+								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('ChuDe/del_all') ?>">
 									<span style='color:white;'>Xóa hết</span>
 								</a>
 						 </div>
 							
 					     <div class='pagination'>
-			               			            </div>
+			             </div>
 					</td>
 				</tr>
 			</tfoot>
  			
 			<tbody>
 			<?php foreach ($list as $row):?>
-				<tr>
-					<td><input type="checkbox" name="maChuDe[]" value="<?php echo $row -> maChuDe ?>" /></td>
+				<tr  class="row_<?php echo $row->maChuDe?>">
+					<td><input type="checkbox" name="id[]" value="<?php echo $row -> maChuDe ?>" /></td>
 					<td class="textC"><?php echo $row -> maChuDe ?></td>
 					<td><span title="<?php echo $row -> tenChuDe ?>" class="tipS"><?php echo $row -> tenChuDe ?></span></td>
 					<td><span title="<?php echo $row -> maNhomChuDe ?>" class="tipS"><?php echo $row -> maNhomChuDe ?></span></td>

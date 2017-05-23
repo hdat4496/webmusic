@@ -4,6 +4,8 @@
 <div class="line"></div>
 
 <div class="wrapper" id="main_product">
+	<br>
+	<?php $this -> load -> view('admin/message',$this-> data);?>
 	<div class="widget">
 	
 		<div class="title">
@@ -61,7 +63,7 @@
 				<tr>
 					<td colspan="8">
 						 <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="admin/product/del_all.html">
+								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('BaiHat/del_all') ?>">
 									<span style="color:white;">Xóa hết</span>
 								</a>
 						 </div>
@@ -75,7 +77,7 @@
 			
 			<tbody class="list_item">
 			<?php foreach ($list as $row): ?>
-			    <tr class="row_9">
+			    <tr class="row_<?php echo $row->maBaiHat?>"> 
 					<td><input type="checkbox" name="id[]" value="<?php echo $row->maBaiHat ?>"></td>
 					<td class="textC"><?php echo $row->maBaiHat ?></td>
 					<td>
@@ -105,7 +107,7 @@
 							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">
 						</a>
 						
-						<a href="admin/product/del/9.html" title="Xóa" class="tipS verify_action">
+						<a href="<?php echo admin_url('BaiHat/del/').$row->maBaiHat ?>" class="tipS verify_action">
 						    <img src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
 						</a>
 					</td>

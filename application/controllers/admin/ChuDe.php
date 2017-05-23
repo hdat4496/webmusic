@@ -142,21 +142,42 @@ class ChuDe extends MY_Controller
     function delete()
     {
         $maChuDe = $this->uri->rsegment('3');
+        $this -> _del($maChuDe);
 
-        //lay thong tin cua quan tri vien
+        $this-> session->set_flashdata('message', 'Xóa chủ đề thành công.');
+        redirect(admin_url('ChuDe'));
+    }
+    /*
+     * Xóa tất chủ đề
+     */  
+    
+    function del_all()
+    {
+        $ids = $this ->input-> post('ids');
+        foreach($ids as $maChuDe)
+        {
+            $this -> _del($maChuDe);
+        }
+
+    } 
+    /*
+     *Xoa chủ đề
+     */
+    private function _del($maChuDe)
+    {
+        //lay thong tin chủ dề
 		$info = $this-> ChuDe_model ->get_info($maChuDe);
         if(!$info)
         {
             $this-> session->set_flashdata('message', 'Không tồn tại chủ đề này.');
             redirect(admin_url('ChuDe'));
         }
+
         //thuc hiện xóa
         $this-> ChuDe_model->delete($maChuDe);
         
-        $this-> session->set_flashdata('message', 'Xóa chủ đề thành công.');
-        redirect(admin_url('ChuDe'));
+        
     }
-
 }
 
  ?>

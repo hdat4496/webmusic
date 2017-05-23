@@ -32,6 +32,17 @@
 	</div>
 
 	<div class="formRow">
+		<label class="formLeft">Audio:<span class="req">*</span></label>
+		<div class="formRight">
+			<div class="left">
+				<input type="file" id="image" name="audio">
+			</div>
+			<div name="audio_error" class="clear error"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="formRow">
 		<label class="formLeft">Hình ảnh:<span class="req">*</span></label>
 		<div class="formRight">
 			<div class="left">
@@ -49,15 +60,17 @@
 		<div class="formRight">
 				<select name="chuDe" class="left">
 					<option value=""></option>	
-					<?php foreach ($chude as $row): ?>	
-						<option value="<?php echo $row->maChuDe?>"><?php echo $row->tenChuDe ?></option>}
-					<?php endforeach; ?>															    
+
+                    		       <option ></option>
+														    
 				</select>
 			<span name="cat_autocheck" class="autocheck"></span>
 			<div name="cat_error" class="clear error"><?php echo form_error('chuDe')?></div>
 		</div>
 		<div class="clear"></div>
 	</div>
+
+
 
 
 	<div class="formRow">
@@ -73,6 +86,18 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label class="formLeft" for="param_name">Lời bài hát:<span class="req">*</span></label>
+		<div class="formRight">
+				<textarea name="loiBaiHat" id="param_content" class="editor"></textarea>
+				<div name="content_error" class="clear error"></div>
+
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
 				        
 	<div class="formRow hide"></div>
 </div>
@@ -115,12 +140,7 @@
 						 
 	<div id="tab3" class="tab_content pd0">
 		 <div class="formRow">
-			<label class="formLeft">Lời bài hát:</label>
-			<div class="formRight">
-				<textarea name="loiBaiHat" id="param_content" class="editor"></textarea>
-				<div name="content_error" class="clear error"></div>
-			</div>
-			<div class="clear"></div>
+
 		</div>
 		<div class="formRow hide"></div>
 	</div>

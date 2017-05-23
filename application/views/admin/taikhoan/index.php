@@ -9,13 +9,7 @@
 	<div class="widget">
 	
 		<div class="title">
-			<span class="titleIcon">
-				<div class="checker" id="uniform-titleCheck">
-					<span>
-						<input type="checkbox" id="titleCheck" name="titleCheck" style="opacity: 0;">
-					</span>
-				</div>
-			</span>
+
 			<h6>Danh sách Thành viên</h6>
 		 	<div class="num f12">Tổng số: <b>		<?php echo $total; ?></b></div>
 		</div>
@@ -23,7 +17,7 @@
 		<table cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable withCheck" id="checkAll">
 			<thead>
 				<tr>
-					<td style="width:10px;"><img src="<?php echo public_url('admin')?>/images/icons/tableArrows.png" /></td>
+
 					<td style="width:80px;">Tên tài khoản</td>
 					<td>Họ và tên</td>
 					<td>Giới tính</td>
@@ -32,25 +26,12 @@
 				</tr>
 			</thead>
 			
- 			<tfoot>
-				<tr>
-					<td colspan="7">
-					     <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="user/del_all.html">
-									<span style='color:white;'>Xóa hết</span>
-								</a>
-						 </div>
-							
-					     <div class='pagination'>
-			               			            </div>
-					</td>
-				</tr>
-			</tfoot>
+
  			
 			<tbody>
 			<?php foreach ($list as $row):?>
 				<tr>
-					<td><input type="checkbox" name="taiKhoan[]" value="<?php echo $row -> taiKhoan ?>" /></td>
+
 					<td class="textC"><?php echo $row -> taiKhoan ?></td>
 					<td><span title="<?php echo $row -> hoTen ?>" class="tipS"><?php echo $row -> hoTen ?></span></td>
 					<td><span title="<?php echo $row -> gioiTinh ?>" class="tipS"><?php echo $row -> gioiTinh ?></span></td>

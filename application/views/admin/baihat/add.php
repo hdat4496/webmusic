@@ -84,7 +84,17 @@
 		</div>
 		<div class="clear"></div>
 	</div>
-				        
+
+	<div class="formRow">
+		<label class="formLeft" for="param_name">Lời bài hát:<span class="req">*</span></label>
+		<div class="formRight">
+				<textarea name="loiBaiHat" id="param_content" class="editor"></textarea>
+				<div name="content_error" class="clear error"></div>
+
+		</div>
+		<div class="clear"></div>
+	</div>
+	 	 					        
 	<div class="formRow hide"></div>
 </div>
 						 
@@ -125,15 +135,7 @@
 </div>
 						 
 	<div id="tab3" class="tab_content pd0">
-		 <div class="formRow">
-			<label class="formLeft">Lời bài hát:</label>
-			<div class="formRight">
-				<textarea name="loiBaiHat" id="param_content" class="editor"></textarea>
-				<div name="content_error" class="clear error"></div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<div class="formRow hide"></div>
+
 	</div>
 </div><!-- End tab_container-->
 	        		

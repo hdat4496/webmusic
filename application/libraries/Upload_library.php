@@ -14,8 +14,10 @@ Class Upload_library
      */
     function upload($upload_path = '', $file_name = '')
     {
+
         $config = $this->config($upload_path);
-        $this->CI->load->library('upload', $config);
+        $this->CI->load->library('upload');
+        $this->CI->upload->initialize($config);
         //Thực hiện upload
         if($this->CI->upload->do_upload($file_name))
         {
@@ -50,7 +52,7 @@ Class Upload_library
             $_FILES['userfile']['error']    = $file['error'][$i]; //khai báo lỗi của file thứ i
             $_FILES['userfile']['size']     = $file['size'][$i]; //khai báo kích cỡ của file thứ i
             //load thư viện upload và cấu hình
-            $this->CI->load->library('upload', $config);
+            $this->CI->load->initialize('upload', $config);
             //thực hiện upload từng file
             if($this->CI->upload->do_upload())
             {

@@ -134,12 +134,13 @@
 			{
 				ids.push($(this).val());
 			});
-			
+
 			if (!ids.length) return false;
 			
 			//link xoa du lieu
 		    var url  = $(this).attr('url');
 			//ajax để xóa
+
 			$.ajax({
 				url: url,
 				type: 'POST',
