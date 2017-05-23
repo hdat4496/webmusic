@@ -105,16 +105,8 @@ class BaiHat extends MY_Controller
         // Nếu có dữ liệu post lên
         if($this-> input-> post())
         {
-            $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
-            $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-            $this-> form_validation-> set_rules('chuDe','Tên chủ đề','required');
-            $this-> form_validation-> set_rules('sangTac','Sáng tác','required');
-            $this-> form_validation-> set_rules('trinhBay','Trình bày','required');
 
 
-            //Nhập liệu chính xác
-            if($this -> form_validation -> run())
-            {
                 //Thêm vào csdl
                 //$mabaihat = ;
                 $tenBaiHat = $this-> input-> post('tenBaiHat');
@@ -126,18 +118,9 @@ class BaiHat extends MY_Controller
 
 
                 $this -> load -> library('upload_library');
-                 //Lấy tên file ảnh được upload lên               
-                $upload_path = './upload/img';
-                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
-                $imageURL = '';
-                if(isset($upload_data['file_name']))
-                {
-                    $imageURL= $upload_data['file_name'];
-                }
                 //Lấy tên file nhạc được upload lên
                 $upload_path_audio = './upload/music';
                 $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
-                pre($upload_data_audio);
                 $url = '';
                 if(isset($upload_data_audio['file_name']))
                 {
@@ -145,9 +128,21 @@ class BaiHat extends MY_Controller
                 }
 
 
+                //Lấy tên file nhạc được upload lên
+                $upload_path = './upload/img';
+                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                }
+
+
+
+
                 $ngayPhatHanh=date('Y-m-d H:i:s');
                 $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000051',
+                    'maBaiHat' => 'BH0000000000058',
                     'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
                     'imageURL' =>$imageURL ,
@@ -171,7 +166,7 @@ class BaiHat extends MY_Controller
                 }
                 //chuyển tới trang  danh sách tài khoản quản trị
                 redirect(admin_url('BaiHat'));
-            }
+     
         }
         
         

@@ -35,7 +35,7 @@
 		<label class="formLeft">Audio:<span class="req">*</span></label>
 		<div class="formRight">
 			<div class="left">
-				<input type="file" id="audio" name="audio">
+				<input type="file" id="image" name="audio">
 			</div>
 			<div name="audio_error" class="clear error"></div>
 		</div>
