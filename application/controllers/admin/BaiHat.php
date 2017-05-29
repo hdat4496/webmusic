@@ -81,8 +81,11 @@ class BaiHat extends MY_Controller
      * Thêm bài hát mới
      */
     function add()
-    {
-      
+    {   
+
+       // $list_chude = isset($_POST['list_chude']) ? $_POST['list_chude'] : false;
+
+
         //Lấy danh sách quốc gia
         $this-> load-> model('QuocGia_model');
         $quocgia = $this->QuocGia_model->get_list();
@@ -120,10 +123,12 @@ class BaiHat extends MY_Controller
                 //$mabaihat = ;
                 $tenBaiHat = $this-> input-> post('tenBaiHat');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $maChuDe = $this-> input-> post('chuDe');
-                $maNSSangTac = $this-> input-> post('sangTac');
-                $maNSTrinhBay = $this-> input-> post('trinhBay');
+                $maChuDe = $this-> input-> post('list_chude');
+                $maNSSangTac = $this-> input-> post('list_nhacsi');
+                $maNSTrinhBay = $this-> input-> post('list_casi');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
+                $params = $_POST;
+                print_r($params); die();
 
                 $this -> load -> library('upload_library');
                 //Lấy tên file nhạc được upload lên
@@ -147,7 +152,7 @@ class BaiHat extends MY_Controller
 
                 $ngayPhatHanh=date('Y-m-d H:i:s');
                 $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000078',
+                    'maBaiHat' => 'BH0000000000068',
                     'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
                     'imageURL' =>$imageURL ,
@@ -181,6 +186,22 @@ class BaiHat extends MY_Controller
         $this->load->view('admin/main-layout', $this->data);
     }
     
+
+    function add_test()
+    {   
+
+// Nhập giá trị number bằng phương thức post
+$list_chude = isset($_POST['list_chude']) ? $_POST['list_chude'] : false;
+$list_casi = isset($_POST['list_casi']) ? $_POST['list_casi'] : false;
+$list_nhacsi = isset($_POST['list_nhacsi']) ? $_POST['list_nhacsi'] : false;
+
+pre($list_chude);
+  pre($list_casi);
+  pre($list_nhacsi);      
+
+    }
+
+
     /*
      * chỉnh sửa bài hát mới
      */
@@ -249,7 +270,7 @@ class BaiHat extends MY_Controller
                 }
                 $ngayPhatHanh=date('Y-m-d H:i:s');
                 $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000042',
+                    'maBaiHat' => 'BH0000000000047',
                     'url' => '123123',
                     'tenBaiHat' =>$tenBaiHat,
                     'imageURL' =>$imageURL ,
@@ -332,7 +353,17 @@ class BaiHat extends MY_Controller
             unlink($url);
         }
     }
- 
+
+    /*
+     * thêm nhiều chủ đề
+     */
+    function muti_chude()
+    { 
+
+        $maChuDe = $this-> input-> post('chuDe');
+        pre($chude);
+    }
+
 }
 
 ?>

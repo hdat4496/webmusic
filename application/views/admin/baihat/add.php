@@ -3,10 +3,10 @@
 
 <div class="line"></div>
 <div class="wrapper">
-    
+ 	   
 <!-- Form -->
-<form class="form" id="form" action="<?php echo admin_url('BaiHat/add')?>" method="post" enctype="multipart/form-data">
-<fieldset>
+<div class="form" id="form">
+<div>
 <div class="widget">
 	<div class="title">
 		<img src="<?php echo public_url('admin') ?>/images/icons/dark/add.png" class="titleIcon">
@@ -57,12 +57,17 @@
 	<div class="formRow">
 		<label class="formLeft" for="param_cat">Chủ đề:<span class="req">*</span></label>
 		<div class="formRight">
-				<select name="chuDe" class="left">
+				<select _autocheck="true" id="chuDe" name="chuDe" class="left">
 					<option value=""></option>	
 					<?php foreach ($chude as $row): ?>	
 						<option value="<?php echo $row->maChuDe?>"><?php echo $row->tenChuDe ?></option>}
 					<?php endforeach; ?>															    
 				</select>
+				<a  href="javascript:void(0)">
+					<img src="http://localhost:8080/webmusic/public/admin/images/icons/control/16/add.png" onclick="add_chude()" style="margin:6px 0 0 6px;">
+	 			</a>
+				<div id="list_chude">				 
+				</div>
 			<span name="cat_autocheck" class="autocheck"></span>
 			<div name="cat_error" class="clear error"><?php echo form_error('chuDe')?></div>
 		</div>
@@ -103,12 +108,18 @@
 	<div class="formRow">
 		<label class="formLeft" for="param_cat">Sáng tác:<span class="req">*</span></label>
 		<div class="formRight">
-				<select name="sangTac" class="left">
+				<select name="sangTac" id="sangTac" class="left">
 					<option value=""></option>	
 					<?php foreach ($nghesi as $row): ?>	
 						<option value="<?php echo $row->maNgheSi?>"><?php echo $row->tenNgheSi ?></option>}
 					<?php endforeach; ?>															    
 				</select>
+				<a  href="javascript:void(0)">
+					<img src="http://localhost:8080/webmusic/public/admin/images/icons/control/16/add.png" onclick="add_sangtac()" style="margin:6px 0 0 6px;">
+	 			</a>
+				<div id="list_nhacsi">				 
+				</div>
+
 			<span name="cat_autocheck" class="autocheck"></span>
 			<div name="cat_error" class="clear error"><?php echo form_error('sangTac')?></div>
 		</div>
@@ -118,12 +129,17 @@
 	<div class="formRow">
 		<label class="formLeft" for="param_cat">Trình bày:<span class="req">*</span></label>
 		<div class="formRight">
-				<select name="trinhBay" class="left">
+				<select name="trinhBay" id="trinhBay" class="left">
 					<option value=""></option>	
 					<?php foreach ($nghesi as $row): ?>	
 						<option value="<?php echo $row->maNgheSi?>"><?php echo $row->tenNgheSi ?></option>}
 					<?php endforeach; ?>															    
 				</select>
+				<a  href="javascript:void(0)">
+					<img src="http://localhost:8080/webmusic/public/admin/images/icons/control/16/add.png" onclick="add_trinhbay()" style="margin:6px 0 0 6px;">
+	 			</a>
+				<div id="list_casi">				 
+				</div>
 			<span name="cat_autocheck" class="autocheck"></span>
 			<div name="cat_error" class="clear error"><?php echo form_error('trinhBay')?></div>
 		</div>
@@ -140,11 +156,15 @@
 </div><!-- End tab_container-->
 	        		
 	        		<div class="formSubmit">
-	           			<input type="submit" value="Thêm mới" class="redB">
+	           			<input type="submit" value="Thêm mới" class="redB oncl" onclick="load_ajax()">
+	           		</div>
+
+	           		<div id="result">
+	           			
 	           		</div>
 	        		<div class="clear"></div>
 				</div>
-			</fieldset>
-		</form>
+			</div>
+		</div>
 </div>
 <div class="clear mt30"></div>

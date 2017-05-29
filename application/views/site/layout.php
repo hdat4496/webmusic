@@ -4,6 +4,7 @@
     <title><?php echo $title?></title>
 		<?php $this -> load ->view('site/head')?>
 	</head>
+
 	<body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
     <!-- Main Header -->
@@ -16,7 +17,7 @@
 	  </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <?php $this -> load -> view($temp)?>
+      <?php $this -> load -> view($temp, $this-> data)?>
     </div>
   <!-- /.content-wrapper -->
 

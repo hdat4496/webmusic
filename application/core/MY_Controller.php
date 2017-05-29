@@ -19,7 +19,9 @@ class MY_Controller extends CI_Controller
 				break;
 			}
 			default:
-				# code...
+				{
+					
+				}
 		}
 	}
 
@@ -29,12 +31,12 @@ class MY_Controller extends CI_Controller
 		$controller = strtolower($controller);
 
 		$login  = $this -> session -> userdata('login');
-        //neu ma chua dang nhap,ma truy cap 1 controller khac login
+        //Nếu chưa đăng nhập mà truy cập vào 1 controller khác
         if(!$login && $controller != 'login')
         {
             redirect(admin_url('login'));
         }
-        //neu ma admin da dang nhap thi khong cho phep vao trang login nua.
+        //Nếu admin đã đăng nhập thì k cho phép vào trang admin nữa
         if($login && $controller == 'login')
         {
             redirect(admin_url('home'));

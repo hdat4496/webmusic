@@ -89,7 +89,7 @@
 			</a>
 			<ul class="sub" style="display: none;">
 				<li>
-					<a href="admin/slide.html">Slide</a>
+					<a href="<?php echo admin_url('Slide') ?>">Slide</a>
 				</li>
 				<li>
 					<a href="admin/news.html">Tin tức</a>

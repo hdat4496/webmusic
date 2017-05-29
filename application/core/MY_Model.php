@@ -1,21 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class MY_Model extends CI_Model {
 	
-	// Ten table
+	// Tên bảng
 	var $table = '';
 	
-	// Key chinh cua table
+	// Key chính của bảng
 	var $key = '';
-	
-	// Order mac dinh (VD: $order = array('id', 'desc))
+
+	// Key chính thứ 2 của bảng (Giành cho bảng có 2 khóa chính)
+	var $key_2 = '';
+
+	// Order mặc định (VD: $order = array('id', 'desc))
 	var $order = '';
 	
-	// Cac field select mac dinh khi get_list (VD: $select = 'id, name')
+	// Cac field select mặc định khi get_list (VD: $select = 'id, name')
 	var $select = '';
 	
 	/**
-	 * Them row moi
-	 * $data : du lieu ma ta can them
+	 * Thêm row mới
+	 * $data : dữ liệu cần thêm
 	 */
 	function create($data = array())
 	{
@@ -28,9 +31,9 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Cap nhat row tu id
-	 * $id : khoa chinh cua bang can sua
-	 * $data : mang du lieu can sua
+	 * Cập nhật row từ id
+	 * $id : khóa chỉnh của bảng cần sửa
+	 * $data : mảng dữ liệu cần sửa
 	 */
 	function update($id, $data)
 	{
@@ -46,11 +49,32 @@ class MY_Model extends CI_Model {
 	 	return TRUE;
 	}
 	
+	/**
+	 * Cập nhật row từ bảng có nhiều id
+	 * $id : khóa chính của bảng cần sửa
+	 * $id_2 : khóa chính thứ 2 của bảng cần sửa
+	 * $data : mang du lieu can sua
+	 */
+	function update_mutikey($id,$id_2, $data)
+	{
+		if (!($id && $id_2))
+		{
+			return FALSE;
+		}
+		
+		$where = array();
+	 	$where[$this->key] = $id;
+	 	$where[$this->key_2] = $id_2;	 	
+	    $this->update_rule($where, $data);
+	 	
+	 	return TRUE;
+	}
+
 
 	/**
-	 * Cap nhat row tu dieu kien
-	 * $where : dieu kien
-	 * $data : mang du lieu can cap nhat
+	 * Cập nhật row từ điều kiện
+	 * $where : điều kiện
+	 * $data : mảng dữ liệu cần cập nhật
 	 */
 	function update_rule($where, $data)
 	{
@@ -66,8 +90,8 @@ class MY_Model extends CI_Model {
 	}
 
 	/**
-	 * Xoa row tu id
-	 * $id : gia tri cua khoa chinh
+	 * Xóa row từ id
+	 * $id : giá trị của khóa chính
 	 */
 	function delete($id)
 	{
@@ -87,10 +111,36 @@ class MY_Model extends CI_Model {
 		
 		return TRUE;
 	}
+
+	/**
+	 * Xóa row từ bảng có 2 khóa chính
+	 * $id : giá trị của khóa chính thứ nhất
+	 * $id_2 : giá trị của khóa chính thứ 2
+	 */
+	function delete_mutikey($id,$id_2)
+	{
+		if (!($id && $id_2))
+		{
+			return FALSE;
+		}
+
+		if($id && $id_2)
+		{
+			$where = array($this->key => $id,$this ->key_2 => $id_2);
+		}else
+		{
+		 	$this->db->where($where);
+		}
+	 	$this->del_rule($where);
+		
+		return TRUE;
+	}
+
+
 	
 	/**
-	 * Xoa row tu dieu kien
-	 * $where : mang dieu kien de xoa
+	 * Xóa row từ điều kiện
+	 * $where : mảng điều kiện để xóa
 	 */
 	function del_rule($where)
 	{
@@ -107,7 +157,7 @@ class MY_Model extends CI_Model {
 	
 	/**
 	 * Thực hiện câu lệnh query
-	 * $sql : cau lenh sql
+	 * $sql : câu lệnh sql
 	 */
 	function query($sql){
 		$rows = $this->db->query($sql);
@@ -115,9 +165,9 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Lay thong tin cua row tu id
-	 * $id : id can lay thong tin
-	 * $field : cot du lieu ma can lay
+	 * Lấy thông tin của row từ id
+	 * $id : id cần lấy thông tin
+	 * $field : Cột dữ liệu cần lấy
 	 */
 	function get_info($id, $field = '')
 	{
@@ -131,9 +181,28 @@ class MY_Model extends CI_Model {
 	 	
 	 	return $this->get_info_rule($where, $field);
 	}
+
+	/**
+	 * Lấy thông tin của row từ id
+	 * $id,$id_2 : id,id_@ cần lấy thông tin
+	 * $field : cột dữ liệu cần lấy
+	 */
+	function get_info_mutikey($id,$id_2, $field = '')
+	{
+		if (!($id && $id_2))
+		{
+			return FALSE;
+		}
+	 	
+	 	$where = array();
+	 	$where[$this->key] = $id;
+	 	$where[$this->key_2] = $id_2;
+	 	
+	 	return $this->get_info_rule($where, $field);
+	}	
 	
 	/**
-	 * Lay thong tin cua row tu dieu kien
+	 * Lấy thông tin của row từ điều kiện
 	 * $where: Mảng điều kiện
 	 * $field: Cột muốn lấy dữ liệu
 	 */
@@ -154,7 +223,7 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Lay tong so
+	 * Lấy tổng số
 	 */
 	function get_total($input = array())
 	{
@@ -166,8 +235,8 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Lay tong so
-	 * $field: cot muon tinh tong
+	 * Lấy tổng số
+	 * $field: cột muốn tính tổng số
 	 */
 	function get_sum($field, $where = array())
 	{
@@ -184,7 +253,7 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Lay 1 row
+	 * Lấy 1 row
 	 */
 	function get_row($input = array()){
 		$this->get_list_set_input($input);
@@ -195,23 +264,23 @@ class MY_Model extends CI_Model {
 	}
 	
 	/**
-	 * Lay danh sach
-	 * $input : mang cac du lieu dau vao
+	 * Lấy danh sách
+	 * $input : mảng các dữ liệu đầu vào
 	 */
 	function get_list($input = array())
 	{
-	    //xu ly ca du lieu dau vao
+	    //Xử lý các dữ liệu đầu vào
 		$this->get_list_set_input($input);
 		
-		//thuc hien truy van du lieu
+		//Thực hiện truy vấn dữ liệu
 		$query = $this->db->get($this->table);
 		//echo $this->db->last_query();
 		return $query->result();
 	}
 	
 	/**
-	 * Gan cac thuoc tinh trong input khi lay danh sach
-	 * $input : mang du lieu dau vao
+	 * Gắn các thuộc tính trong input khi lấy danh sách
+	 * $input : mảng dữ liệu đầu vào
 	 */
 	
 	protected function get_list_set_input($input = array())
@@ -224,7 +293,7 @@ class MY_Model extends CI_Model {
 			$this->db->where($input['where']);
 		}
 		
-		//tim kiem like
+		//Tìm kiếm like
 		// $input['like'] = array('name' => 'abc');
 	    if ((isset($input['like'])) && $input['like'])
 		{
@@ -255,12 +324,12 @@ class MY_Model extends CI_Model {
 	
 	/**
 	 * kiểm tra sự tồn tại của dữ liệu theo 1 điều kiện nào đó
-	 * $where : mang du lieu dieu kien
+	 * $where : mảng dữ liệu điều kiện
 	 */
     function check_exists($where = array())
     {
 	    $this->db->where($where);
-	    //thuc hien cau truy van lay du lieu
+	    //thực hiện câu truy vấn lấy dữ liệu
 		$query = $this->db->get($this->table);
 		
 		if($query->num_rows() > 0){

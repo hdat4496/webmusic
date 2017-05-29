@@ -1,28 +1,14 @@
   <section class="hbox stretch">
     <section class="content">
       <div  id="sidebar">
-        <aside class="aside bg-light dk" >
+        <aside class="aside bg-light dk" style="background-color: #f2f4f8">
           <section class="vbox animated fadeInUp">
             <section claas="scrollable hover">
               <div class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                <a href="" class="list-group-item">Tất cả</a>
-                <a href="" class="list-group-item active"> Acoustic </a>
-                <a href="" class="list-group-item">Tình yêu</a>
-                <a href="" class="list-group-item">Nhạc hot</a>
-                <a href="" class="list-group-item">Nhạc thiếu nhi</a>
-                <a href="" class="list-group-item">Nhạc bất hủ</a>
-                <a href="" class="list-group-item">EDM</a>
-                <a href="" class="list-group-item">Nhạc trữ tình</a>
-                <a href="" class="list-group-item">Blue</a>
-                <a href="" class="list-group-item">Classical</a>
-                <a href="" class="list-group-item">Hip hop</a>
-                <a href="" class="list-group-item">Jazz</a>
-                <a href="" class="list-group-item">Pop</a>
-                <a href="" class="list-group-item">Rock</a>
-                <a href="" class="list-group-item">World</a> 
-                <a href="" class="list-group-item">World</a>  
-                <a href="" class="list-group-item">World</a>        
-              </div>  
+                <?php foreach ($list_chude as $row):?>
+                   <a href="" class="list-group-item"><?php echo $row ->tenChuDe ?></a>
+                <?php endforeach; ?>        
+             </div>  
             </section>
           </section>
         </aside>
