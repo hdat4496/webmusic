@@ -35,7 +35,7 @@ class MY_Model extends CI_Model {
 	 * $id : khóa chỉnh của bảng cần sửa
 	 * $data : mảng dữ liệu cần sửa
 	 */
-	function update($id, $data)
+	function 	update($id, $data)
 	{
 		if (!$id)
 		{
@@ -103,9 +103,6 @@ class MY_Model extends CI_Model {
 		if($id)
 		{
 			$where = array($this->key => $id);
-		}else
-		{
-		 	$this->db->where($where);
 		}
 	 	$this->del_rule($where);
 		

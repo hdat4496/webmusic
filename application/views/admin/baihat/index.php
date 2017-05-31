@@ -100,7 +100,7 @@
 						<a href="" title="Gán là nhạc nổi bật" class="tipE">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/star.png">
 						</a>
-						<a href="product/view/9.html" target="_blank" class="tipS" title="Xem chi tiết sản phẩm">
+						<a href="<?php echo admin_url('BaiHat/chitiet/').$row->maBaiHat?>" target="_blank" class="tipS" title="Cập nhật chi tiết bài hát">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
 						</a>
 						<a href="<?php echo admin_url('BaiHat/edit/').$row->maBaiHat?>" title="Chỉnh sửa" class="tipS">

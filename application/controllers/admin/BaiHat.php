@@ -3,12 +3,17 @@
 * 
 */
 class BaiHat extends MY_Controller
-{
+{   
+
 	
 	function __construct()
 	{
 		parent::__construct();
 		$this -> load -> model('BaiHat_model');
+        $this -> load -> model ('BaiHatChuDe_model');
+        $this -> load -> model('SangTac_model');
+        $this -> load -> model('TrinhBay_model');
+     
 	}
 
 	/*
@@ -82,10 +87,6 @@ class BaiHat extends MY_Controller
      */
     function add()
     {   
-
-       // $list_chude = isset($_POST['list_chude']) ? $_POST['list_chude'] : false;
-
-
         //Lấy danh sách quốc gia
         $this-> load-> model('QuocGia_model');
         $quocgia = $this->QuocGia_model->get_list();
@@ -111,24 +112,17 @@ class BaiHat extends MY_Controller
 
             $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-            $this-> form_validation-> set_rules('chuDe','Tên chủ đề','required');
-            $this-> form_validation-> set_rules('sangTac','Sáng tác','required');
-            $this-> form_validation-> set_rules('trinhBay','Trình bày','required');
 
             //Nhập liệu chính xác
             if($this -> form_validation -> run())
             {
-
                 //Thêm vào csdl
-                //$mabaihat = ;
+                $success = $this->db->query("call sp_TaoMa_BaiHat(@outputparam)");
+                $query = $this->db->query('select @outputparam as out_param');
+                $maBaiHat = $query->row()->out_param;
                 $tenBaiHat = $this-> input-> post('tenBaiHat');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $maChuDe = $this-> input-> post('list_chude');
-                $maNSSangTac = $this-> input-> post('list_nhacsi');
-                $maNSTrinhBay = $this-> input-> post('list_casi');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
-                $params = $_POST;
-                print_r($params); die();
 
                 $this -> load -> library('upload_library');
                 //Lấy tên file nhạc được upload lên
@@ -152,7 +146,7 @@ class BaiHat extends MY_Controller
 
                 $ngayPhatHanh=date('Y-m-d H:i:s');
                 $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000068',
+                    'maBaiHat' => $maBaiHat,
                     'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
                     'imageURL' =>$imageURL ,
@@ -164,22 +158,20 @@ class BaiHat extends MY_Controller
                     'ngayPhatHanh' => $ngayPhatHanh
                 );
 
-
-
                 //Thêm mới vào csdl
                 if($this -> BaiHat_model -> create($dataBaiHat)){
                     //tạo nội dung thông báo
                     $this-> session -> set_flashdata('message','Thêm bài hát thành công.');
+                    redirect(admin_url('BaiHat/chitiet/').$maBaiHat);
                 }
                 else{
                     $this-> session -> set_flashdata('message','Thêm bài hát không thành công.');
+                    redirect(admin_url('BaiHat'));
                 }
-                //chuyển tới trang  danh sách tài khoản quản trị
-                redirect(admin_url('BaiHat'));
+
             }
      
         }
-        
         
         //load view
         $this->data['temp'] = 'admin/baihat/add';
@@ -187,20 +179,134 @@ class BaiHat extends MY_Controller
     }
     
 
-    function add_test()
+    function chitiet()
     {   
 
-// Nhập giá trị number bằng phương thức post
-$list_chude = isset($_POST['list_chude']) ? $_POST['list_chude'] : false;
-$list_casi = isset($_POST['list_casi']) ? $_POST['list_casi'] : false;
-$list_nhacsi = isset($_POST['list_nhacsi']) ? $_POST['list_nhacsi'] : false;
+        //Lấy mã bài hát
+        $maBaiHat =$this -> uri -> rsegment('3');   
+        $baiHat = $this -> BaiHat_model -> get_info( $maBaiHat);
+        if(!$baiHat)
+        {
+            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
+            redirect(admin_url('BaiHat'));                   
+        }   
 
-pre($list_chude);
-  pre($list_casi);
-  pre($list_nhacsi);      
+        $this -> data['baiHat']  = $baiHat;  
+
+        //Lấy danh sách nghệ sĩ
+        $this-> load-> model('NgheSi_model');
+        $nghesi = $this->NgheSi_model->get_list();
+        $this->data['nghesi'] = $nghesi;
+
+        //Lấy danh sách chủ đề
+        $this-> load-> model('ChuDe_model');
+        $chude = $this->ChuDe_model->get_list();
+        $this->data['chude'] = $chude;
+
+       // load view
+        $this->data['temp'] = 'admin/baihat/chitiet';
+        $this->load->view('admin/main-layout', $this->data);
 
     }
 
+
+    function them_chitiet()
+    { 
+           //     $this -> load -> model('BaiHatChuDe_model');
+         //dữ liệu post lên   
+        $data = $_POST;
+        $x=0;
+        foreach ($data['list_chude'] as $key => $value) {
+                $data_chude = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maChuDe' => $value["machude"]
+                );
+                //Thêm mới vào csdl
+                if($this -> BaiHatChuDe_model -> create($data_chude)){
+                    $x++;
+                } else{
+                    $x--;               
+                }
+        }        
+
+        foreach ($data['list_nhacsi'] as $key => $value) {
+                $data_sangtac = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maNhacSi' => $value["manhacsi"]
+                );
+                //Thêm mới vào csdl
+                if($this -> SangTac_model -> create($data_sangtac)){
+                    $x++;
+                } else{
+                    $x--;               
+                }
+        }  
+
+        foreach ($data['list_casi'] as $key => $value) {
+                $data_trinhbay = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maCasi' => $value["macasi"]
+                );
+                //Thêm mới vào csdl
+                if($this -> TrinhBay_model -> create($data_trinhbay)){
+                    $x++;
+                } else{
+                    $x--;               
+                }
+        }  
+
+        echo $x;
+
+}
+
+
+
+
+
+
+
+//print_r($datachude);
+
+// //print_r($datachude);
+//  // print_r($data['list_casi']);
+//  // print_r($data['list_nhacsi']);
+
+
+
+
+// //echo $data['list_chude'];
+
+
+
+
+
+        // }
+        // foreach ($data['list_casi'] as $key => $value) {
+        //         $datacasi = array(
+        //             'maBaiHat' => $data['mabaihat'],
+        //             'maCaSi' => $value["macasi"]
+        //         );
+        //         if($this -> TrinhBay_model -> create($datacasi)){
+        //             $x++;
+        //         } else{
+        //             $x--;
+        //         }                   
+        // }
+        // foreach ($data['list_nhacsi'] as $key => $value) {
+        //         $datanhacsi = array(
+        //             'maBaiHat' => $data['mabaihat'],
+        //             'maNhacSi' => $value["manhacsi"]
+        //         );
+        //         if($this -> SangTac_model -> create($datanhacsi)){
+        //             $x++;
+        //         } else{
+        //             $x--;
+        //         }                 
+        // }
+        // echo $x;
+
+
+    
 
     /*
      * chỉnh sửa bài hát mới
@@ -241,9 +347,6 @@ pre($list_chude);
         {
             $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-            $this-> form_validation-> set_rules('chuDe','Tên chủ đề','required');
-            $this-> form_validation-> set_rules('sangTac','Sáng tác','required');
-            $this-> form_validation-> set_rules('trinhBay','Trình bày','required');
 
 
             //Nhập liệu chính xác
@@ -254,9 +357,6 @@ pre($list_chude);
                 //$mabaihat = ;
                 $tenBaiHat = $this-> input-> post('tenBaiHat');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $maChuDe = $this-> input-> post('chuDe');
-                $maNSSangTac = $this-> input-> post('sangTac');
-                $maNSTrinhBay = $this-> input-> post('trinhBay');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
 
                 //Lấy tên file ảnh được upload lên
@@ -292,7 +392,7 @@ pre($list_chude);
                 else{
                     $this-> session -> set_flashdata('message','Thêm bài hát không thành công.');
                 }
-                //chuyển tới trang  danh sách tài khoản quản trị
+                //chuyển tới trang  danh sách bài hát
                 redirect(admin_url('BaiHat'));
             }
         }
@@ -354,15 +454,7 @@ pre($list_chude);
         }
     }
 
-    /*
-     * thêm nhiều chủ đề
-     */
-    function muti_chude()
-    { 
 
-        $maChuDe = $this-> input-> post('chuDe');
-        pre($chude);
-    }
 
 }
 

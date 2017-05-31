@@ -16,56 +16,64 @@
 				<strong></strong>
 			</a>
 		</li>
-		<li class="tran">
-			<a href="admin/tran.html" class="exp inactive">
-				<span>Quản lý bán hàng</span>
-				<strong>2</strong>
-			</a>
-			<ul class="sub" style="display: none;">
-				<li>
-					<a href="admin/tran.html">Giao dịch</a>
-				</li>
-				<li>
-					<a href="admin/product_order.html">Đơn hàng sản phẩm</a>
-				</li>
-			</ul>				
+
+		<li class="music">
+			<a  href="<?php echo admin_url('BaiHat')?>" class="current">
+				<span>Bài hát </span>
+			</a>				
 		</li>
 
-		<li class="product">
-			<a href="admin/product.html" class="exp inactive">
-				<span>Bài hát</span>
-				<strong>3</strong>
-			</a>
-			<ul class="sub" style="display: none;">
-				<li>
-					<a href="<?php echo admin_url('BaiHat')?>">Bài hát</a>
-				</li>
-				<li>
-					<a href="<?php echo admin_url('ChuDe')?>">Chủ đề</a>
-				</li>
-				<li>
-					<a href="admin/comment.html">Phản hồi</a>
-				</li>
-			</ul>
+		<li class="home">
+			<a  href="#" class="current">
+				<span>Album </span>
+			</a>				
+		</li>
+
+		<li class="home">
+			<a  href="" class="current">
+				<span>Nghệ sĩ</span>
+			</a>				
 		</li>
 
 		<li class="account">
 			<a href="admin/account.html" class="exp inactive">
 				<span>Tài khoản</span>
-				<strong>3</strong>
+				<strong>2</strong>
 			</a>	
 			<ul class="sub" style="display: none;">
 				<li>
 					<a href="<?php echo admin_url('TaiKhoan')?>">Ban quản trị</a>
 				</li>
 				<li>
-					<a href="admin/admin_group.html">Nhóm quản trị</a>
-				</li>
-				<li>
 					<a href="admin/user.html">Thành viên</a>
 				</li>
 			</ul>						
 		</li>
+
+		<li class="home">
+			<a  href="" class="current">
+				<span>Playlist</span>
+			</a>				
+		</li>
+
+
+
+		<li class="content">
+			<a href="admin/content.html" class="exp inactive">
+				<span>Nội dung</span>
+				<strong>2</strong>
+			</a>
+			<ul class="sub" style="display: none;">
+				<li>
+					<a href="<?php echo admin_url('Slide') ?>">Slide</a>
+				</li>
+				<li>
+					<a href="<?php echo admin_url('ChuDe')?>">Chủ đề</a>
+				</li>
+
+			</ul>				
+		</li>
+
 
 		<li class="support">
 			<a href="admin/support.html" class="exp inactive">
@@ -82,26 +90,7 @@
 			</ul>						
 		</li>
 
-		<li class="content">
-			<a href="admin/content.html" class="exp inactive">
-				<span>Nội dung</span>
-				<strong>4</strong>
-			</a>
-			<ul class="sub" style="display: none;">
-				<li>
-					<a href="<?php echo admin_url('Slide') ?>">Slide</a>
-				</li>
-				<li>
-					<a href="admin/news.html">Tin tức</a>
-				</li>
-				<li>
-					<a href="admin/info.html">Trang thông tin</a>
-				</li>
-				<li>
-					<a href="admin/video.html">Video</a>
-				</li>
-			</ul>				
-		</li>
+
 	</ul>		
 </div>
 <div class="clear"></div>

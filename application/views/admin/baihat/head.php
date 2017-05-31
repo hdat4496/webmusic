@@ -58,7 +58,7 @@ Array.prototype.remByVal_chude = function(val) {
 }
 	var list_chude = new Array();
     function add_chude(){  
-
+console.log($('#chuDe').val());
     	if(!list_chude.contains_chude($('#chuDe').val()) && $('#chuDe').val()!=""){
     		list_chude.push({
     			machude : $('#chuDe').val(),
@@ -99,6 +99,7 @@ Array.prototype.remByVal_sangtac = function(val) {
 }
 	var list_nhacsi = new Array();
     function add_sangtac(){  
+
     	if(!list_nhacsi.contains_sangtac($('#sangTac').val()) && $('#sangTac').val()!=""){
     		list_nhacsi.push({
     			manhacsi : $('#sangTac').val(),
@@ -160,16 +161,15 @@ Array.prototype.remByVal_trinhbay = function(val) {
  <!--Ajax đưa biến lên controller-->
 <script language="javascript">
 	function load_ajax(){
-	 $.post(
-            'add_test', // URL 
-            {
-            list_chude :  list_chude,
-            list_casi : list_casi,
-	        list_nhacsi: list_nhacsi,
-	        tenbaihat:$('#number').val()
-	            },  // Data
-	            function(result){  $('#result').html(result);}, 
-            'text' // dataTyppe		
-    );
-}
+		$.post('/webmusic/admin/BaiHat/them_chitiet', {
+			"list_chude": list_chude,
+			"list_casi": list_casi,
+			"list_nhacsi": list_nhacsi,
+            "mabaihat" : $('#mabaihat').val()				
+		}, function(data, textStatus, xhr) {
+            $('#result').html(data);
+		});
+	}
+
+
 </script>
