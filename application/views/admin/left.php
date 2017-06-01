@@ -30,7 +30,7 @@
 		</li>
 
 		<li class="home">
-			<a  href="" class="current">
+			<a  href="<?php echo admin_url('NgheSi')?>" class="current">
 				<span>Nghệ sĩ</span>
 			</a>				
 		</li>

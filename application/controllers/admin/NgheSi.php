@@ -2,7 +2,7 @@
 /**
 * 
 */
-     $maBaiHat ='';  
+     $maNgheSi ='';  
 class NgheSi extends MY_Controller
 {   
 
@@ -11,7 +11,6 @@ class NgheSi extends MY_Controller
 	{
 		parent::__construct();
 		$this -> load -> model('NgheSi_model');
-        $this -> load -> model('BaiHat_model');
 	}
 
 	/*
@@ -83,7 +82,7 @@ class NgheSi extends MY_Controller
 	}
 
     /*
-     * Thêm bài hát mới
+     * Thêm nghệ sĩ mới
      */
     function add()
     {   
@@ -92,15 +91,6 @@ class NgheSi extends MY_Controller
         $quocgia = $this->QuocGia_model->get_list();
         $this->data['quocgia'] = $quocgia;
 
-        //Lấy danh sách nghệ sĩ
-        $this-> load-> model('NgheSi_model');
-        $nghesi = $this->NgheSi_model->get_list();
-        $this->data['nghesi'] = $nghesi;
-
-        //Lấy danh sách chủ đề
-        $this-> load-> model('ChuDe_model');
-        $chude = $this->ChuDe_model->get_list();
-        $this->data['chude'] = $chude;
 
         //load thư viện validate dữ liệu
         $this-> load->library('form_validation');
@@ -110,74 +100,61 @@ class NgheSi extends MY_Controller
         if($this-> input-> post())
         {
 
-            $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
+            $this-> form_validation-> set_rules('tenNgheSi','Tên nghệ sĩ','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
+            $this-> form_validation-> set_rules('gioiTinh','Giơi tính','required');
 
             //Nhập liệu chính xác
             if($this -> form_validation -> run())
             {
-                $CI =& get_instance();
-                //Thêm vào csdl
-                // $query = $this->db->query('fu_TaoMa_BaiHat()');
-                $maBaiHat = $this-> db-> call_function('fu_TaoMa_BaiHat');
-                //$mabaihat = $this -> db -> query('fu_TaoMa_BaiHat()');
-                pre($maBaiHat);
-                $tenBaiHat = $this-> input-> post('tenBaiHat');
+                $success = $this->db->query("call sp_TaoMa_NgheSi(@outputparam)");
+                $query = $this->db->query('select @outputparam as out_param');
+                $maNgheSi = $query->row()->out_param;
+                $tenNgheSi = $this-> input-> post('tenNgheSi');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $loiBaiHat = $this-> input-> post('loiBaiHat');
+                $gioiTinh = $this-> input-> post('gioiTinh');
+                $ngaySinh = $this-> input-> post('ngaySinh');
+                $tieuSu = $this-> input-> post('tieuSu');
 
                 $this -> load -> library('upload_library');
-                //Lấy tên file nhạc được upload lên
-                $upload_path_audio = './upload/music';
-                $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
-                $url = '';
-                if(isset($upload_data_audio['file_name']))
-                {
-                    $url= $upload_data_audio['file_name'];
-                }
 
-
-                //Lấy tên file nhạc được upload lên
+                $dataNgheSi = array(
+                    'maNgheSi' => $maNgheSi,
+                    'tenNgheSi' => $tenNgheSi,
+                    'maQuocGia' =>$maQuocGia ,
+                    'gioiTinh' => $gioiTinh,
+                    'ngaySinh' => date("Y-m-d H:i:s",strtotime($ngaySinh)),
+                    'tieuSu' => $tieuSu,
+                );
+        
+                //Lấy tên file ảnh được upload lên
                 $upload_path = './upload/img';
                 $upload_data =$this -> upload_library -> upload($upload_path, 'image');
                 $imageURL = '';
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
+                    $dataNgheSi['imageURL'] = $imageURL;
                 }
 
-                $ngayPhatHanh=date('Y-m-d H:i:s');
-                $dataBaiHat = array(
-                    'maBaiHat' => $maBaiHat,
-                    'url' => $url,
-                    'tenBaiHat' =>$tenBaiHat,
-                    'imageURL' =>$imageURL ,
-                    'maQuocGia' =>$maQuocGia ,
-                    'loiBaiHat' =>$loiBaiHat ,
-                    'luotNghe' => 0 ,
-                    'luotThich' => 0,
-                    'luotTai' => 0,
-                    'ngayPhatHanh' => $ngayPhatHanh
-                );
+                
 
                 //Thêm mới vào csdl
-                if($this -> BaiHat_model -> create($dataBaiHat)){
+                if($this -> NgheSi_model -> create($dataNgheSi)){
                     //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Thêm bài hát thành công.');
-                    redirect(admin_url('BaiHat/chitiet/').$maBaiHat);
+                    $this-> session -> set_flashdata('message','Thêm nghệ sĩ thành công.');
                 }
                 else{
-                    $this-> session -> set_flashdata('message','Thêm bài hát không thành công.');
-                    redirect(admin_url('BaiHat'));
+                    $this-> session -> set_flashdata('message','Thêm nghệ sĩ không thành công.');
                 }
-
+                redirect(admin_url('nghesi'));
             }
      
         }
         
         
         //load view
-        $this->data['temp'] = 'admin/baihat/add';
+        $this->data['temp'] = 'admin/nghesi/add';
         $this->load->view('admin/main-layout', $this->data);
     }
     
@@ -188,7 +165,7 @@ class NgheSi extends MY_Controller
      */
     function edit()
     {
-        //Lấy mã bài hát
+        //Lấy mã nghệ sĩ
         $maNgheSi =$this -> uri -> rsegment('3');   
         $ngheSi = $this -> NgheSi_model -> get_info($maNgheSi);
         if(!$ngheSi)
@@ -214,7 +191,7 @@ class NgheSi extends MY_Controller
             $this-> form_validation-> set_rules('tenNgheSi','Tên nghệ sĩ','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
             $this-> form_validation-> set_rules('gioiTinh','Giơi tính','required');
-            $this-> form_validation-> set_rules('ngaySinh','Ngày sinh','required');
+            //$this-> form_validation-> set_rules('ngaySinh','Ngày sinh','required');
 
 
             //Nhập liệu chính xác
@@ -222,9 +199,20 @@ class NgheSi extends MY_Controller
             {
            
                 //Thêm vào csdl
-                //$mabaihat = ;
+                
                 $tenNgheSi = $this-> input-> post('tenNgheSi');
                 $maQuocGia = $this-> input-> post('quocGia');
+                $gioiTinh = $this-> input-> post('gioiTinh');
+                $ngaySinh = $this-> input-> post('ngaySinh');
+                $tieuSu = $this-> input-> post('tieuSu');
+
+                $dataNgheSi = array(
+                    'tenNgheSi' => $tenNgheSi,
+                    'maQuocGia' =>$maQuocGia ,
+                    'gioiTinh' => $gioiTinh,
+                    'ngaySinh' => date("Y-m-d H:i:s",strtotime($ngaySinh)),
+                    'tieuSu' => $tieuSu,
+                );
 
                 //Lấy tên file ảnh được upload lên
                 $this -> load -> library('upload_library');
@@ -234,24 +222,26 @@ class NgheSi extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
+                    $dataNgheSi['imageURL']= $imageURL;
+                    // lấy link hình cũ
+                    $imageURL_old='./upload/img/'.$ngheSi->imageURL;
                 }
-                $dataBaiHat = array(
-                    'maBaiHat' => 'NS00000001',
-                    'maQuocGia' =>$maQuocGia ,
 
-                );
-
-
-
-                /*//Thêm mới vào csdl
-                if($this -> BaiHat_model -> update($baiHat->maBaiHat,$dataBaiHat)){
+                //Cập nhật vào csdl
+                if($this -> NgheSi_model -> update($maNgheSi,$dataNgheSi)){
                     //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Thêm bài hát thành công.');
+                    $this-> session -> set_flashdata('message','Cập nhật nghệ sĩ thành công.');
+
+                    //Xóa ảnh nghệ sĩ cũ
+                    if(file_exists($imageURL_old)) 
+                    {
+                        unlink($imageURL_old);
+                    }
                 }
                 else{
-                    $this-> session -> set_flashdata('message','Thêm bài hát không thành công.');
-                }*/
-                //chuyển tới trang  danh sách bài hát
+                    $this-> session -> set_flashdata('message','Cập nhật nghệ sĩ không thành công.');
+                }
+                //chuyển tới trang  danh sách nghệ sĩ
                 redirect(admin_url('nghesi'));
             }
         }
@@ -262,55 +252,49 @@ class NgheSi extends MY_Controller
         $this->load->view('admin/main-layout', $this->data);       
     }
     /*
-     * Xóa bài hát
+     * Xóa nghệ sĩ
      */
     function del()
     {
-        $maBaiHat = $this -> uri -> rsegment(3);
-        $this->_del($maBaiHat);
-        $this-> session -> set_flashdata('message','Xóa bài hát thành công'); 
-        redirect(admin_url('BaiHat'));        
+        $maNgheSi = $this -> uri -> rsegment(3);
+        $this->_del($maNgheSi);
+        $this-> session -> set_flashdata('message','Xóa nghệ sĩ thành công'); 
+        redirect(admin_url('nghesi'));        
     }
 
     /*
-     * Xóa tất cả bài hát
+     * Xóa tất cả nghệ sĩ
      */  
     
     function del_all()
     {
         $ids = $this ->input-> post('ids');
-        foreach($ids as $maBaiHat)
+        foreach($ids as $maNgheSi)
         {
-            $this -> _del($maBaiHat);
+            $this -> _del($maNgheSi);
         }
 
     } 
     /*
-     *Xóa bài hát
+     *Xóa nghệ sĩ
      */
-    private function _del($maBaiHat)
+    private function _del($maNgheSi)
     {
-        $baiHat = $this -> BaiHat_model-> get_info($maBaiHat);
-        if(!$baiHat)
+        $ngheSi = $this -> NgheSi_model-> get_info($maNgheSi);
+        if(!$maNgheSi)
         {
-            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
-            redirect(admin_url('BaiHat'));                   
+            $this-> session -> set_flashdata('message','Không tồn tại nghệ sĩ này.'); 
+            redirect(admin_url('nghesi'));                   
         } 
         //thực hiện xóa
-        $this -> BaiHat_model -> delete($maBaiHat);
-        //Xóa ảnh bài hát
-        $imageURL='./upload/img/'.$baiHat->imageURL;
+        $this -> NgheSi_model -> delete($maNgheSi);
+        //Xóa ảnh nghệ sĩ
+        $imageURL='./upload/img/'.$nghesi->imageURL;
         if(file_exists($imageURL)) 
         {
             unlink($imageURL);
         }
 
-        //Xóa file audio bài hát
-        $url='./upload/music/'.$baiHat->url;
-        if(file_exists($url)) 
-        {
-            unlink($url);
-        }
     }
 
 
