@@ -1,7 +1,7 @@
 <div class="topNav">
 	<div class="wrapper">
 		<div class="welcome">
-			<span>Xin chào: <b>admin!</b></span>
+			<span>Xin chào: <b><?php echo $this -> session-> userdata('taiKhoan')->hoTen; ?></b></span>
 		</div>
 		
 		<div class="userNav">

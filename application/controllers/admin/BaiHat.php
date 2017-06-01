@@ -118,6 +118,7 @@ class BaiHat extends MY_Controller
                 $success = $this->db->query("call sp_TaoMa_BaiHat(@outputparam)");
                 $query = $this->db->query('select @outputparam as out_param');
                 $maBaiHat = $query->row()->out_param;
+                
                 $tenBaiHat = $this-> input-> post('tenBaiHat');
                 $maQuocGia = $this-> input-> post('quocGia');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
@@ -227,30 +228,30 @@ class BaiHat extends MY_Controller
                 $maQuocGia = $this-> input-> post('quocGia');
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
 
-          //      $this -> load -> library('upload_library');
+               $this -> load -> library('upload_library');
+               // Lấy tên file nhạc được upload lên
+                $upload_path_audio = './upload/music';
+                $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
+                $url = '';
+                if(isset($upload_data_audio['file_name']))
+                {
+                    $url= $upload_data_audio['file_name'];
+                }
+
+
                 //Lấy tên file nhạc được upload lên
-                // $upload_path_audio = './upload/music';
-                // $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
-                // $url = '';
-                // if(isset($upload_data_audio['file_name']))
-                // {
-                //     $url= $upload_data_audio['file_name'];
-                // }
-
-
-                // //Lấy tên file nhạc được upload lên
-                // $upload_path = './upload/img';
-                // $upload_data =$this -> upload_library -> upload($upload_path, 'image');
-                // $imageURL = '';
-                // if(isset($upload_data['file_name']))
-                // {
-                //     $imageURL= $upload_data['file_name'];
-                // }
+                $upload_path = './upload/img';
+                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                }
 
                 $dataBaiHat = array(
-                //    'url' => $url,
+                    'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
-                //    'imageURL' =>$imageURL ,
+                    'imageURL' =>$imageURL ,
                     'maQuocGia' =>$maQuocGia ,
                     'loiBaiHat' =>$loiBaiHat 
                 );
@@ -388,6 +389,23 @@ class BaiHat extends MY_Controller
          //dữ liệu post lên   
         $data = $_POST;
         $x=0;
+
+        $chude = $this-> BaiHat_model->layDSChuDeBaiHat($data['mabaihat']);        
+        $casi = $this-> BaiHat_model->layDSCaSiBaiHat($data['mabaihat']);       
+        $nhacsi = $this-> BaiHat_model->layDSNhacSiBaiHat($data['mabaihat']);
+
+        foreach ($chude as $key => $value) {
+            $this -> BaiHatChuDe_model -> delete($data['mabaihat'],$value["maChuDe"]);
+        }
+
+        foreach ($casi as $key => $value) {
+            $this -> TrinhBay_model-> delete($data['mabaihat'],$value["maNgheSi"]);
+        }
+
+        foreach ($nhacsi as $key => $value) {
+            $this -> SangTac_model -> delete($data['mabaihat'],$value["maNgheSi"]);
+        }
+
         foreach ($data['list_chude'] as $key => $value) {
                 $data_chude = array(
                     'maBaiHat' => $data['mabaihat'],

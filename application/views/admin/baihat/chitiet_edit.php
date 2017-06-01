@@ -55,7 +55,16 @@
 					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png" onclick="add_chude()" style="margin:6px 0 0 6px;">
 	 			</a>
 				<div id="list_chude">	
-			 
+
+					<?php   $this-> load-> model('BaiHat_model');
+	        				$chude = $this-> BaiHat_model->layDSChuDeBaiHat($baiHat->maBaiHat); ?>
+	        		<?php foreach ($chude as $key => $value): ?>
+				 		<span class="list_option" id="item_<?php echo $value["maChuDe"]; ?>"><?php echo $value["tenChuDe"]; ?>
+					 		<a href="javascript:void(0)" onclick="delete_chude('<?php echo $value["maChuDe"]; ?>')">
+					 			 <img style="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
+					 		 </a>
+				 		 </span>
+	        		<?php endforeach ?>
 				</div>
 			<span name="cat_autocheck" class="autocheck"></span>
 
@@ -75,7 +84,16 @@
 				<a  href="javascript:void(0)">
 					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png" onclick="add_sangtac()" style="margin:6px 0 0 6px;">
 	 			</a>
-				<div id="list_nhacsi">				 
+				<div id="list_nhacsi">
+					<?php   $this-> load-> model('BaiHat_model');
+	        				$nhacsi = $this-> BaiHat_model->layDSNhacSiBaiHat($baiHat->maBaiHat); ?>
+	        		<?php foreach ($nhacsi as $key => $value): ?>
+				 		<span class="list_option" id="item_<?php echo $value["maNgheSi"]; ?>"><?php echo $value["tenNgheSi"]; ?>
+					 		<a href="javascript:void(0)" onclick="delete_sangtac('<?php echo $value["maNgheSi"]; ?>')">
+					 			 <img style="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
+					 		 </a>
+				 		 </span>
+	        		<?php endforeach ?>
 				</div>
 
 			<span name="cat_autocheck" class="autocheck"></span>
@@ -97,17 +115,22 @@
 					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png" onclick="add_trinhbay()" style="margin:6px 0 0 6px;">
 	 			</a>
 				<div id="list_casi">	
-					<?php foreach ($list_casi as $key => $value): ?>
-					 	<span class="list_option" id="item_.<?php echo $list_casi->macasi?>"> . <?php echo $list_casi->tencasi ?> 
-					 	<a href="javascript:void(0)" onclick="delete_trinhbay(<?php echo $list_casi->macasi?>)"> <img style ="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png"> </a></span>
-					 <?php endforeach ?> 								 
+					<?php   $this-> load-> model('BaiHat_model');
+	        				$casi = $this-> BaiHat_model->layDSCaSiBaiHat($baiHat->maBaiHat); ?>
+	        		<?php foreach ($casi as $key => $value): ?>
+				 		<span class="list_option" id="item_<?php echo $value["maNgheSi"]; ?>"><?php echo $value["tenNgheSi"]; ?>
+					 		<a href="javascript:void(0)" onclick="delete_trinhbay('<?php echo $value["maNgheSi"]; ?>')">
+					 			 <img style="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
+					 		 </a>
+				 		 </span>
+	        		<?php endforeach ?>							 
 				</div>
 			<span name="cat_autocheck" class="autocheck"></span>
 
 		</div>
 		<div class="clear"></div>
 	</div>
-
+		
 	<div class="formRow hide"></div>
 						
 </div><!-- End tab_container-->

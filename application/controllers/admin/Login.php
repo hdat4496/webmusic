@@ -9,11 +9,12 @@ class Login extends MY_Controller
 	{
 		$this -> load -> library('form_validation');
 		$this -> load -> helper('form');
+		$this-> load -> model('TaiKhoan_model');
 		if($this -> input -> post())
 		{
 			$this-> form_validation->set_rules('login','login','callback_check_login');
 			if($this -> form_validation -> run()){
-				$this -> session -> set_userdata('login', true);
+				
 				redirect(admin_url('Home'));			
 			}
 		}
@@ -32,6 +33,10 @@ class Login extends MY_Controller
 		$this -> load -> model('TaiKhoan_model');
 		$where = array('taiKhoan'=> $taiKhoan, 'matKhau'=> $matKhau);
 		if($this -> TaiKhoan_model->check_exists($where)){
+			$this -> session -> set_userdata(array(
+					'login'=> true,
+					'taiKhoan' => $this -> TaiKhoan_model -> get_info($taiKhoan)
+					));
 			return true;
 		}
 		$this -> form_validation-> set_message(__FUNCTION__, 'Không đăng nhập thành công');

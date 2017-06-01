@@ -22,6 +22,8 @@
 		<div class="clear"></div>
 	</div>
 </div>
+
+
 <script type="text/javascript">
 (function($)
 {
@@ -56,9 +58,20 @@ Array.prototype.remByVal_chude = function(val) {
     }
     return this;
 }
-	var list_chude = new Array();
+    var list_chude = new Array();
+        <?php   $this-> load-> model('BaiHat_model');
+            $chude = $this-> BaiHat_model->layDSChuDeBaiHat($baiHat->maBaiHat);
+        ?>
+
+        <?php foreach ($chude as $key => $value): ?> 
+            <?php    
+                echo "list_chude.push({machude : '".$value['maChuDe']."',tenchude : '".$value['tenChuDe']."'});";               
+            ?>           
+        <?php endforeach ?>
+                            
+
+
     function add_chude(){  
-console.log($('#chuDe').val());
     	if(!list_chude.contains_chude($('#chuDe').val()) && $('#chuDe').val()!=""){
     		list_chude.push({
     			machude : $('#chuDe').val(),
@@ -98,6 +111,16 @@ Array.prototype.remByVal_sangtac = function(val) {
     return this;
 }
 	var list_nhacsi = new Array();
+        <?php   $this-> load-> model('BaiHat_model');
+            $nhacsi = $this-> BaiHat_model->layDSNhacSiBaiHat($baiHat->maBaiHat);
+        ?>
+
+        <?php foreach ($nhacsi as $key => $value): ?> 
+            <?php    
+                echo "list_nhacsi.push({manhacsi : '".$value['maNgheSi']."',tennhacsi : '".$value['tenNgheSi']."'});";               
+            ?>           
+        <?php endforeach ?>
+
     function add_sangtac(){  
 
     	if(!list_nhacsi.contains_sangtac($('#sangTac').val()) && $('#sangTac').val()!=""){
@@ -139,6 +162,16 @@ Array.prototype.remByVal_trinhbay = function(val) {
     return this;
 }
 	var list_casi = new Array();
+        <?php   $this-> load-> model('BaiHat_model');
+            $casi = $this-> BaiHat_model->layDSCaSiBaiHat($baiHat->maBaiHat);
+        ?>
+
+        <?php foreach ($casi as $key => $value): ?> 
+            <?php    
+                echo "list_casi.push({macasi : '".$value['maNgheSi']."',tencasi : '".$value['tenNgheSi']."'});";               
+            ?>           
+        <?php endforeach ?>
+
     function add_trinhbay(){  
     	if(!list_casi.contains_trinhbay($('#trinhBay').val()) && $('#trinhBay').val()!=""){
     		list_casi.push({
@@ -179,7 +212,7 @@ Array.prototype.remByVal_trinhbay = function(val) {
  <!--Ajax đưa biến lên controller-->
 <script language="javascript">
     function chitiet_edit(){
-        $.post('/webmusic/admin/BaiHat/them_chitiet', {
+        $.post('/webmusic/admin/BaiHat/sua_chitiet', {
             "list_chude": list_chude,
             "list_casi": list_casi,
             "list_nhacsi": list_nhacsi,

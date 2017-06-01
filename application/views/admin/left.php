@@ -1,9 +1,12 @@
 <div id="leftSide" style="padding-top:30px;">
 	<!-- Account panel -->				
 	<div class="sideProfile">
-		<a href="#" title="" class="profileFace"><img width="40" src="<?php echo public_url('admin')?>/images/user.png"></a>
-		<span>Xin chào: <strong>admin!</strong></span>
-		<span>Hoàng văn Tuyền</span>
+		<a href="#" title="" class="profileFace"><img width="80px" height="80px" src="<?php 
+		$url=$this -> session-> userdata('taiKhoan')->imageURL;
+		echo base_url('upload/img/'.$url) 
+		?>"></a>
+		<br>
+		<span><?php echo $this -> session-> userdata('taiKhoan')->taiKhoan; ?></span>
 		<div class="clear"></div>
 	</div>
 	<div class="sidebarSep"></div>		    
