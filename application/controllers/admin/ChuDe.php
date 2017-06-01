@@ -94,7 +94,7 @@ class ChuDe extends MY_Controller
 			redirect(admin_url('ChuDe'));	
 		}
 
-		$this->data['info']= $info;
+		$this-> data['info']= $info;
  	
 		// Nếu có dữ liệu post lên
 		if($this-> input-> post())
@@ -105,7 +105,7 @@ class ChuDe extends MY_Controller
 			if($this -> form_validation -> run())
 			{
 				//Thêm vào csdl
-				//$maChuDe = ;
+
 				$tenChuDe = $this-> input-> post('tenChuDe');
 				$maNhomChuDe = $this-> input-> post('maNhomChuDe');
 
@@ -114,7 +114,7 @@ class ChuDe extends MY_Controller
 					'maNhomChuDe' => $maNhomChuDe
 				);
 
-				//Thêm mới vào csdl
+				//cập nhật vào csdl
 				if($this -> ChuDe_model -> update($maChuDe,$data)){
 					//tạo nội dung thông báo
 					$this-> session -> set_flashdata('message','Cập  nhât chủ đề thành công.');
@@ -122,7 +122,7 @@ class ChuDe extends MY_Controller
 				else{
 					$this-> session -> set_flashdata('message','Cập nhật chủ đề không thành công.');
 				}
-				//chuyển tới trang  danh sách tài khoản quản trị
+				//chuyển tới trang  danh sách chủ đề
 				redirect(admin_url('ChuDe'));
 			}
 		}

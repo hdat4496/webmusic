@@ -18,14 +18,14 @@
 			
 			<thead class="filter"><tr><td colspan="8">
 				<form class="list_filter form" action="<?php echo admin_url('BaiHat') ?>" method="get">
-					<table cellpadding="0" cellspacing="0" width="80%"><tbody>
+					<table cellpadding="0" cellspacing="0" width="100%"><tbody>
 					
 						<tr>
 							<td class="label" style="width:55px;"><label for="filter_maBaiHat">Mã bài hát</label></td>
-							<td class="item"><input name="maBaiHat" value="<?php echo $this -> input ->get('maBaiHat') ?>" id="filter_maBaiHat" type="text" style="width:55px;"></td>
+							<td class="item"><input name="maBaiHat" value="<?php echo $this -> input ->get('maBaiHat') ?>" id="filter_maBaiHat" type="text" style="width:115px;"></td>
 							
 							<td class="label" style="width:65px;"><label for="filter_id">Tên bài hát</label></td>
-							<td class="item" style="width:155px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="filter_tenBaiHat" type="text" style="width:155px;"></td>
+							<td class="item" style="width:185px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="filter_tenBaiHat" type="text" style="width:185px;"></td>
 							
 							<td class="label" style="width:60px;"><label for="filter_status">Quốc gia</label></td>
 							<td class="item">
@@ -90,8 +90,21 @@
 						</a>
 						<div class="f11">Nghe: <?php echo $row->luotNghe ?>					  | Tải: <?php echo $row->luotTai ?>				| Thích: <?php echo $row->luotThich ?>			</div>
 					</td>
-					<td class="textR">5,400,000 đ</td>				
-					<td class="textC">01-01-1970</td>
+					<td class="textL">
+							<?php   $this-> load-> model('BaiHat_model');
+        							$nhacsi = $this-> BaiHat_model->layDSNhacSiBaiHat($row->maBaiHat);
+        							foreach ($nhacsi as $key => $value) {
+        								echo $value["tenNgheSi"].' <br> ';
+        						    } 
+        					?>
+    				 </td>				
+					<td class="textL">
+							<?php   $this-> load-> model('BaiHat_model');
+        							$casi = $this-> BaiHat_model->layDSCaSiBaiHat($row->maBaiHat);
+        							foreach ($casi as $key => $value) {
+        								echo $value["tenNgheSi"].' <br> ';
+        						    }?>
+        			</td>
 					<td class="textC"><?php echo $row->ngayPhatHanh ?></td>
 
 
@@ -100,7 +113,7 @@
 						<a href="" title="Gán là nhạc nổi bật" class="tipE">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/star.png">
 						</a>
-						<a href="<?php echo admin_url('BaiHat/chitiet/').$row->maBaiHat?>" target="_blank" class="tipS" title="Cập nhật chi tiết bài hát">
+						<a href="<?php echo admin_url('BaiHat/chitiet_edit/').$row->maBaiHat?>" target="_blank" class="tipS" title="Cập nhật chi tiết bài hát">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
 						</a>
 						<a href="<?php echo admin_url('BaiHat/edit/').$row->maBaiHat?>" title="Chỉnh sửa" class="tipS">

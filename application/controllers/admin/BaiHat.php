@@ -13,6 +13,7 @@ class BaiHat extends MY_Controller
         $this -> load -> model ('BaiHatChuDe_model');
         $this -> load -> model('SangTac_model');
         $this -> load -> model('TrinhBay_model');
+        $this -> load -> model('NgheSi_model');
      
 	}
 
@@ -67,8 +68,10 @@ class BaiHat extends MY_Controller
         //lấy danh sách bài hát
         $list = $this-> BaiHat_model->get_list($input);
         $this->data['list'] = $list;
-       
-       
+        
+        //Lấy danh sách nghệ sĩ
+        $nghesi = $this -> NgheSi_model -> get_list();
+
         //Lấy danh sách quốc gia
         $this-> load-> model('QuocGia_model');
         $quocgia = $this->QuocGia_model->get_list();
@@ -96,11 +99,6 @@ class BaiHat extends MY_Controller
         $this-> load-> model('NgheSi_model');
         $nghesi = $this->NgheSi_model->get_list();
         $this->data['nghesi'] = $nghesi;
-
-        //Lấy danh sách chủ đề
-        $this-> load-> model('ChuDe_model');
-        $chude = $this->ChuDe_model->get_list();
-        $this->data['chude'] = $chude;
 
         //load thư viện validate dữ liệu
         $this-> load->library('form_validation');
@@ -179,6 +177,104 @@ class BaiHat extends MY_Controller
     }
     
 
+    /*
+     * chỉnh sửa bài hát
+     */
+    function edit()
+    {
+        $this -> load -> library('form_validation');
+        $this -> load -> helper('form');
+        //Lấy mã bài hát
+        $maBaiHat =$this -> uri -> rsegment('3');   
+        $baiHat = $this -> BaiHat_model -> get_info($maBaiHat);
+        if(!$baiHat)
+        {
+            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
+            redirect(admin_url('BaiHat'));                   
+        }   
+        $this -> data['baiHat']  = $baiHat;  
+
+         //Lấy danh sách quốc gia
+        $this-> load-> model('QuocGia_model');
+        $quocgia = $this->QuocGia_model->get_list();
+        $this->data['quocgia'] = $quocgia;
+
+        //Lấy danh sách nghệ sĩ
+        $this-> load-> model('NgheSi_model');
+        $nghesi = $this->NgheSi_model->get_list();
+        $this->data['nghesi'] = $nghesi;
+
+        //Lấy danh sách chủ đề
+        $this-> load-> model('ChuDe_model');
+        $chude = $this->ChuDe_model->get_list();
+        $this->data['chude'] = $chude;
+
+
+         date_default_timezone_set('Asia/Ho_Chi_Minh'); 
+        // Nếu có dữ liệu post lên
+        if($this-> input-> post())
+        {
+            $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
+            $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
+
+
+            //Nhập liệu chính xác
+            if($this -> form_validation -> run())
+            {
+           
+                //Thêm vào csdl
+                $tenBaiHat = $this-> input-> post('tenBaiHat');
+                $maQuocGia = $this-> input-> post('quocGia');
+                $loiBaiHat = $this-> input-> post('loiBaiHat');
+
+          //      $this -> load -> library('upload_library');
+                //Lấy tên file nhạc được upload lên
+                // $upload_path_audio = './upload/music';
+                // $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
+                // $url = '';
+                // if(isset($upload_data_audio['file_name']))
+                // {
+                //     $url= $upload_data_audio['file_name'];
+                // }
+
+
+                // //Lấy tên file nhạc được upload lên
+                // $upload_path = './upload/img';
+                // $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                // $imageURL = '';
+                // if(isset($upload_data['file_name']))
+                // {
+                //     $imageURL= $upload_data['file_name'];
+                // }
+
+                $dataBaiHat = array(
+                //    'url' => $url,
+                    'tenBaiHat' =>$tenBaiHat,
+                //    'imageURL' =>$imageURL ,
+                    'maQuocGia' =>$maQuocGia ,
+                    'loiBaiHat' =>$loiBaiHat 
+                );
+
+                //cập nhật vào csdl
+                if($this -> BaiHat_model -> update($maBaiHat,$dataBaiHat)){
+                    //tạo nội dung thông báo
+                    $this-> session -> set_flashdata('message','Cập  nhât chủ đề thành công.');
+                }
+                else{
+                    $this-> session -> set_flashdata('message','Cập nhật chủ đề không thành công.');
+                }
+                //chuyển tới trang  danh sách chủ đề
+                redirect(admin_url('BaiHat'));
+            }
+        }
+        
+        
+        //load view
+        $this->data['temp'] = 'admin/baihat/edit';
+        $this->load->view('admin/main-layout', $this->data);       
+    }
+
+
     function chitiet()
     {   
 
@@ -209,10 +305,39 @@ class BaiHat extends MY_Controller
 
     }
 
+    function chitiet_edit()
+    {   
+
+        //Lấy mã bài hát
+        $maBaiHat =$this -> uri -> rsegment('3');   
+        $baiHat = $this -> BaiHat_model -> get_info( $maBaiHat);
+        if(!$baiHat)
+        {
+            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
+            redirect(admin_url('BaiHat'));                   
+        }   
+
+        $this -> data['baiHat']  = $baiHat;  
+
+        //Lấy danh sách nghệ sĩ
+        $this-> load-> model('NgheSi_model');
+        $nghesi = $this->NgheSi_model->get_list();
+        $this->data['nghesi'] = $nghesi;
+
+        //Lấy danh sách chủ đề
+        $this-> load-> model('ChuDe_model');
+        $chude = $this->ChuDe_model->get_list();
+        $this->data['chude'] = $chude;
+
+       // load view
+        $this->data['temp'] = 'admin/baihat/chitiet_edit';
+        $this->load->view('admin/main-layout', $this->data);
+
+    }
 
     function them_chitiet()
     { 
-           //     $this -> load -> model('BaiHatChuDe_model');
+
          //dữ liệu post lên   
         $data = $_POST;
         $x=0;
@@ -254,154 +379,56 @@ class BaiHat extends MY_Controller
                     $x--;               
                 }
         }  
-
         echo $x;
-
 }
 
+    function sua_chitiet()
+    { 
 
-
-
-
-
-
-//print_r($datachude);
-
-// //print_r($datachude);
-//  // print_r($data['list_casi']);
-//  // print_r($data['list_nhacsi']);
-
-
-
-
-// //echo $data['list_chude'];
-
-
-
-
-
-        // }
-        // foreach ($data['list_casi'] as $key => $value) {
-        //         $datacasi = array(
-        //             'maBaiHat' => $data['mabaihat'],
-        //             'maCaSi' => $value["macasi"]
-        //         );
-        //         if($this -> TrinhBay_model -> create($datacasi)){
-        //             $x++;
-        //         } else{
-        //             $x--;
-        //         }                   
-        // }
-        // foreach ($data['list_nhacsi'] as $key => $value) {
-        //         $datanhacsi = array(
-        //             'maBaiHat' => $data['mabaihat'],
-        //             'maNhacSi' => $value["manhacsi"]
-        //         );
-        //         if($this -> SangTac_model -> create($datanhacsi)){
-        //             $x++;
-        //         } else{
-        //             $x--;
-        //         }                 
-        // }
-        // echo $x;
-
-
-    
-
-    /*
-     * chỉnh sửa bài hát mới
-     */
-    function edit()
-    {
-        //Lấy mã bài hát
-        $maBaiHat =$this -> uri -> rsegment('3');   
-        $baiHat = $this -> BaiHat_model -> get_info($maBaiHat);
-        if(!$baiHat)
-        {
-            $this-> session -> set_flashdata('message','Không tồn tại bài hát này.'); 
-            redirect(admin_url('BaiHat'));                   
-        }   
-        $this -> data['baiHat']  = $baiHat;  
-
-         //Lấy danh sách quốc gia
-        $this-> load-> model('QuocGia_model');
-        $quocgia = $this->QuocGia_model->get_list();
-        $this->data['quocgia'] = $quocgia;
-
-        //Lấy danh sách nghệ sĩ
-        $this-> load-> model('NgheSi_model');
-        $nghesi = $this->NgheSi_model->get_list();
-        $this->data['nghesi'] = $nghesi;
-
-        //Lấy danh sách chủ đề
-        $this-> load-> model('ChuDe_model');
-        $chude = $this->ChuDe_model->get_list();
-        $this->data['chude'] = $chude;
-
-        //load thư viện validate dữ liệu
-        $this-> load->library('form_validation');
-        $this-> load->helper('form');
-         date_default_timezone_set('Asia/Ho_Chi_Minh'); 
-        // Nếu có dữ liệu post lên
-        if($this-> input-> post())
-        {
-            $this-> form_validation-> set_rules('tenBaiHat','Tên bài hát','required|max_length[100]');
-            $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-
-
-            //Nhập liệu chính xác
-            if($this -> form_validation -> run())
-            {
-           
-                //Thêm vào csdl
-                //$mabaihat = ;
-                $tenBaiHat = $this-> input-> post('tenBaiHat');
-                $maQuocGia = $this-> input-> post('quocGia');
-                $loiBaiHat = $this-> input-> post('loiBaiHat');
-
-                //Lấy tên file ảnh được upload lên
-                $this -> load -> library('upload_library');
-                $upload_path = './upload/img';
-                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
-                $imageURL = '';
-                if(isset($upload_data['file_name']))
-                {
-                    $imageURL= $upload_data['file_name'];
-                }
-                $ngayPhatHanh=date('Y-m-d H:i:s');
-                $dataBaiHat = array(
-                    'maBaiHat' => 'BH0000000000047',
-                    'url' => '123123',
-                    'tenBaiHat' =>$tenBaiHat,
-                    'imageURL' =>$imageURL ,
-                    'maQuocGia' =>$maQuocGia ,
-                    'loiBaiHat' =>$loiBaiHat ,
-                    'luotNghe' => 0 ,
-                    'luotThich' => 0,
-                    'luotTai' => 0,
-                    'ngayPhatHanh' => $ngayPhatHanh
+         //dữ liệu post lên   
+        $data = $_POST;
+        $x=0;
+        foreach ($data['list_chude'] as $key => $value) {
+                $data_chude = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maChuDe' => $value["machude"]
                 );
-
-
-
                 //Thêm mới vào csdl
-                if($this -> BaiHat_model -> update($baiHat->maBaiHat,$dataBaiHat)){
-                    //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Thêm bài hát thành công.');
+                if($this -> BaiHatChuDe_model -> create($data_chude)){
+                    $x++;
+                } else{
+                    $x--;               
                 }
-                else{
-                    $this-> session -> set_flashdata('message','Thêm bài hát không thành công.');
+        }        
+
+        foreach ($data['list_nhacsi'] as $key => $value) {
+                $data_sangtac = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maNhacSi' => $value["manhacsi"]
+                );
+                //Thêm mới vào csdl
+                if($this -> SangTac_model -> create($data_sangtac)){
+                    $x++;
+                } else{
+                    $x--;               
                 }
-                //chuyển tới trang  danh sách bài hát
-                redirect(admin_url('BaiHat'));
-            }
-        }
-        
-        
-        //load view
-        $this->data['temp'] = 'admin/baihat/edit';
-        $this->load->view('admin/main-layout', $this->data);       
-    }
+        }  
+
+        foreach ($data['list_casi'] as $key => $value) {
+                $data_trinhbay = array(
+                    'maBaiHat' => $data['mabaihat'],
+                    'maCasi' => $value["macasi"]
+                );
+                //Thêm mới vào csdl
+                if($this -> TrinhBay_model -> create($data_trinhbay)){
+                    $x++;
+                } else{
+                    $x--;               
+                }
+        }  
+        echo $x;
+}
+
     /*
      * Xóa bài hát
      */

@@ -154,7 +154,9 @@ Array.prototype.remByVal_trinhbay = function(val) {
 		$('#item_'+id).fadeOut(200,function(){
 			this.remove();
 		});
-	}   
+	}  
+
+
  </script>
 
 
@@ -167,9 +169,26 @@ Array.prototype.remByVal_trinhbay = function(val) {
 			"list_nhacsi": list_nhacsi,
             "mabaihat" : $('#mabaihat').val()				
 		}, function(data, textStatus, xhr) {
-            $('#result').html(data);
+            if(data)
+            {
+                    window.location.href = '<?php echo admin_url('BaiHat') ?>'
+        }
 		});
 	}
-
-
+</script>
+ <!--Ajax đưa biến lên controller-->
+<script language="javascript">
+    function chitiet_edit(){
+        $.post('/webmusic/admin/BaiHat/them_chitiet', {
+            "list_chude": list_chude,
+            "list_casi": list_casi,
+            "list_nhacsi": list_nhacsi,
+            "mabaihat" : $('#mabaihat').val()               
+        }, function(data, textStatus, xhr) {
+            if(data)
+            {
+                    window.location.href = '<?php echo admin_url('BaiHat') ?>'
+        }
+        });
+    }
 </script>
