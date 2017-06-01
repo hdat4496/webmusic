@@ -46,12 +46,14 @@ class ChuDe extends MY_Controller
 			if($this -> form_validation -> run())
 			{
 				//Thêm vào csdl
-				//$maChuDe = ;
+                $success = $this->db->query("call sp_TaoMa_ChuDe(@outputparam)");
+                $query = $this->db->query('select @outputparam as out_param');
+                $maChuDe = $query->row()->out_param;
 				$tenChuDe = $this-> input-> post('tenChuDe');
 				$maNhomChuDe = $this-> input-> post('maNhomChuDe');
 
 				$data = array(
-					'maChuDe' => 'CD00024',
+					'maChuDe' => $maChuDe,
 					'tenChuDe' => $tenChuDe,
 					'maNhomChuDe' => $maNhomChuDe
 				);
