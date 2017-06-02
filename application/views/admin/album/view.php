@@ -42,7 +42,6 @@
 							
 						</tr>
 					</tbody></table>
-					<input type="button" name="maAlbum" style="display: none;"><?php echo $info->maAlbum?></input>
 				</form>
 			</td></tr></thead>
 			

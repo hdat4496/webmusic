@@ -87,20 +87,12 @@ class Album extends MY_Controller
         $this -> load -> view('admin/main-layout', $this->data);
 
 	}
-    static $maAlbum_global="";
-    //private $maAlbum_global ="";
+    
     function view()
     {
         //Lấy mã album
-        
         $str = $this -> uri -> rsegment('3');
         $maAlbum= substr($str,0,10);
-
-        if(empty($maAlbum)) {$maAlbum=$maAlbum_global;}
-        else {$maAlbum_global = "2";}
-
-         $this-> session -> set_flashdata('message',$maAlbum.'-'.$maAlbum_global); 
-
 
         //if(emty($maAlbum)) $maAlbum=
         //lấy danh sách bài hát
@@ -120,17 +112,19 @@ class Album extends MY_Controller
         $config = array();
         $config['total_rows'] = $total_rows;// tổng tất cả bài hát
         $config['base_url']   = admin_url('album/view'); //link hien thi ra danh sach san pham
-        $config['per_page']   = 1;//Số lượng bài hát trên 1 trang
+        $config['per_page']   = 7;//Số lượng bài hát trên 1 trang
         $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
         $config['next_link']   = 'Trang kế tiếp';
         $config['prev_link']   = 'Trang trước';
         $config['reuse_query_string']=true;
         $config['prefix'] = $maAlbum.'-' ;
+        $config['first_url'] = admin_url('Album/view/').$maAlbum;
 
         //khởi tạo các cấu hình trang
-        $this->pagination->initialize($config);    
+        $this-> pagination->initialize($config);    
          
-        $segment = substr($str, 11,1);
+        $index=strpos($str,'-');
+        $segment = substr($str, $index+1);
         $segment = intval($segment);
 
         //$input['limit'] = array($config['per_page'], $segment);
@@ -203,15 +197,18 @@ class Album extends MY_Controller
 
     }
 
+    private function removeElementWithValue($array, $key, $value){
+        foreach($array as $subKey => $subArray){
+            if($subArray->$key == $value){
+            unset($array[$subKey]);
+            }
+        }
+     return $array;
+    }
+
     function add_baihat()
     {
-        $this->view();
-        //$view_to_add=$this->view_to_add();
-        //$this->data['view_to_add']=$view_to_add;
-        //Lấy mã album        
-        //$maAlbum = $this -> uri -> rsegment('3'); 
-        //$this->data['maAlbum']=$maAlbum;
-
+        //$this->view();
         //Lấy mã album
         
         $str = $this -> uri -> rsegment('3');
@@ -238,8 +235,31 @@ class Album extends MY_Controller
             $input['where']['maQuocGia'] = $maQuocGia;
         }
 
+        //lấy danh sách bài hát
+        $list = $this-> BaiHat_model->get_list($input);
+
+        //lấy danh sách bài hát thuộc album
+        $this-> db->select('*');
+        $this-> db-> from('album_baihat');
+        $this-> db-> join('baihat','album_baihat.mabaihat=baihat.mabaihat');
+        $this-> db-> where('maAlbum',$maAlbum);
+        $query= $this-> db-> get();
+        $listBH= $query->result();
+        
+        //xử lý xóa các bài hát đã thuộc album ra khỏi danh sách list
+        foreach ($list as $row)
+        {
+            foreach ($listBH as $bh){
+                if($row->maBaiHat == $bh->maBaiHat)
+                {
+                    $list=$this->removeElementWithValue($list,'maBaiHat',$bh->maBaiHat);
+                    break;
+                }
+                # code...
+            }
+        }
         //Lấy số lượng bài hát
-        $total_rows = $this -> BaiHat_model-> get_total($input);
+        $total_rows = count($list);
         $this -> data['total_rows'] = $total_rows;
 
         //load thư viện phân trang
@@ -253,22 +273,24 @@ class Album extends MY_Controller
         $config['prev_link']   = 'Trang trước';
         $config['reuse_query_string']=true;
         $config['prefix'] = $maAlbum.'-' ;
+        $config['first_url'] = admin_url('album/add_baihat/').$maAlbum;
 
         //khởi tạo các cấu hình trang
         $this->pagination->initialize($config);    
          
-        $segment = substr($str, 11,1);
+        $index=strpos($str,'-');
+        $segment = substr($str, $index+1);
         $segment = intval($segment);
 
         $input['limit'] = array($config['per_page'], $segment);
-        //lấy danh sách bài hát
-        $list = $this-> BaiHat_model->get_list($input);
-        //return $list;
-        $this->data['list'] = $list;
-        
-        //Lấy danh sách nghệ sĩ
-        $nghesi = $this -> NgheSi_model -> get_list();
 
+        $this->data['list'] = array_slice($list, $segment,$config['per_page']);
+        
+        //Lấy danh sách quốc gia
+        $this-> load-> model('QuocGia_model');
+        $quocgia = $this->QuocGia_model->get_list();
+        $this->data['quocgia'] = $quocgia;
+        
         //lấy nội dung biến message
         $message = $this -> session -> flashdata('message');
         $this -> data['message'] = $message;
@@ -277,6 +299,43 @@ class Album extends MY_Controller
         $this -> load -> view('admin/main-layout', $this->data);
     }
 
+      /*
+     * Thêm bài hát vào album
+     */
+    function add_baihat_to_album()
+    {   
+        $str=$this-> uri->rsegment(3);
+        $maAlbum= substr($str,0,10);
+        $maBaiHat= substr($str,11,15);
+        $data= array(
+            'maAlbum' => $maAlbum,
+            'maBaiHat' => $maBaiHat);
+
+        if($this -> Album_BaiHat_model -> create($data)){
+                    //tạo nội dung thông báo
+                    $this-> session -> set_flashdata('message','Thêm bài hát vào album thành công.');
+        }
+        else{
+                    $this-> session -> set_flashdata('message','Thêm bài hát vào album không thành công.');
+        }
+        redirect(admin_url('album/view/').$maAlbum);
+    }
+    /*
+     * Xóa tất cả nghệ sĩ
+     */  
+    
+    function add_all_baihat_to_album()
+    {
+        $maAlbum=$this-> uri->rsegment(3);
+        $ids = $this ->input-> post('ids');
+        $data= array('maAlbum' => $maAlbum);
+        foreach($ids as $maBaiHat)
+        {
+            $data['maBaiHat']=$maBaiHat;
+            $this-> Album_BaiHat_model->create($data);
+        }
+        redirect(admin_url('album/view/').$maAlbum);
+    } 
     /*
      * Thêm album mới
      */

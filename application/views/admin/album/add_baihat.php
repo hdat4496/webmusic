@@ -62,8 +62,8 @@
 				<tr>
 					<td colspan="8">
 						 <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('BaiHat/del_all') ?>">
-									<span style="color:white;">Xóa hết</span>
+								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('album/add_all_baihat_to_album/'.$maAlbum) ?>">
+									<span style="color:white;">Thêm tất cả</span>
 								</a>
 						 </div>
 							
@@ -106,18 +106,8 @@
         			</td>
 					<td class="textC"><?php echo $row->ngayPhatHanh ?></td>
 					<td class="option textC">
-						<a href="" title="Gán là nhạc nổi bật" class="tipE">
-							<img src="<?php echo public_url('admin/images')?>/icons/color/star.png">
-						</a>
-						<a href="<?php echo admin_url('BaiHat/chitiet_edit/').$row->maBaiHat?>" target="_blank" class="tipS" title="Cập nhật chi tiết bài hát">
-							<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
-						</a>
-						<a href="<?php echo admin_url('BaiHat/edit/').$row->maBaiHat?>" title="Chỉnh sửa" class="tipS">
-							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">
-						</a>
-						
-						<a href="<?php echo admin_url('BaiHat/del/').$row->maBaiHat ?>" class="tipS verify_action">
-						    <img src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
+						<a href="<?php echo admin_url('album/add_baihat_to_album/').$maAlbum.'-'.$row->maBaiHat?>" title="Thêm" class="tipE">
+							<img src="<?php echo public_url('admin/images')?>/icons/control/16/add.png">
 						</a>
 					</td>
 				</tr> 
