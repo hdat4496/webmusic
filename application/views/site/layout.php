@@ -7,6 +7,8 @@
 
 	<body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
+      <?php $this -> load ->view('site/register')?>
+      <?php $this -> load ->view('site/login')?>
     <!-- Main Header -->
  		<header class="main-header">
 			<?php $this -> load ->view('site/header')?>

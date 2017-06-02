@@ -4,7 +4,7 @@
         <aside class="aside bg-light dk" style="background-color: #f2f4f8">
           <section class="vbox animated fadeInUp">
             <section claas="scrollable hover">
-              <div class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
+              <div class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto" style="margin-bottom: -15px;">
                 <?php foreach ($list_chude as $row):?>
                    <a href="" class="list-group-item"><?php echo $row ->tenChuDe ?></a>
                 <?php endforeach; ?>        

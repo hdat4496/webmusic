@@ -30,11 +30,114 @@ body {
 }
 
 
+/*2. Đăng ký*/
+.modaldialogdk {
+    width: 300px;
+}
+.modalfooterdk {
+    height: 70px;
+    margin: 0;
+}
+.modalfooterdk .btn {
+    font-weight: bold;
+}
+.modalfooterdk .progress {
+    display: none;
+    height: 32px;
+    margin: 0;
+}
+.input-group-addon {
+    color: #fff;
+    background: #3276B1;
+}
+.modaldk {
+  width: 550px;
+  height: 450px;
+  margin-left: -120px;
+  margin-top: 100px;
+}
+.checkbox{
+  height: 30px!important;
+}
+
+.modalbodydk{
+  height: 270px;
+}
+.input-lg {
+    height: 38px !important;
+    font-size: 14px !important;
+}
+.btndk{
+    background-color: #FB4B00!important;
+    margin-bottom: 10px!important;
+}
+.btndk:hover{
+    background-color: #A89D00!important;
+}
+
+/*2. Out đăng ký*/
+/*3. Đăng nhập */
+.modaldialogdn {
+    width: 300px;
+}
+.modalfooterdn {
+    height: 70px;
+    margin: 0;
+}
+.modalfooterdn .btn {
+    font-weight: bold;
+}
+.modalfooterdn .progress {
+    display: none;
+    height: 32px;
+    margin: 0;
+}
+.input-group-addon {
+    color: #fff;
+    background: #3276B1;
+}
+.modaldn{
+  width: 450px;
+  height: 350px;
+  margin-left: -80px;
+  margin-top: 150px;
+}
+.checkbox{
+  height: 30px!important;
+}
+.quenmatkhau{
+  right: 0;
+  margin-top: 10px;
+}
+.noidungqmk{
+  margin-left: 82px;
+}
+.modalbodydn{
+  height: 164px;
+} 
+/* xóa viền đăng nhập khi ấn vô*/
+.login:hover, .login:active, .login:focus{
+    outline: 0;
+}
+.btndn{
+    background-color: #337ab7!important;
+    margin-bottom: 10px!important;
+}
+.btndn:hover{
+    background-color: #428bca!important;
+}
+#myModalLabel{
+    font-weight: bold;
+}
+.input-lg {
+    height: 38px !important;
+    font-size: 14px !important;
+}
+
+/*3. Out Đăng nhập */ 
+
+
 /*Play audio*/
-
-
-
-
 .left {
   float: left;
 }
