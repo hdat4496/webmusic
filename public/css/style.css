@@ -25,6 +25,155 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+      .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+      }
+      .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 13px 13px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 25px;
+      }
+/*ád       */
+
+
+.beds-baths span.icon {             
+    opacity: 1;
+    color: #909090;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    height: 24px;
+    line-height: 24px;
+}
+
+
+
+.icon-blank-space {
+    text-indent: -9999px
+}
+
+
+.beds-baths.active {
+    background: #9aa5af;   
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.beds-baths {
+    width: 10%   
+}
+
+.beds-baths-group {
+    width: 100%   
+}
+
+.beds-baths-word {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    line-height: 34px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #909090;
+}
+
+.beds-baths.active .beds-baths-word {
+    color: #fff;
+}
+
+.mobile-br {
+ display: block;   
+}
+
+.beds-baths-clearfix {
+    display: none;
+    clear: both;
+}
+
+@media (max-width: 600px) {
+
+    .beds-baths {
+        text-align: left;
+        margin-bottom: 0px !important;
+    }
+    
+    .beds-baths-word {
+        display: block;
+        position: absolute;
+        width: 100%;
+        margin: 0 auto;
+        font-size: 17px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        font-weight: bold;
+        text-align: center;
+}
+
+.beds-baths-1,
+.beds-baths-2,
+.beds-baths-3,
+.beds-baths-4,
+.beds-baths-5,
+.beds-baths-6,
+.beds-baths-7,
+.beds-baths-8 {
+    width: 50% !important;
+margin-top: -1px;
+    margin-bottom: -1px;
+}
+
+.beds-baths-2,
+.beds-baths-4,
+.beds-baths-6,
+.beds-baths-8 {
+    float: right !important;  
+}
+
+.beds-baths-1,
+.beds-baths-3,
+.beds-baths-5,
+.beds-baths-7 {
+    float: left !important;
+
+}
+
+.bed-baths-9 {
+  width: 100% !important;
+}
+
+    .beds-baths.active .beds-baths-word {
+        color: #fff;
+    }
+    
+    .beds-baths-clearfix {
+        display: block;
+        clear: both;
+    }
+
+.mobile-br {
+ display: none;   
+ 
+ 
+}}
+/*dfds*/
 #list-song-tem{
   float: right!important;
 }
@@ -52,7 +201,7 @@ body {
 }
 .modaldk {
   width: 550px;
-  height: 450px;
+  height: 470px;
   margin-left: -120px;
   margin-top: 100px;
 }
@@ -61,7 +210,7 @@ body {
 }
 
 .modalbodydk{
-  height: 270px;
+  height: 290px;
 }
 .input-lg {
     height: 38px !important;

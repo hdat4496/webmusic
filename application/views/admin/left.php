@@ -27,7 +27,7 @@
 		</li>
 
 		<li class="home">
-			<a  href="#" class="current">
+			<a  href="<?php echo admin_url('Album')?>" class="current">
 				<span>Album </span>
 			</a>				
 		</li>
