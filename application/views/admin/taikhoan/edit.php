@@ -85,8 +85,15 @@
 				<div class="formRow">
 					<label class="formLeft">Hình ảnh:<span class="req">*</span></label>
 					<div class="formRight">
-						<div class="left"><input type="file" id="image" name="image"></div>
+						<div class="left">
+							<input type="file" id="image" name="image">
+
+						</div>
+
 						<div name="image_error" class="clear error"></div>
+						
+						<img id = "imageLoad" src="<?php echo base_url('upload/img/'.$info->imageURL) ?>" style="width: 260px;height: 260px;" alt="">	
+
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -101,3 +108,22 @@
 
 
 </div>
+
+<!-- preview hình -->
+<script type="text/javascript">
+       function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#imageLoad').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#image").change(function(){
+        readURL(this);
+    });
+</script>

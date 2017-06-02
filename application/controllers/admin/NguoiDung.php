@@ -2,7 +2,7 @@
 /**
 * 
 */
-class TaiKhoan extends MY_Controller
+class NguoiDung extends MY_Controller
 {
 	
 	function __construct()
@@ -17,8 +17,52 @@ class TaiKhoan extends MY_Controller
 	
 	function index()
 	{
-		$input = array();
-		$input['where'] = array('maQuyen' => 'Q01');
+
+		//Lấy số lượng bài hát
+		$total_rows = $this -> TaiKhoan_model-> get_total();
+		$this -> data['total_rows'] = $total_rows;
+
+		//load thư viện phân trang
+		$this -> load -> library('pagination');
+		$config = array();
+		$config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        $config['base_url']   = admin_url('nguoidung/index'); //link hien thi ra danh sach san pham
+        $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
+        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
+        $config['next_link']   = 'Trang kế tiếp';
+        $config['prev_link']   = 'Trang trước';
+
+        //khởi tạo các cấu hình trang
+        $this->pagination->initialize($config);    
+         
+        $segment = $this->uri->segment(4);
+        $segment = intval($segment);
+
+        $input = array();
+        $input['limit'] = array($config['per_page'], $segment);
+
+        //Kiểm tra có thực hiện lọc k
+        $input['where'] = array();
+        $taiKhoan = $this->input->get('taiKhoan');
+        if($taiKhoan)
+        {
+            $input['like'] = array('taiKhoan', $taiKhoan);
+        }
+
+        $hoTen = $this->input->get('hoTen');
+        if($hoTen)
+        {
+            $input['like'] = array('hoTen', $hoTen);
+        }
+
+        $email = $this->input->get('email');
+        if($email)
+        {
+            $input['like'] = array('email', $email);
+        }
+
+		$input['where'] = array('maQuyen' => 'Q02');
+
 		$list = $this -> TaiKhoan_model -> get_list($input);
 		$this -> data['list'] = $list;
 		$total = $this -> TaiKhoan_model -> get_total($input);
@@ -28,7 +72,7 @@ class TaiKhoan extends MY_Controller
 		$message = $this -> session -> flashdata('message');
 		$this -> data['message'] = $message;
 
-		$this -> data['temp'] = 'admin/taikhoan/index';
+		$this -> data['temp'] = 'admin/nguoidung/index';
 		$this -> load -> view('admin/main-layout', $this->data);
 	}
 	/*
@@ -90,29 +134,28 @@ class TaiKhoan extends MY_Controller
 				$gioiTinh = $this-> input-> post('gioiTinh');
 
 
-				$dataTaiKhoan = array(
+                $this -> load -> library('upload_library');
+
+				$data = array(
 					'taiKhoan' => $taiKhoan,
 					'matKhau' => md5($matKhau),
-					'maQuyen' => 'Q01',
+					'maQuyen' => 'Q02',
 					'hoTen' => $hoTen,
-					'imageURL' => $imageURL,
 					'email' => $email,
 					'gioiTinh' => $gioiTinh
 				);
-
                 //Lấy tên file ảnh được upload lên
-                $this -> load -> library('upload_library');				
                 $upload_path = './upload/img';
                 $upload_data =$this -> upload_library -> upload($upload_path, 'image');
                 $imageURL = '';
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
-                    $dataTaiKhoan['imageURL'] = $imageURL;
+                    $data['imageURL'] = $imageURL;
                 }
 
 
-				if($this -> TaiKhoan_model -> create($dataTaiKhoan)){
+				if($this -> TaiKhoan_model -> create($data)){
 					//tạo nội dung thông báo
 					$this-> session -> set_flashdata('message','Thêm tài khoản thành công.');
 				}
@@ -120,10 +163,10 @@ class TaiKhoan extends MY_Controller
 					$this-> session -> set_flashdata('message','Thêm tài khoản không thành công.');
 				}
 				//chuyển tới trang  danh sách tài khoản quản trị
-				redirect(admin_url('TaiKhoan'));
+				redirect(admin_url('NguoiDung'));
 			}
 		}
-		$this -> data['temp'] = 'admin/taikhoan/add';
+		$this -> data['temp'] = 'admin/nguoidung/add';
 		$this -> load -> view('admin/main-layout', $this->data);
 	}
 
@@ -162,11 +205,12 @@ class TaiKhoan extends MY_Controller
 				$hoTen = $this-> input-> post('hoTen');
 				$gioiTinh = $this-> input-> post('gioiTinh');
 
-				$dataTaiKhoan = array(
+				$data = array(
 					'matKhau' => md5($matKhau),
 					'hoTen' => $hoTen,
+					'imageURL' => $imageURL,
 					'gioiTinh' => $gioiTinh
-				);
+				);	
 
                 //Lấy tên file ảnh được upload lên
                 $this -> load -> library('upload_library');
@@ -176,13 +220,12 @@ class TaiKhoan extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
-                    $dataTaiKhoan['imageURL']= $imageURL;
+                    $data['imageURL']= $imageURL;
                     // lấy link hình cũ
-                    $imageURL_old='./upload/img/'.$info->imageURL;
+                    $imageURL_old='./upload/img/'.$taiKhoan->imageURL;
                 }
-	
-
-					if($this -> TaiKhoan_model -> update($taiKhoan, $dataTaiKhoan)){
+                
+					if($this -> TaiKhoan_model -> update($taiKhoan, $data)){
 						//tạo nội dung thông báo
 						$this-> session -> set_flashdata('message','Cập nhật tài khoản thành công.');
 
@@ -190,18 +233,18 @@ class TaiKhoan extends MY_Controller
 	                    if(file_exists($imageURL_old)) 
 	                    {
 	                        unlink($imageURL_old);
-	                    }						
+	                    }
 					}
 					else{
 						$this-> session -> set_flashdata('message','Cập nhật tài khoản không thành công.');
 					}
 				//chuyển tới trang  danh sách tài khoản quản trị
-				redirect(admin_url('TaiKhoan'));		
+				redirect(admin_url('NguoiDung'));		
 			}
 
 		}
 
-		$this -> data['temp'] = 'admin/taikhoan/edit';
+		$this -> data['temp'] = 'admin/nguoidung/edit';
 		$this -> load -> view('admin/main-layout', $this->data);
 	}
 
@@ -218,27 +261,14 @@ class TaiKhoan extends MY_Controller
         if(!$info)
         {
             $this-> session->set_flashdata('message', 'Không tồn tại tài khoản này.');
-            redirect(admin_url('taiKhoan'));
+            redirect(admin_url('NguoiDung'));
         }
         //thuc hiện xóa
         $this-> TaiKhoan_model->delete($taiKhoan);
         
         $this-> session->set_flashdata('message', 'Xóa tài khoản thành công.');
-        redirect(admin_url('taiKhoan'));
+        redirect(admin_url('NguoiDung'));
     }
-
-    /*
-     * Thực hiện đăng xuất
-     */
-    function logout()
-    {
-        if($this->session->userdata('login'))
-        {
-            $this->session->unset_userdata('login');
-        }
-        redirect(admin_url('login'));
-    }
-
 
 
 

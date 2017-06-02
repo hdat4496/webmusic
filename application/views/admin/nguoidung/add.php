@@ -1,5 +1,5 @@
 <!--head-->
-<?php $this -> load -> view('admin/taikhoan/head', $this-> data) ?>
+<?php $this -> load -> view('admin/nguoidung/head', $this-> data) ?>
 
 <div class="line"></div>
 
@@ -82,6 +82,7 @@
 						<div class="left">
 							<input type="file" id="image" name="image">
 							<img id="imageLoad" src="#" style="width: 260px;height: 260px;display: none;" alt="">
+						
 						</div>
 						<div name="image_error" class="clear error"></div>
 					</div>

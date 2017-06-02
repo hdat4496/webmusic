@@ -48,7 +48,7 @@
 					<a href="<?php echo admin_url('TaiKhoan')?>">Ban quản trị</a>
 				</li>
 				<li>
-					<a href="admin/user.html">Thành viên</a>
+					<a href="<?php echo admin_url('NguoiDung')?>">Thành viên</a>
 				</li>
 			</ul>						
 		</li>

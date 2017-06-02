@@ -10,7 +10,7 @@
 	
 		<div class="title">
 
-			<h6>Danh sách Thành viên</h6>
+			<h6>Danh sách quản trị viên</h6>
 		 	<div class="num f12">Tổng số: <b>		<?php echo $total; ?></b></div>
 		</div>
 		

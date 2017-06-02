@@ -22,35 +22,13 @@ class BaiHat extends MY_Controller
 	 */
 	function index()
 	{
-		//Lấy số lượng bài hát
-		$total_rows = $this -> BaiHat_model-> get_total();
-		$this -> data['total_rows'] = $total_rows;
-
-		//load thư viện phân trang
-		$this -> load -> library('pagination');
-		$config = array();
-		$config['total_rows'] = $total_rows;// tổng tất cả bài hát
-        $config['base_url']   = admin_url('baihat/index'); //link hien thi ra danh sach san pham
-        $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
-        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
-        $config['next_link']   = 'Trang kế tiếp';
-        $config['prev_link']   = 'Trang trước';
-
-        //khởi tạo các cấu hình trang
-        $this->pagination->initialize($config);    
-         
-        $segment = $this->uri->segment(4);
-        $segment = intval($segment);
-
-        $input = array();
-        $input['limit'] = array($config['per_page'], $segment);
 
         //Kiểm tra có thực hiện lọc k
         $input['where'] = array();
         $maBaiHat = $this->input->get('maBaiHat');
         if($maBaiHat)
         {
-            $input['where']['maBaiHat'] = $maBaiHat;
+            $input['like'] = array('maBaiHat', $maBaiHat);
         }
 
         $tenBaiHat = $this->input->get('tenBaiHat');
@@ -76,6 +54,30 @@ class BaiHat extends MY_Controller
         $this-> load-> model('QuocGia_model');
         $quocgia = $this->QuocGia_model->get_list();
         $this->data['quocgia'] = $quocgia;
+		//Lấy số lượng bài hát
+		$total_rows = $this -> BaiHat_model-> get_total($input);
+		$this -> data['total_rows'] = $total_rows;
+
+		//load thư viện phân trang
+		$this -> load -> library('pagination');
+		$config = array();
+		$config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        $config['base_url']   = admin_url('baihat/index'); //link hien thi ra danh sach san pham
+        $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
+        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
+        $config['next_link']   = 'Trang kế tiếp';
+        $config['prev_link']   = 'Trang trước';
+
+        //khởi tạo các cấu hình trang
+        $this->pagination->initialize($config);    
+         
+        $segment = $this->uri->segment(4);
+        $segment = intval($segment);
+
+        $input = array();
+        $input['limit'] = array($config['per_page'], $segment);
+
+
 
 		//lấy nội dung biến message
 		$message = $this -> session -> flashdata('message');
@@ -124,31 +126,11 @@ class BaiHat extends MY_Controller
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
 
                 $this -> load -> library('upload_library');
-                //Lấy tên file nhạc được upload lên
-                $upload_path_audio = './upload/music';
-                $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
-                $url = '';
-                if(isset($upload_data_audio['file_name']))
-                {
-                    $url= $upload_data_audio['file_name'];
-                }
-
-
-                //Lấy tên file nhạc được upload lên
-                $upload_path = './upload/img';
-                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
-                $imageURL = '';
-                if(isset($upload_data['file_name']))
-                {
-                    $imageURL= $upload_data['file_name'];
-                }
-
                 $ngayPhatHanh=date('Y-m-d H:i:s');
+
                 $dataBaiHat = array(
                     'maBaiHat' => $maBaiHat,
-                    'url' => $url,
                     'tenBaiHat' =>$tenBaiHat,
-                    'imageURL' =>$imageURL ,
                     'maQuocGia' =>$maQuocGia ,
                     'loiBaiHat' =>$loiBaiHat ,
                     'luotNghe' => 0 ,
@@ -156,7 +138,26 @@ class BaiHat extends MY_Controller
                     'luotTai' => 0,
                     'ngayPhatHanh' => $ngayPhatHanh
                 );
+                //Lấy tên file nhạc được upload lên
+                $upload_path_audio = './upload/music';
+                $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
+                $url = '';
+                if(isset($upload_data_audio['file_name']))
+                {
+                    $url= $upload_data_audio['file_name'];
+                    $dataBaiHat['url'] = $url;
+                }
 
+
+                //Lấy tên file nhạc được upload lên                
+                $upload_path = './upload/img';
+                $upload_data =$this -> upload_library -> upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                    $dataBaiHat['imageURL'] = $imageURL;
+                }
                 //Thêm mới vào csdl
                 if($this -> BaiHat_model -> create($dataBaiHat)){
                     //tạo nội dung thông báo
@@ -229,6 +230,12 @@ class BaiHat extends MY_Controller
                 $loiBaiHat = $this-> input-> post('loiBaiHat');
 
                $this -> load -> library('upload_library');
+                $dataBaiHat = array(
+                    'tenBaiHat' =>$tenBaiHat,
+                    'maQuocGia' =>$maQuocGia ,
+                    'loiBaiHat' =>$loiBaiHat 
+                );
+
                // Lấy tên file nhạc được upload lên
                 $upload_path_audio = './upload/music';
                 $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
@@ -236,8 +243,10 @@ class BaiHat extends MY_Controller
                 if(isset($upload_data_audio['file_name']))
                 {
                     $url= $upload_data_audio['file_name'];
+                    $dataBaiHat['url']= $url;
+                    // lấy link hình cũ
+                    $url_old='./upload/music/'.$baiHat->url;
                 }
-
 
                 //Lấy tên file nhạc được upload lên
                 $upload_path = './upload/img';
@@ -246,20 +255,26 @@ class BaiHat extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
+                    $dataNgheSi['imageURL']= $imageURL;
+                    // lấy link hình cũ
+                    $imageURL_old='./upload/img/'.$baiHat->imageURL;
                 }
-
-                $dataBaiHat = array(
-                    'url' => $url,
-                    'tenBaiHat' =>$tenBaiHat,
-                    'imageURL' =>$imageURL ,
-                    'maQuocGia' =>$maQuocGia ,
-                    'loiBaiHat' =>$loiBaiHat 
-                );
 
                 //cập nhật vào csdl
                 if($this -> BaiHat_model -> update($maBaiHat,$dataBaiHat)){
                     //tạo nội dung thông báo
                     $this-> session -> set_flashdata('message','Cập  nhât chủ đề thành công.');
+                    //Xóa ảnh bài hát cũ
+                    if(file_exists($imageURL_old)) 
+                    {
+                        unlink($imageURL_old);
+                    }
+
+                    //Xóa audio bài hát cũ
+                    if(file_exists($url_old)) 
+                    {
+                        unlink($url_old);
+                    }
                 }
                 else{
                     $this-> session -> set_flashdata('message','Cập nhật chủ đề không thành công.');

@@ -41,9 +41,10 @@
 		<div class="formRight">
 			<div class="left">
 				<input type="file" id="image" name="image">
-				<img src="<?php echo base_url('upload/img/'.$baiHat->imageURL) ?>" style="width: 100px;height: 70px" alt="">
+
 			</div>
 			<div name="image_error" class="clear error"></div>
+			<img id="imageLoad" src="<?php echo base_url('upload/img/'.$baiHat->imageURL)?>" style="width: 260px;height: 260px" alt="">
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -86,3 +87,4 @@
 		</form>
 </div>
 <div class="clear mt30"></div>
+

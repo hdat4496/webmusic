@@ -29,7 +29,7 @@
 		<div class="formRight">
 			<div class="left">
 				<input type="file" id="image" name="image">
-				<img id="imageLoad" src="#" style="width: 100px;height: 70px" alt="">
+				<img id="imageLoad" src="#" style="width: 260px;height: 260px;display: none;" alt="">
 			</div>
 			<div name="image_error" class="clear error"></div>
 		</div>
@@ -108,6 +108,7 @@
             
             reader.onload = function (e) {
                 $('#imageLoad').attr('src', e.target.result);
+                $('#imageLoad').css('display','block'); 
             }
             
             reader.readAsDataURL(input.files[0]);
