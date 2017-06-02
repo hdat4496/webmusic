@@ -2,34 +2,38 @@
 /**
 * 
 */
-     $maNgheSi ='';  
-class NgheSi extends MY_Controller
+     $maAlbum ='';  
+class Album extends MY_Controller
 {   
 
 	
 	function __construct()
 	{
 		parent::__construct();
-		$this -> load -> model('NgheSi_model');
+		$this -> load -> model('Album_model');
+        $this -> load -> model('NgheSi_model');
+        $this -> load -> model('BaiHat_model');
+        $this -> load -> model('Album_BaiHat_model');
 	}
 
 	/*
-	 * Hiển thị danh sách nghệ sĩ
+	 * Hiển thị danh sách album
 	 */
 	function index()
 	{
+
         //Kiểm tra có thực hiện lọc k
         $input['where'] = array();
-        $maNgheSi = $this->input->get('maNgheSi');
-        if($maNgheSi)
+        $maAlbum = $this->input->get('maAlbum');
+        if($maAlbum)
         {
-            $input['where']['maNgheSi'] = $maNgheSi;
+            $input['where']['maAlbum'] = $maAlbum;
         }
 
-        $tenNgheSi = $this->input->get('tenNgheSi');
-        if($tenNgheSi)
+        $tenAlbum = $this->input->get('tenAlbum');
+        if($tenAlbum)
         {
-            $input['like'] = array('tenNgheSi', $tenNgheSi);
+            $input['like'] = array('tenAlbum', $tenAlbum);
         }
 
         $maQuocGia = $this->input->get('quocgia');
@@ -37,8 +41,8 @@ class NgheSi extends MY_Controller
         {
             $input['where']['maQuocGia'] = $maQuocGia;
         }
-        //Lấy số lượng nghe si hien thi
-        $total_rows = $this -> NgheSi_model-> get_total($input);
+        //Lấy số lượng album hien thi
+        $total_rows = $this -> Album_model-> get_total($input);
         $this -> data['total_rows'] = $total_rows;
 
         
@@ -46,7 +50,7 @@ class NgheSi extends MY_Controller
         $this -> load -> library('pagination');
         $config = array();
         $config['total_rows'] = $total_rows;// tổng tất cả bài hát
-        $config['base_url']   = admin_url('nghesi/index'); //link hien thi ra danh sach nghe si
+        $config['base_url']   = admin_url('album/index'); //link hien thi ra danh sach nghe si
         $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
         $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
         $config['next_link']   = 'Trang kế tiếp';
@@ -66,22 +70,215 @@ class NgheSi extends MY_Controller
         $quocgia = $this->QuocGia_model->get_list();
         $this->data['quocgia'] = $quocgia;
 
-        //lấy danh sách nghe si
-        $list = $this-> NgheSi_model->get_list($input);
-        $this->data['list'] = $list;
-       
+        //lấy danh sách album
+        $list = $this-> Album_model->get_list($input);
+        $this->data['list']=$list;
+
+        //lấy danh sách nghệ sĩ album
+        $query=$this-> db->query("call sp_Get_Album_NgheSi()");
+        mysqli_next_result($this->db->conn_id);
+        $this->data['nghesi']=$query->result();        
        
         //lấy nội dung biến message
         $message = $this -> session -> flashdata('message');
         $this -> data['message'] = $message;
 
-        $this -> data['temp'] = 'admin/nghesi/index';
+        $this -> data['temp'] = 'admin/album/index';
         $this -> load -> view('admin/main-layout', $this->data);
 
 	}
+    static $maAlbum_global="";
+    //private $maAlbum_global ="";
+    function view()
+    {
+        //Lấy mã album
+        
+        $str = $this -> uri -> rsegment('3');
+        $maAlbum= substr($str,0,10);
+
+        if(empty($maAlbum)) {$maAlbum=$maAlbum_global;}
+        else {$maAlbum_global = "2";}
+
+         $this-> session -> set_flashdata('message',$maAlbum.'-'.$maAlbum_global); 
+
+
+        //if(emty($maAlbum)) $maAlbum=
+        //lấy danh sách bài hát
+        $this-> db->select('*');
+        $this-> db-> from('album_baihat');
+        $this-> db-> join('baihat','album_baihat.mabaihat=baihat.mabaihat');
+        $this-> db-> where('maAlbum',$maAlbum);
+
+        $query = $this-> db->get();
+        
+        //Lấy số lượng bài hát
+        $total_rows = $query->num_rows();
+        $this -> data['total_rows'] = $total_rows;
+
+        //load thư viện phân trang
+        $this -> load -> library('pagination');
+        $config = array();
+        $config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        $config['base_url']   = admin_url('album/view'); //link hien thi ra danh sach san pham
+        $config['per_page']   = 1;//Số lượng bài hát trên 1 trang
+        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
+        $config['next_link']   = 'Trang kế tiếp';
+        $config['prev_link']   = 'Trang trước';
+        $config['reuse_query_string']=true;
+        $config['prefix'] = $maAlbum.'-' ;
+
+        //khởi tạo các cấu hình trang
+        $this->pagination->initialize($config);    
+         
+        $segment = substr($str, 11,1);
+        $segment = intval($segment);
+
+        //$input['limit'] = array($config['per_page'], $segment);
+
+        // Lấy danh sách bài hát thuộc album
+        $this-> db->select('*');
+        $this-> db-> from('album_baihat');
+        $this-> db-> join('baihat','album_baihat.mabaihat=baihat.mabaihat');
+        $this-> db-> where('maAlbum',$maAlbum);
+        $this-> db-> limit($config['per_page'], $segment);
+        $query = $this-> db->get();
+        $this->data['list'] = $query->result();
+
+        //lấy danh sách nghệ sĩ album
+        $query=$this-> db->query("call sp_Get_Album_NgheSi()");
+        mysqli_next_result($this->db->conn_id);
+        $this->data['nghesi']=$query->result();
+
+        //lấy thông tin album
+        $info= $this->Album_model->get_info($maAlbum);
+        $this->data['info']=$info;
+
+        //lấy nội dung biến message
+        $message = $this -> session -> flashdata('message');
+        $this -> data['message'] = $message;
+
+        $this -> data['temp'] = 'admin/album/view';
+        $this -> load -> view('admin/main-layout', $this->data);
+    }
+    /*
+     * Xóa 1 bài hát ra khỏi album
+     */
+    function del_baihat()
+    {
+        $str = $this -> uri -> rsegment(3);
+        $maalbum = substr($str,0,10);
+        $mabaihat = substr($str,11,15);
+        $this->_del_baihat($maalbum,$mabaihat);
+        $this-> session -> set_flashdata('message','Xóa bài hát thành công'); 
+        redirect(admin_url('Album/view/').$maalbum);        
+    }
+    /*
+     * Xóa tất cả bài hát ra khỏi album
+     */  
+    
+    function del_all_baihat()
+    {
+        $maalbum= $this -> uri -> rsegment(3);
+        $ids = $this ->input-> post('ids');
+        foreach($ids as $mabaihat)
+        {
+            $this->_del_baihat($maalbum,$mabaihat);
+        }
+        $this-> session -> set_flashdata('message','Xóa các bài hát thành công'); 
+        redirect(admin_url('Album/view/').$maalbum);     
+    }
+    /*
+     *Xóa bài hát ra khỏi album
+     */
+    private function _del_baihat($maalbum,$mabaihat)
+    {
+        $album_baihat = $this -> Album_BaiHat_model-> get_info_mutikey($maalbum,$mabaihat);
+        if(!$album_baihat)
+        {
+            $this-> session -> set_flashdata('message','Không tồn tại bài hát trong album này.'); 
+            redirect(admin_url('Album/view/').$maalbum);                   
+        } 
+        //thực hiện xóa
+        $this -> Album_BaiHat_model -> delete_mutikey($maalbum,$mabaihat);
+
+    }
+
+    function add_baihat()
+    {
+        $this->view();
+        //$view_to_add=$this->view_to_add();
+        //$this->data['view_to_add']=$view_to_add;
+        //Lấy mã album        
+        //$maAlbum = $this -> uri -> rsegment('3'); 
+        //$this->data['maAlbum']=$maAlbum;
+
+        //Lấy mã album
+        
+        $str = $this -> uri -> rsegment('3');
+        $maAlbum= substr($str,0,10);
+        $this->data['maAlbum']=$maAlbum;
+
+        //Kiểm tra có thực hiện lọc k
+        $input['where'] = array();
+        $maBaiHat = $this->input->get('maBaiHat');
+        if($maBaiHat)
+        {
+            $input['where']['maBaiHat'] = $maBaiHat;
+        }
+
+        $tenBaiHat = $this->input->get('tenBaiHat');
+        if($tenBaiHat)
+        {
+            $input['like'] = array('tenBaiHat', $tenBaiHat);
+        }
+
+        $maQuocGia = $this->input->get('quocgia');
+        if($maQuocGia)
+        {
+            $input['where']['maQuocGia'] = $maQuocGia;
+        }
+
+        //Lấy số lượng bài hát
+        $total_rows = $this -> BaiHat_model-> get_total($input);
+        $this -> data['total_rows'] = $total_rows;
+
+        //load thư viện phân trang
+        $this -> load -> library('pagination');
+        $config = array();
+        $config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        $config['base_url']   = admin_url('album/add_baihat'); //link hien thi ra danh sach san pham
+        $config['per_page']   = 4;//Số lượng bài hát trên 1 trang
+        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
+        $config['next_link']   = 'Trang kế tiếp';
+        $config['prev_link']   = 'Trang trước';
+        $config['reuse_query_string']=true;
+        $config['prefix'] = $maAlbum.'-' ;
+
+        //khởi tạo các cấu hình trang
+        $this->pagination->initialize($config);    
+         
+        $segment = substr($str, 11,1);
+        $segment = intval($segment);
+
+        $input['limit'] = array($config['per_page'], $segment);
+        //lấy danh sách bài hát
+        $list = $this-> BaiHat_model->get_list($input);
+        //return $list;
+        $this->data['list'] = $list;
+        
+        //Lấy danh sách nghệ sĩ
+        $nghesi = $this -> NgheSi_model -> get_list();
+
+        //lấy nội dung biến message
+        $message = $this -> session -> flashdata('message');
+        $this -> data['message'] = $message;
+
+        $this -> data['temp'] = 'admin/album/add_baihat';
+        $this -> load -> view('admin/main-layout', $this->data);
+    }
 
     /*
-     * Thêm nghệ sĩ mới
+     * Thêm album mới
      */
     function add()
     {   
@@ -251,7 +448,7 @@ class NgheSi extends MY_Controller
         $this->load->view('admin/main-layout', $this->data);       
     }
     /*
-     * Xóa nghệ sĩ
+     * Xóa album
      */
     function del()
     {
