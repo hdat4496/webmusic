@@ -9,11 +9,10 @@
           <!-- Profile Image -->
           <div class="box box-primary info-left">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../dist/img/123.jpg" alt="User profile picture">
+              <img style="width: 100px;height: 100px;" class="profile-user-img img-responsive img-circle" src="<?php echo base_url('upload/img/'.$user_info->imageURL)?>" alt="User profile picture">
 
-              <h3 class="profile-username text-center">Huỳnh Duy Anh Toàn</h3>
+              <h3 class="profile-username text-center"><?php echo $user_info->hoTen?></h3>
 
-              <p class="text-muted text-center">VIP</p>
             </div>
             <!-- /.box-body -->
           </div>
@@ -22,27 +21,21 @@
           <!-- About Me Box -->
           <div class="box box-primary info-left">
             <div class="box-header with-border">
-              <h3 class="box-title">About Me</h3>
+             
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+              <strong><i class="fa fa-suitcase margin-r-5"></i>Email</strong>
 
               <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
+                <?php echo $user_info->email?>
               </p>
 
               <hr>
 
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+              <strong><i class="fa fa-venus-mars margin-r-5"></i> Giới tính</strong>
+              <p class="text-muted"><?php echo $user_info->gioiTinh?></p>
 
-              <p class="text-muted">Malibu, California</p>
-
-              <hr>
-
-              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
             </div>
             <!-- /.box-body -->
           </div>
