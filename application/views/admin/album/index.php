@@ -11,7 +11,7 @@
 		<div class="title">
 			<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck"></span>
 			<h6>Danh sách album</h6>
-		 	<div class="num f12">Số lượng: <b><?php echo $total_rows ?></b></div>
+		 	<div class="num f12">Số lượng: <b id="total"><?php echo $total_rows ?></b></div>
 		</div>
 		
 		<table cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable" id="checkAll">

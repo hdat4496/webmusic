@@ -1,5 +1,5 @@
 <!--head-->
-<?php $this -> load -> view('admin/nghesi/head', $this-> data) ?>
+<?php $this -> load -> view('admin/album/head', $this-> data) ?>
 
 <div class="line"></div>
 <div class="wrapper">
@@ -10,16 +10,16 @@
 <div class="widget">
 	<div class="title">
 		<img src="<?php echo public_url('admin') ?>/images/icons/dark/add.png" class="titleIcon">
-		<h6>Thêm mới Nghệ sĩ</h6>
+		<h6>Thêm mới album</h6>
 	</div>
 						
 <div class="tab_container">
 	<div class="formRow">
-		<label class="formLeft" for="param_name">Tên nghệ sĩ<span class="req">*</span></label>
+		<label class="formLeft" for="param_name">Tên alum<span class="req">*</span></label>
 		<div class="formRight">
-			<span class="oneTwo"><input name="tenNgheSi" id="param_name" _autocheck="true" value="" type="text"></span>
+			<span class="oneTwo"><input name="tenAlbum" id="param_name" _autocheck="true" value="" type="text"></span>
 			<span name="name_autocheck" class="autocheck"></span>
-			<div name="name_error" class="clear error"><?php echo form_error('tenNgheSi')?></div>
+			<div name="name_error" class="clear error"><?php echo form_error('tenAlbum')?></div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -29,7 +29,7 @@
 		<div class="formRight">
 			<div class="left">
 				<input type="file" id="image" name="image">
-				<img id="imageLoad" src="#" style="width: 100px;height: 70px" alt="">
+				<img id="imageLoad" src="#" style="width: 260px;height: 260px;display: none;" alt="">
 			</div>
 			<div name="image_error" class="clear error"></div>
 		</div>
@@ -51,47 +51,14 @@
 		<div class="clear"></div>
 	</div>
 
-	<div class="formRow">
-		<label class="formLeft" for="param_cat">Ngày sinh:<span class="req">*</span></label>
-		<div class="formRight">
-				<input style="width: 50%" name="ngaySinh" value="<?php echo date('d/m/Y')?>" type="text" class="datepicker" />
-			<span name="cat_autocheck" class="autocheck"></span>
-			
-		</div>
-		<div class="clear"></div>
-	</div>
-
-	<div class="formRow">
-		<label class="formLeft" for="param_cat">Giới tính:<span class="req">*</span></label>
-		<div class="formRight">
-				<select name="gioiTinh" class="left">	
-                    <option value="Nữ" >Nữ</option>
-                    <option value="Nam" >Nam</option>
-                    <option value="Khác" >Khác</option>														    
-				</select>
-			<span name="cat_autocheck" class="autocheck"></span>
-			<div name="cat_error" class="clear error"><?php echo form_error('gioiTinh')?></div>
-		</div>
-		<div class="clear"></div>
-	</div>
-	<div class="formRow">
-		<label class="formLeft" for="param_name">Tiểu sử:</label>
-		<div class="formRight">
-				<textarea name="tieuSu" id="param_content" class="editor"></textarea>
-				<div name="content_error" class="clear error"></div>
-
-		</div>
-		<div class="clear"></div>
-	</div>
-
-
+	
 	 	 					        
 	<div class="formRow hide"></div>
 					
 </div><!-- End tab_container-->
 	        		
 	        		<div class="formSubmit">
-	           			<input type="submit" value="Thêm mới" class="redB oncl">
+	           			<input type="submit" value="Thêm bài hát" class="redB oncl">
 	           		</div>
 	        		<div class="clear"></div>
 				</div>
@@ -108,6 +75,7 @@
             
             reader.onload = function (e) {
                 $('#imageLoad').attr('src', e.target.result);
+                $('#imageLoad').css('display','block'); 
             }
             
             reader.readAsDataURL(input.files[0]);

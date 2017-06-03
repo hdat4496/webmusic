@@ -10,7 +10,7 @@
 		<div class="title">
 			<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck"></span>
 			<h6>Danh sách bài hát</h6>
-		 	<div class="num f12">Số lượng: <b><?php echo $total_rows ?></b></div>
+		 	<div class="num f12">Số lượng: <b id="total"><?php echo $total_rows ?></b></div>
 		</div>
 		
 		<table  cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable" id="checkAll">
@@ -57,14 +57,15 @@
 					<td style="width:120px;">Hành động</td>
 				</tr>
 			</thead>
-			
  			<tfoot class="auto_check_pages">
 				<tr>
 					<td colspan="8">
 						 <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('album/add_all_baihat_to_album/'.$maAlbum) ?>">
+								<a href="#submit_ver2" id="submit_ver2" class="button blueB" url="<?php echo admin_url('album/add_all_baihat_to_album/'.$maAlbum) ?>">
 									<span style="color:white;">Thêm tất cả</span>
 								</a>
+
+							
 						 </div>
 							
 					     <div class="pagination">
@@ -113,6 +114,7 @@
 				</tr> 
 				<?php endforeach; ?>      
 		    </tbody>
+		    
 		</table>
 	</div>	
 	</div>

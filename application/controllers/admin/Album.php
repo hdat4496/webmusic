@@ -164,7 +164,7 @@ class Album extends MY_Controller
         $mabaihat = substr($str,11,15);
         $this->_del_baihat($maalbum,$mabaihat);
         $this-> session -> set_flashdata('message','Xóa bài hát thành công'); 
-        redirect(admin_url('Album/view/').$maalbum);        
+        redirect(admin_url('album/view/').$maalbum);        
     }
     /*
      * Xóa tất cả bài hát ra khỏi album
@@ -176,10 +176,17 @@ class Album extends MY_Controller
         $ids = $this ->input-> post('ids');
         foreach($ids as $mabaihat)
         {
-            $this->_del_baihat($maalbum,$mabaihat);
+            //$this->_del_baihat($maalbum,$mabaihat);
+            $this -> Album_BaiHat_model -> delete_mutikey($maalbum,$mabaihat);
         }
         $this-> session -> set_flashdata('message','Xóa các bài hát thành công'); 
-        redirect(admin_url('Album/view/').$maalbum);     
+        //redirect(admin_url('album/view/').$maAlbum);
+        redirect(admin_url('album/view/').$maalbum);
+        //lấy thông tin album
+        //$info= $this->Album_model->get_info($maAlbum);
+        //$this->data['info']=$info;
+        //$this -> data['temp'] = 'admin/album/view/'.$maalbum;
+        //$this -> load -> view('admin/main-layout', $this->data);     
     }
     /*
      *Xóa bài hát ra khỏi album
@@ -190,7 +197,7 @@ class Album extends MY_Controller
         if(!$album_baihat)
         {
             $this-> session -> set_flashdata('message','Không tồn tại bài hát trong album này.'); 
-            redirect(admin_url('Album/view/').$maalbum);                   
+            redirect(admin_url('album/view/').$maalbum);                   
         } 
         //thực hiện xóa
         $this -> Album_BaiHat_model -> delete_mutikey($maalbum,$mabaihat);
@@ -334,7 +341,6 @@ class Album extends MY_Controller
             $data['maBaiHat']=$maBaiHat;
             $this-> Album_BaiHat_model->create($data);
         }
-        redirect(admin_url('album/view/').$maAlbum);
     } 
     /*
      * Thêm album mới
@@ -355,31 +361,25 @@ class Album extends MY_Controller
         if($this-> input-> post())
         {
 
-            $this-> form_validation-> set_rules('tenNgheSi','Tên nghệ sĩ','required|max_length[100]');
+            $this-> form_validation-> set_rules('tenAlbum','Tên album','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-            $this-> form_validation-> set_rules('gioiTinh','Giơi tính','required');
 
             //Nhập liệu chính xác
             if($this -> form_validation -> run())
             {
-                $success = $this->db->query("call sp_TaoMa_NgheSi(@outputparam)");
+                $success = $this->db->query("call sp_TaoMa_Album(@outputparam)");
                 $query = $this->db->query('select @outputparam as out_param');
-                $maNgheSi = $query->row()->out_param;
-                $tenNgheSi = $this-> input-> post('tenNgheSi');
+                $maAlbum = $query->row()->out_param;
+                $tenAlbum = $this-> input-> post('tenAlbum');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $gioiTinh = $this-> input-> post('gioiTinh');
-                $ngaySinh = $this-> input-> post('ngaySinh');
-                $tieuSu = $this-> input-> post('tieuSu');
-
+                
                 $this -> load -> library('upload_library');
 
-                $dataNgheSi = array(
-                    'maNgheSi' => $maNgheSi,
-                    'tenNgheSi' => $tenNgheSi,
+                $data = array(
+                    'maAlbum' => $maAlbum,
+                    'tenAlbum' => $tenAlbum,
                     'maQuocGia' =>$maQuocGia ,
-                    'gioiTinh' => $gioiTinh,
-                    'ngaySinh' => date("Y-m-d H:i:s",strtotime($ngaySinh)),
-                    'tieuSu' => $tieuSu,
+                    'ngayTao' => date("Y-m-d H:i:s")
                 );
         
                 //Lấy tên file ảnh được upload lên
@@ -389,27 +389,26 @@ class Album extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
-                    $dataNgheSi['imageURL'] = $imageURL;
+                    $data['imageURL'] = $imageURL;
                 }
-
-                
+               
 
                 //Thêm mới vào csdl
-                if($this -> NgheSi_model -> create($dataNgheSi)){
+                if($this -> Album_model -> create($data)){
                     //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Thêm nghệ sĩ thành công.');
+                    $this-> session -> set_flashdata('message','Thêm album thành công.');
                 }
                 else{
-                    $this-> session -> set_flashdata('message','Thêm nghệ sĩ không thành công.');
+                    $this-> session -> set_flashdata('message','Thêm album không thành công.');
                 }
-                redirect(admin_url('nghesi'));
+                redirect(admin_url('album/add_baihat/').$maAlbum);
             }
      
         }
         
         
         //load view
-        $this->data['temp'] = 'admin/nghesi/add';
+        $this->data['temp'] = 'admin/album/add';
         $this->load->view('admin/main-layout', $this->data);
     }
     
@@ -420,15 +419,15 @@ class Album extends MY_Controller
      */
     function edit()
     {
-        //Lấy mã nghệ sĩ
-        $maNgheSi =$this -> uri -> rsegment('3');   
-        $ngheSi = $this -> NgheSi_model -> get_info($maNgheSi);
-        if(!$ngheSi)
+        //Lấy mã album
+        $maAlbum =$this -> uri -> rsegment('3');   
+        $album = $this -> Album_model -> get_info($maAlbum);
+        if(!$album)
         {
-            $this-> session -> set_flashdata('message','Không tồn tại nghệ sĩ này.'); 
+            $this-> session -> set_flashdata('message','Không tồn tại album này.'); 
             redirect(admin_url('NgheSi'));                   
         }   
-        $this -> data['ngheSi']  = $ngheSi;  
+        $this -> data['album']  = $album;  
 
          //Lấy danh sách quốc gia
         $this-> load-> model('QuocGia_model');
@@ -443,30 +442,22 @@ class Album extends MY_Controller
         // Nếu có dữ liệu post lên
         if($this-> input-> post())
         {
-            $this-> form_validation-> set_rules('tenNgheSi','Tên nghệ sĩ','required|max_length[100]');
+            $this-> form_validation-> set_rules('tenAlbum','Tên album','required|max_length[100]');
             $this-> form_validation-> set_rules('quocGia','Quốc gia','required');
-            $this-> form_validation-> set_rules('gioiTinh','Giơi tính','required');
-            //$this-> form_validation-> set_rules('ngaySinh','Ngày sinh','required');
-
 
             //Nhập liệu chính xác
             if($this -> form_validation -> run())
             {
-           
-                //Thêm vào csdl
-                
-                $tenNgheSi = $this-> input-> post('tenNgheSi');
+                $tenAlbum = $this-> input-> post('tenAlbum');
                 $maQuocGia = $this-> input-> post('quocGia');
-                $gioiTinh = $this-> input-> post('gioiTinh');
-                $ngaySinh = $this-> input-> post('ngaySinh');
-                $tieuSu = $this-> input-> post('tieuSu');
+                
+                $this -> load -> library('upload_library');
 
-                $dataNgheSi = array(
-                    'tenNgheSi' => $tenNgheSi,
+                $data = array(
+                    'maAlbum' => $maAlbum,
+                    'tenAlbum' => $tenAlbum,
                     'maQuocGia' =>$maQuocGia ,
-                    'gioiTinh' => $gioiTinh,
-                    'ngaySinh' => date("Y-m-d H:i:s",strtotime($ngaySinh)),
-                    'tieuSu' => $tieuSu,
+                    'ngayTao' => date("Y-m-d H:i:s")
                 );
 
                 //Lấy tên file ảnh được upload lên
@@ -477,15 +468,15 @@ class Album extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
-                    $dataNgheSi['imageURL']= $imageURL;
+                    $data['imageURL']= $imageURL;
                     // lấy link hình cũ
-                    $imageURL_old='./upload/img/'.$ngheSi->imageURL;
+                    $imageURL_old='./upload/img/'.$album->imageURL;
                 }
 
                 //Cập nhật vào csdl
-                if($this -> NgheSi_model -> update($maNgheSi,$dataNgheSi)){
+                if($this -> Album_model -> update($maAlbum,$data)){
                     //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Cập nhật nghệ sĩ thành công.');
+                    $this-> session -> set_flashdata('message','Cập nhật album thành công.');
 
                     //Xóa ảnh nghệ sĩ cũ
                     if(file_exists($imageURL_old)) 
@@ -494,16 +485,16 @@ class Album extends MY_Controller
                     }
                 }
                 else{
-                    $this-> session -> set_flashdata('message','Cập nhật nghệ sĩ không thành công.');
+                    $this-> session -> set_flashdata('message','Cập nhật album không thành công.');
                 }
-                //chuyển tới trang  danh sách nghệ sĩ
-                redirect(admin_url('nghesi'));
+                //chuyển tới trang  danh sách album
+                redirect(admin_url('album'));
             }
         }
         
         
         //load view
-        $this->data['temp'] = 'admin/nghesi/edit';
+        $this->data['temp'] = 'admin/album/edit';
         $this->load->view('admin/main-layout', $this->data);       
     }
     /*
@@ -511,40 +502,40 @@ class Album extends MY_Controller
      */
     function del()
     {
-        $maNgheSi = $this -> uri -> rsegment(3);
-        $this->_del($maNgheSi);
-        $this-> session -> set_flashdata('message','Xóa nghệ sĩ thành công'); 
-        redirect(admin_url('nghesi'));        
+        $maAlbum = $this -> uri -> rsegment(3);
+        $this->_del($maAlbum);
+        $this-> session -> set_flashdata('message','Xóa album thành công'); 
+        redirect(admin_url('album'));        
     }
 
     /*
-     * Xóa tất cả nghệ sĩ
+     * Xóa tất cả album
      */  
     
     function del_all()
     {
         $ids = $this ->input-> post('ids');
-        foreach($ids as $maNgheSi)
+        foreach($ids as $maAlbum)
         {
-            $this -> _del($maNgheSi);
+            $this -> _del($maAlbum);
         }
 
     } 
     /*
-     *Xóa nghệ sĩ
+     *Xóa album
      */
-    private function _del($maNgheSi)
+    private function _del($maAlbum)
     {
-        $ngheSi = $this -> NgheSi_model-> get_info($maNgheSi);
-        if(!$maNgheSi)
+        $album = $this -> Album_model-> get_info($maAlbum);
+        if(!$maAlbum)
         {
             $this-> session -> set_flashdata('message','Không tồn tại nghệ sĩ này.'); 
-            redirect(admin_url('nghesi'));                   
+            redirect(admin_url('album'));                   
         } 
         //thực hiện xóa
-        $this -> NgheSi_model -> delete($maNgheSi);
+        $this -> Album_model -> delete($maAlbum);
         //Xóa ảnh nghệ sĩ
-        $imageURL='./upload/img/'.$nghesi->imageURL;
+        $imageURL='./upload/img/'.$album->imageURL;
         if(file_exists($imageURL)) 
         {
             unlink($imageURL);
