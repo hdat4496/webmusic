@@ -14,7 +14,29 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 } 
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
 
+#img-upload{
+    width: 100%;
+}
 .fa {
     display: inline-block;
     font-family: FontAwesome;
@@ -201,7 +223,7 @@ margin-top: -1px;
 }
 .modaldk {
   width: 550px;
-  height: 470px;
+  height: 520px;
   margin-left: -120px;
   margin-top: 100px;
 }
@@ -210,7 +232,7 @@ margin-top: -1px;
 }
 
 .modalbodydk{
-  height: 290px;
+  height: 350px;
 }
 .input-lg {
     height: 38px !important;

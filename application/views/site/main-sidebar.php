@@ -1,17 +1,19 @@
     <section class="sidebar">
 
       <!-- Sidebar user panel (optional) -->
+    <?php if(isset($user_info)): ?>      
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/123.jpg" class="img-circle" alt="User Image">
+          <img style="max-width: 50px;height: 50px;" src="<?php echo base_url('upload/img/'.$user_info->imageURL)?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Huỳnh Duy Anh Toàn</p>
+          <p><?php echo $user_info->hoTen?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
-
+      <?php else: ?>
+          <?php endif; ?>        
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->

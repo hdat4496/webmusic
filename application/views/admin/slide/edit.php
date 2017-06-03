@@ -33,10 +33,10 @@
                             	<label class="formLeft">Hình ảnh:<span class="req">*</span></label>
                             	<div class="formRight">
                             		<div class="left">
-                                		<input type="file" name="image" id="image" size="25">
-                                		<img src="<?php echo base_url('upload/slide/'.$Slide->imageURL)?>" style="width:100px;height:70px">
+                                        <input type="file" id="image" name="image">
                             		</div>
                             		<div class="clear error" name="image_error"></div>
+                                    <img id="imageLoad" src="<?php echo base_url('upload/slide/'.$Slide->imageURL)?>" style="width: 260px;height: 260px" alt="">
                             	</div>
                             	<div class="clear"></div>
                             </div>
@@ -88,3 +88,22 @@
 		</form>
 </div>
 <div class="clear mt30"></div>
+
+<!-- preview hình -->
+<script type="text/javascript">
+       function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#imageLoad').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#image").change(function(){
+        readURL(this);
+    });
+</script>

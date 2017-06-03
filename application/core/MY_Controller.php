@@ -21,6 +21,18 @@ class MY_Controller extends CI_Controller
 			default:
 				{
 					
+					$message = $this -> session -> flashdata('message');
+					$this -> data['message'] = $message;
+					// Kiểm tra thành viên đăng nhập chưa
+					$user_id_login=$this-> session -> userdata('user_id_login');
+					$this -> data['user_id_login']= $user_id_login;
+					///Nếu đăng nhập thành công thì lấy thông tin của thành viên
+					if($user_id_login)
+					{
+						$this-> load -> model('TaiKhoan_model');
+						$user_info = $this -> TaiKhoan_model -> get_info($user_id_login);
+						$this -> data['user_info']= $user_info;  
+					}
 				}
 		}
 	}

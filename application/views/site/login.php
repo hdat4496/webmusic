@@ -1,3 +1,4 @@
+<form action="<?php echo base_url('User/login') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <div class="modal fade" id="myModal"  aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modaldialogdn">
           <div class="modal-content modaldn">
@@ -7,15 +8,17 @@
             </div>
             <div class="modal-body modalbodydn">
               <form role="form">
+
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" id="uLogin" placeholder="Nhập Tài Khoản">
+                    <input type="text" name="tenTaiKhoanDangNhap" class="form-control" id="uLogin" placeholder="Nhập Tài Khoản">
                     <label for="uLogin" class="input-group-addon glyphicon-user"></label>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="password" class="form-control" id="uPassword" placeholder="Nhập Mật Khẩu">
+                    <input type="password" name="matKhauDangNhap" class="form-control" id="uPassword" placeholder="Nhập Mật Khẩu">
                     <label for="uPassword" class="input-group-addon glyphicon-lock"></label>
                   </div>
                 </div>
@@ -33,9 +36,10 @@
             </form>
           </div>
           <div class="modal-footer modalfooterdn">
-            <button class="form-control btndn btn-primary">Đăng Nhập</button>
+            <button name ="login" type="submit" name="submit_dn" class="form-control btndn btn-primary">Đăng Nhập</button>
             <button class="form-control btndk btn-primary">Đăng Ký</button>
           </div> 
         </div>
       </div>
     </div>
+    </form>

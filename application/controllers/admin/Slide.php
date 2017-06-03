@@ -39,39 +39,45 @@ Class Slide extends MY_Controller
     {
         
         //load thư viện validate dữ liệu
-        $this->load->library('form_validation');
-        $this->load->helper('form');
+        $this -> load -> library('form_validation');
+        $this -> load -> helper('form');
         
         //neu ma co du lieu post len thi kiem tra
-        if($this->input->post())
+        if($this-> input-> post())
         {
-            $this->form_validation->set_rules('tenSlide', 'Tên Slide', 'required');
-            
+            $this-> form_validation->set_rules('tenSlide', 'Tên slide', 'required|max_length[100]');
+
             //nhập liệu chính xác
-            if($this->form_validation->run())
-            {
-               
-                //lay ten file anh minh hoa duoc update len
-                $this->load->library('upload_library');
-                $upload_path = './upload/Slide';
-                $upload_data = $this->upload_library->upload($upload_path, 'image');  
-                $imageURL = '';
-                if(isset($upload_data['file_name']))
-                {
-                    $imageURL = $upload_data['file_name'];
-                }
+           if($this-> form_validation->run())
+           {
+                $success = $this->db->query("call sp_TaoMa_Slide(@outputparam)");
+                $query = $this->db->query('select @outputparam as out_param');
+                $maSlide = $query->row()->out_param;
+
+
+
                
                 //luu du lieu can them
                 $data = array(
-                    'maSlide' =>'sl001',
-                    'tenSlide'       => $this->input->post('tenSlide'),
-                    'imageURL' => $imageURL,
+                    'maSlide' =>$maSlide,
+                    'tenSlide'       => $this-> input->post('tenSlide'),
                     'url'       => $this->input->post('url'),
                     'info'       => $this->input->post('info'),
                     'thuTuHienThi' => $this->input->post('thuTuHienThi'),
                 ); 
+
+                //lay ten file anh minh hoa duoc update len
+                $this->load->library('upload_library');
+                $upload_path = './upload/slide';
+                $upload_data = $this->upload_library->upload($upload_path, 'image');  
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
+                {
+                    $imageURL= $upload_data['file_name'];
+                    $data['imageURL'] = $imageURL;
+                }
                 //them moi vao csdl
-                if($this->Slide_model->create($data))
+                if($this-> Slide_model->create($data))
                 {
                     //tạo ra nội dung thông báo
                     $this->session->set_flashdata('message', 'Thêm mới dữ liệu thành công');
@@ -119,14 +125,7 @@ Class Slide extends MY_Controller
             {
                
                 //lay ten file anh minh hoa duoc update len
-                $this->load->library('upload_library');
-                $upload_path = './upload/slide';
-                $upload_data = $this->upload_library->upload($upload_path, 'image');
-                $imageURL = '';
-                if(isset($upload_data['file_name']))
-                {
-                    $imageURL = $upload_data['file_name'];
-                }
+
             
                 //luu du lieu can them
                 $data = array(
@@ -135,9 +134,17 @@ Class Slide extends MY_Controller
                     'info'       => $this-> input->post('info'),
                     'thuTuHienThi' => $this-> input->post('thuTuHienThi'),
                 ); 
-                if($imageURL != '')
+
+                $this->load->library('upload_library');
+                $upload_path = './upload/slide';
+                $upload_data = $this->upload_library->upload($upload_path, 'image');
+                $imageURL = '';
+                if(isset($upload_data['file_name']))
                 {
-                    $data['imageURL'] = $imageURL;
+                    $imageURL= $upload_data['file_name'];
+                    $data['imageURL']= $imageURL;
+                    // lấy link hình cũ
+                    $imageURL_old='./upload/img/'.$Slide->imageURL;
                 }
                
                 //them moi vao csdl
@@ -145,6 +152,11 @@ Class Slide extends MY_Controller
                 {
                     //tạo ra nội dung thông báo
                     $this->session->set_flashdata('message', 'Cập nhật dữ liệu thành công');
+                    //Xóa ảnh slide cũ
+                    if(file_exists($imageURL_old)) 
+                    {
+                        unlink($imageURL_old);
+                    }
                 }else{
                     $this->session->set_flashdata('message', 'Không cập nhật được');
                 }
