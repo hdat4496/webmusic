@@ -54,7 +54,7 @@
 		</li>
 
 		<li class="home">
-			<a  href="" class="current">
+			<a  href="<?php echo admin_url('Playlist')?>" class="current">
 				<span>Playlist</span>
 			</a>				
 		</li>

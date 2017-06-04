@@ -2,19 +2,15 @@
 <div class="titleArea">
 	<div class="wrapper">
 		<div class="pageTitle">
-			<h5>Nghệ sĩ</h5>
-			<span>Quản lý nghệ sĩ</span>
+			<h5>Album</h5>
+			<span>Quản lý album</span>
 		</div>
 		
 		<div class="horControlB menu_action">
 			<ul>
-				<li><a href="<?php echo admin_url('nghesi/add') ?>">
-					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png">
-					<span>Thêm mới</span>
-				</a></li>
 				
-				<li><a href="<?php echo admin_url('nghesi/index') ?>">
-					<img src="<?php echo public_url('admin') ?>/images/icons/control/16/list.png">	
+				<li><a href="<?php echo admin_url('playlist/index') ?>">
+					<img src="<?php echo public_url('admin') ?>/images/icons/control/16/list.png">
 					<span>Danh sách</span>
 				</a></li>
 			</ul>
@@ -35,5 +31,6 @@
 	});
 })(jQuery);
 </script>
+
 
 

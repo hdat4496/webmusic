@@ -1,53 +1,44 @@
-<!--head-->
-<?php $this -> load -> view('admin/album/head', $this-> data) ?>
 
-<div class="line"></div>
-
-<div class="wrapper" id="main_product">
-	<br>
-	<?php $this -> load -> view('admin/message',$this-> data);?>
-	<div class="widget">
-	
+<div class="wrapper" id="myModal">
+	<div style="width: 65%;
+	margin-left: 20%;
+	margin-top: 6%;	border-radius: 10px; background: white; ">
+	<a href="<?php echo admin_url('Album/view/').$maAlbum ?>" class="close">&times;</a>
+	<div class="widget popup-add"  >	
+		<h2 style="height: 30px; padding-top: 15px; padding-left: 15px; font-size: 18px;">THÊM BÀI HÁT</h2>
+		<div class="line"></div>
 		<div class="title">
 			<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck"></span>
 			<h6>Danh sách bài hát</h6>
 		 	<div class="num f12">Số lượng: <b id="total"><?php echo $total_rows ?></b></div>
 		</div>
 		
-		<table cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable" id="checkAll">
+		<table  cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable" id="checkAll">
 			
 			<thead class="filter"><tr><td colspan="8">
-				<form class="list_filter form" action="" method="get">
+				<form class="list_filter form" action="<?php echo admin_url('album/add_baihat/').$maAlbum ?>" method="get">
 					<table cellpadding="0" cellspacing="0" width="100%"><tbody>
 					
 						<tr>
-							<td class="label" style="width:65px;"><label for="filter_maBaiHat">Mã album:</label></td>
-							<td class="item" style="width:100px;"><b><?php echo $info->maAlbum?></b></td>
+							<td class="label" style="width:55px;"><label for="filter_maBaiHat">Mã bài hát</label></td>
+							<td class="item"><input name="maBaiHat" value="<?php echo $this -> input ->get('maBaiHat') ?>" id="filter_maBaiHat" type="text" style="width:115px;"></td>
 							
-							<td class="label" style="width:65px;"><label for="filter_id">Tên album:</label></td>
-							<td class="item" style="width:185px;"><b><?php echo $info->tenAlbum?></b></td>
+							<td class="label" style="width:65px;"><label for="filter_id">Tên bài hát</label></td>
+							<td class="item" style="width:185px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="filter_tenBaiHat" type="text" style="width:185px;"></td>
 							
-							<td class="label" style="width:60px;"><label for="filter_status">Trình bày:</label></td>
-							<td class="item" style="width:150px;">
-							<b>
-							<?php foreach($nghesi as $i):
-							if($i->maAlbum == $info->maAlbum) echo $i->ngheSi;
-						endforeach; ?> 
-							</b>
+							<td class="label" style="width:60px;"><label for="filter_status">Quốc gia</label></td>
+							<td class="item">
+								<select name="quocgia">
+									<option value=""></option>	
+									<?php foreach ($quocgia as $row): ?>	
+										<option value="<?php echo $row->maQuocGia?>" <?php echo ($this->input->get('quocgia') == $row->maQuocGia ) ? 'selected' : ''?> ><?php echo $row->tenQuocGia ?></option>}
+									<?php endforeach; ?>															    
+								</select>
 							</td>
-
-							<td class="label" style="width:60px;"><label for="filter_status">Chủ đề:</label></td>
-							<td class="item" style="width:150px;">
-							<b>
-							<?php foreach($chude as $i):
-							if($i->maAlbum == $info->maAlbum) echo $i->tenChuDe.'<br>';
-						endforeach; ?> 
-							</b>
-							</td>
-							<td>
-							<a href="<?php echo admin_url('album/load_edit/').$info->maAlbum?>" title="Chỉnh sửa" class="tipS">
-							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">
-							</a>
+							
+							<td style="width:150px">
+							<input type="submit" class="button blueB" value="Lọc">
+							<input type="reset" class="basic" value="Reset" onclick="window.location.href = '<?php echo admin_url('album/add_baihat/'.$maAlbum) ?>'; ">
 							</td>
 							
 						</tr>
@@ -66,19 +57,15 @@
 					<td style="width:120px;">Hành động</td>
 				</tr>
 			</thead>
-			
  			<tfoot class="auto_check_pages">
 				<tr>
 					<td colspan="8">
 						 <div class="list_action itemActions">
-								<a href="#submit" id="submit" class="button blueB" url="<?php echo admin_url('Album/del_all_baihat/').$info->maAlbum ?>">
-									<span style="color:white;">Xóa hết</span>
+								<a href="#submit_ver2" id="submit_ver2" class="button blueB" url="<?php echo admin_url('album/add_all_baihat_to_album/'.$maAlbum) ?>">
+									<span style="color:white;">Thêm tất cả</span>
 								</a>
-						 </div>
-						 <div class="list_action itemActions">
-								<a href="<?php echo admin_url('Album/add_baihat/').$info->maAlbum ?>" id="add_baihat" class="button blueB" url="">
-									<span style="color:white;">Thêm</span>
-								</a>
+
+							
 						 </div>
 							
 					     <div class="pagination">
@@ -88,7 +75,7 @@
 				</tr>
 			</tfoot>
 			
-			<tbody class="list_item">
+			<tbody class="list_item"  >
 			<?php foreach ($list as $row): ?>
 			    <tr class="row_<?php echo $row->maBaiHat?>"> 
 					<td><input type="checkbox" name="id[]" value="<?php echo $row->maBaiHat ?>"></td>
@@ -119,15 +106,16 @@
         						    }?>
         			</td>
 					<td class="textC"><?php echo $row->ngayPhatHanh ?></td>
-
-					<td class="option textC">						
-						<a href="<?php echo admin_url('Album/del_baihat/').$info->maAlbum.'-'.$row->maBaiHat ?>" class="tipS verify_action">
-						    <img src="<?php echo public_url('admin/images')?>/icons/color/delete.png">
+					<td class="option textC">
+						<a href="<?php echo admin_url('album/add_baihat_to_album/').$maAlbum.'-'.$row->maBaiHat?>" title="Thêm" class="tipE">
+							<img src="<?php echo public_url('admin/images')?>/icons/control/16/add.png">
 						</a>
 					</td>
 				</tr> 
-				<?php endforeach; ?>       
-		    </tbody>		
+				<?php endforeach; ?>      
+		    </tbody>
+		    
 		</table>
 	</div>	
+	</div>
 </div>

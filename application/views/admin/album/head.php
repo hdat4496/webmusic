@@ -8,13 +8,13 @@
 		
 		<div class="horControlB menu_action">
 			<ul>
-				<li><a href="<?php echo admin_url('album/add') ?>">
+				<li><a href="<?php echo admin_url('album/load_add') ?>">
 					<img src="<?php echo public_url('admin')?>/images/icons/control/16/add.png">
 					<span>Thêm mới</span>
 				</a></li>
 				
 				<li><a href="<?php echo admin_url('album/index') ?>">
-					<img src="<?php echo public_url('admin') ?>/images/icons/control/16/list.png">	
+					<img src="<?php echo public_url('admin') ?>/images/icons/control/16/list.png">
 					<span>Danh sách</span>
 				</a></li>
 			</ul>
@@ -57,103 +57,88 @@ Array.prototype.remByVal_chude = function(val) {
     }
     return this;
 }
-	var list_chude = new Array();
+	    var list_chude = new Array();
+        <?php  
+        if(isset($album)) $maAlbum=$album->maAlbum;
+        else $maAlbum=''; 
+        $this-> load-> model('Album_ChuDe_model');
+            $chude = $this-> Album_ChuDe_model->layDSChuDeAlbum($maAlbum);
+        ?>
+
+        <?php foreach ($chude as $key => $value): ?> 
+            <?php    
+                echo "list_chude.push({machude : '".$value['maChuDe']."',tenchude : '".$value['tenChuDe']."'});";               
+            ?>           
+        <?php endforeach ?>
+                            
+
+
     function add_chude(){  
-console.log($('#chuDe').val());
-    	if(!list_chude.contains_chude($('#chuDe').val()) && $('#chuDe').val()!=""){
-    		list_chude.push({
-    			machude : $('#chuDe').val(),
-    			tenchude : $('#chuDe option:selected').text()
-    		});
-    		$("#list_chude").append('<span class="list_option" id="item_'+ $('#chuDe').val() +'">' + $('#chuDe option:selected').text() + '<a href="javascript:void(0)" onclick="delete_chude(\''+$('#chuDe').val()+'\')"> <img style ="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png"> </a></span>');
-    	}
-	}	
-	function delete_chude(id){
-		list_chude.remByVal_chude(id);
+        if(!list_chude.contains_chude($('#chuDe').val()) && $('#chuDe').val()!=""){
+            list_chude.push({
+                machude : $('#chuDe').val(),
+                tenchude : $('#chuDe option:selected').text()
+            });
+            $("#list_chude").append('<span class="list_option" id="item_'+ $('#chuDe').val() +'">' + $('#chuDe option:selected').text() + '<a href="javascript:void(0)" onclick="delete_chude(\''+$('#chuDe').val()+'\')"> <img style ="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png"> </a></span>');
+        }
+    }   
+    function delete_chude(id){
+        list_chude.remByVal_chude(id);
 
-		$('#item_'+id).fadeOut(200,function(){
-			this.remove();
-		});
-	}   
+        $('#item_'+id).fadeOut(200,function(){
+            this.remove();
+        });
+    } 
  </script>
 
-
-<!--Sáng tác-->
+<!--Ajax đưa biến lên controller-->
 <script language="javascript">
-Array.prototype.contains_sangtac = function(item) {
-    var i = this.length;
-    while (i--) {
-        if (this[i]['manhacsi'] == item) {
-            return true;
+    function load_ajax(){
+        $.post('/webmusic/admin/Album/add', {
+            "list_chude": list_chude,
+            "tenAlbum" : $('#tenAlbum').val(),
+            "maQuocGia" : $('#quocGia').val()
+            //"imageURL" : $('#image').val()             
+        }, function(data, textStatus, xhr) {
+            if(data)
+            {	
+            	console.log(data);
+            		var str= '/webmusic/admin/Album/add_image/'+data;
+                    window.location.href = str;
         }
-    }
-    return false;
-}
-Array.prototype.remByVal_sangtac = function(val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i]['manhacsi'] === val) {
-            this.splice(i, 1);
-            i--;
+        else
+        {
+        	alert('Mời bạn nhập đầy đủ thông tin');
         }
+        });
     }
-    return this;
-}
-	var list_nhacsi = new Array();
-    function add_sangtac(){  
+</script>
 
-    	if(!list_nhacsi.contains_sangtac($('#sangTac').val()) && $('#sangTac').val()!=""){
-    		list_nhacsi.push({
-    			manhacsi : $('#sangTac').val(),
-    			tennhacsi : $('#sangTac option:selected').text()
-    		});
-    		$("#list_nhacsi").append('<span class="list_option" id="item_'+ $('#sangTac').val() +'">' + $('#sangTac option:selected').text() + '<a href="javascript:void(0)" onclick="delete_sangtac(\''+$('#sangTac').val()+'\')"> <img style ="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png"> </a></span>');
-    	}
-	}	
-	function delete_sangtac(id){
-		list_nhacsi.remByVal_sangtac(id);
-
-		$('#item_'+id).fadeOut(200,function(){
-			this.remove();
-		});
-
-	}   
- </script>
-
- <!--Trình bày-->
+<!--Ajax đưa biến lên controller-->
 <script language="javascript">
-Array.prototype.contains_trinhbay = function(item) {
-    var i = this.length;
-    while (i--) {
-        if (this[i]['macasi'] == item) {
-            return true;
+    function load_ajax_edit(){
+    	console.log(list_chude[0]);
+        console.log($('#tenAlbum').val());
+        console.log($('#quocGia').val());
+        console.log($('#maAlbum').text());
+        $.post('/webmusic/admin/Album/edit', {
+            "list_chude": list_chude,
+            "tenAlbum" : $('#tenAlbum').val(),
+            "maQuocGia" : $('#quocGia').val(),
+            "maAlbum" : $('#maAlbum').text()     
+        }, function(data, textStatus, xhr) {
+            if(data)
+            {	
+            	console.log(data);
+                    //var str='/webmusic/admin/Album/view/'+data;
+            		var str= '/webmusic/admin/Album/edit_image/'+data;
+                    window.location.href = str;
         }
-    }
-    return false;
-}
-Array.prototype.remByVal_trinhbay = function(val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i]['macasi'] === val) {
-            this.splice(i, 1);
-            i--;
+        else
+        {
+        	alert('Mời bạn nhập đầy đủ thông tin');
         }
+        });
     }
-    return this;
-}
-	var list_casi = new Array();
-    function add_trinhbay(){  
-    	if(!list_casi.contains_trinhbay($('#trinhBay').val()) && $('#trinhBay').val()!=""){
-    		list_casi.push({
-    			macasi : $('#trinhBay').val(),
-    			tencasi : $('#trinhBay option:selected').text()
-    		});
-    		$("#list_casi").append('<span class="list_option" id="item_'+ $('#trinhBay').val() +'">' + $('#trinhBay option:selected').text() + '<a href="javascript:void(0)" onclick="delete_trinhbay(\''+$('#trinhBay').val()+'\')"> <img style ="margin: 6px 0 0 6px" width="10px" height="10px" src="<?php echo public_url('admin/images')?>/icons/color/delete.png"> </a></span>');
-    	}
-	}	
-	function delete_trinhbay(id){
-		list_casi.remByVal_trinhbay(id);
+</script>
 
-		$('#item_'+id).fadeOut(200,function(){
-			this.remove();
-		});
-	}   
- </script>

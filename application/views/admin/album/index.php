@@ -50,9 +50,10 @@
 			<thead>
 				<tr>
 					<td style="width:21px;"><img src="<?php echo public_url('admin/images')?>/icons/tableArrows.png"></td>
-					<td style="width:150px;">Mã album</td>
+					<td style="width:60px;">Mã album</td>
 					<td style="width:300px;">Tên album</td>
 					<td>Quốc gia</td>
+					<td>Chủ đề</td>
 					<td>Trình bày</td>
 					<td>Ngày tạo</td>											
 					<td style="width:120px;">Hành động</td>
@@ -94,20 +95,24 @@
 						<?php foreach($quocgia as $i):
 							if($i->maQuocGia == $row->maQuocGia) echo $i->tenQuocGia;
 						endforeach; ?> 
-					</td>				
+					</td>		
+					<td class="textC">
+						<?php foreach($listCD as $i):
+							if($i->maAlbum == $row->maAlbum) echo $i->tenChuDe.'<br>';
+						endforeach; ?> 
+					</td>		
 					<td class="textC"> 
 						<?php foreach($nghesi as $i):
 							if($i->maAlbum == $row->maAlbum) echo $i->ngheSi;
 						endforeach; ?> 
 					</td>
-					<td class="textC"> <?php echo $row->ngayTao ?> </td>
-
+					<td class="textC"> <?php echo date("d/m/Y",strtotime($row->ngayTao)) ?> </td>
 
 					<td class="option textC">
 						<a href="<?php echo admin_url('album/view/').$row->maAlbum?>" title="Chi tiết" class="tipS">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
 						</a>
-						<a href="<?php echo admin_url('album/edit/').$row->maAlbum?>" title="Chỉnh sửa" class="tipS">
+						<a href="<?php echo admin_url('album/load_edit/').$row->maAlbum?>" title="Chỉnh sửa" class="tipS">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">
 						</a>
 						
