@@ -135,9 +135,6 @@ class NgheSi extends MY_Controller
                     $imageURL= $upload_data['file_name'];
                     $dataNgheSi['imageURL'] = $imageURL;
                 }
-
-                
-
                 //Thêm mới vào csdl
                 if($this -> NgheSi_model -> create($dataNgheSi)){
                     //tạo nội dung thông báo

@@ -42,26 +42,14 @@ class BaiHat extends MY_Controller
         {
             $input['where']['maQuocGia'] = $maQuocGia;
         }
+        //Lấy số lượng bài hát
+        $total_rows = $this -> BaiHat_model-> get_total($input);
+        $this -> data['total_rows'] = $total_rows;
 
-        //lấy danh sách bài hát
-        $list = $this-> BaiHat_model->get_list($input);
-        $this->data['list'] = $list;
-        
-        //Lấy danh sách nghệ sĩ
-        $nghesi = $this -> NgheSi_model -> get_list();
-
-        //Lấy danh sách quốc gia
-        $this-> load-> model('QuocGia_model');
-        $quocgia = $this->QuocGia_model->get_list();
-        $this->data['quocgia'] = $quocgia;
-		//Lấy số lượng bài hát
-		$total_rows = $this -> BaiHat_model-> get_total($input);
-		$this -> data['total_rows'] = $total_rows;
-
-		//load thư viện phân trang
-		$this -> load -> library('pagination');
-		$config = array();
-		$config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        //load thư viện phân trang
+        $this -> load -> library('pagination');
+        $config = array();
+        $config['total_rows'] = $total_rows;// tổng tất cả bài hát
         $config['base_url']   = admin_url('baihat/index'); //link hien thi ra danh sach san pham
         $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
         $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
@@ -78,6 +66,17 @@ class BaiHat extends MY_Controller
         $input['limit'] = array($config['per_page'], $segment);
 
 
+        //lấy danh sách bài hát
+        $list = $this-> BaiHat_model->get_list($input);
+        $this->data['list'] = $list;
+        
+        //Lấy danh sách nghệ sĩ
+        $nghesi = $this -> NgheSi_model -> get_list();
+
+        //Lấy danh sách quốc gia
+        $this-> load-> model('QuocGia_model');
+        $quocgia = $this->QuocGia_model->get_list();
+        $this->data['quocgia'] = $quocgia;
 
 		//lấy nội dung biến message
 		$message = $this -> session -> flashdata('message');
@@ -138,6 +137,7 @@ class BaiHat extends MY_Controller
                     'luotTai' => 0,
                     'ngayPhatHanh' => $ngayPhatHanh
                 );
+
                 //Lấy tên file nhạc được upload lên
                 $upload_path_audio = './upload/music';
                 $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
@@ -184,8 +184,6 @@ class BaiHat extends MY_Controller
      */
     function edit()
     {
-        $this -> load -> library('form_validation');
-        $this -> load -> helper('form');
         //Lấy mã bài hát
         $maBaiHat =$this -> uri -> rsegment('3');   
         $baiHat = $this -> BaiHat_model -> get_info($maBaiHat);
@@ -210,9 +208,10 @@ class BaiHat extends MY_Controller
         $this-> load-> model('ChuDe_model');
         $chude = $this->ChuDe_model->get_list();
         $this->data['chude'] = $chude;
-
-
          date_default_timezone_set('Asia/Ho_Chi_Minh'); 
+
+        $this -> load -> library('form_validation');
+        $this -> load -> helper('form');        
         // Nếu có dữ liệu post lên
         if($this-> input-> post())
         {

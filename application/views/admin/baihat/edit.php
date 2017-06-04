@@ -29,7 +29,7 @@
 		<label class="formLeft">Audio:<span class="req">*</span></label>
 		<div class="formRight">
 			<div class="left">
-				<input type="file" id="image" name="audio">
+				<input type="file" id="audio" name="audio">
 			</div>
 			<div name="audio_error" class="clear error"></div>
 		</div>
@@ -87,4 +87,22 @@
 		</form>
 </div>
 <div class="clear mt30"></div>
+<!-- preview hình -->
+<script type="text/javascript">
+       function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#imageLoad').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#image").change(function(){
+        readURL(this);
+    });
+</script>
 
