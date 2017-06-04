@@ -1,5 +1,8 @@
+
 (function($){
+
 	// Settings
+	// baihat = JSON.parse(baihat);
 	var repeat = localStorage.repeat || 0,
 		shuffle = localStorage.shuffle || 'false',
 		continous = true,
@@ -7,15 +10,15 @@
 		playlist = [
 		{
 //tên bài hát
-title: 'Phía sau một cô gái',
+title: tenbaihat,
 //nghệ sĩ
-artist: 'Soobin Hoàng Sơn',
+artist: casi,
 //album
-album: 'Soobin vol 1',
+album: '',
 //ảnh đại diện
-cover:'http://localhost:8080/webmusic/upload/img/phia-sau-mot-co-gai.png',
+cover: imageURL,
 //đường dẫn tập tin .mp3
-mp3: 'http://localhost:8080/webmusic/upload/music/Phia-Sau-Mot-Co-Gai-Soobin-Hoang-Son.mp3',
+mp3: url,
 ogg: ''
 }];
 
@@ -157,7 +160,7 @@ ogg: ''
 			newaudio = $('<audio>').html('<source src="'+item.mp3+'"><source src="'+item.ogg+'">').appendTo('#player');
 		
 		$('.cover').html('<img src="'+item.cover+'" alt="'+item.album+'">');
-		$('.tag').html('<strong>'+item.title+'</strong><span class="artist">'+item.artist+'</span><span class="album">'+item.album+'</span><span><font size="0.5">DN Player'+'</font></span>');
+		$('.tag').html('<strong>'+item.title+'</strong><span class="artist">'+item.artist+'</span><span class="album">'+item.album+'</span><span><font size="0.5">Bài hát'+'</font></span>');
 		$('#playlist li').removeClass('playing').eq(i).addClass('playing');
 		audio = newaudio[0];
 		audio.volume = $('.mute').hasClass('enable') ? 0 : volume;

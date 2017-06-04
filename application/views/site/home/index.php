@@ -64,13 +64,18 @@
               </a>
               </div>
               </div>
-              <a href="<?php echo base_url('upload/music/'.$row->url) ?>">
+              <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>">
                 <img class="group list-group-image img-full" src="<?php  echo base_url('upload/img/'.$row->imageURL)?> " alt class="r r-2x img-full" />
                 </a> 
               </div>          
                 <div class="caption">
-                    <a href="<?php echo base_url('upload/music/'.$row->url) ?>" class="song-name"><?php echo $row->tenBaiHat ?></a>
-                    <a href="#" class="singer-name"><?php echo 'chưa fix' ?></a>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="song-name"><?php echo $row->tenBaiHat ?></a>
+                    <?php foreach ($nghesi as $i): ?>
+                      <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
+                         <a href="#" class="singer-name"><?php echo $i->ngheSi ?></a>       
+                      <?php endif ?>
+
+                     <?php endforeach ?>
                 </div>
 
             </div>
@@ -96,20 +101,29 @@
               <div class="tab-pane active" id="viet-nam">
               <div class="box-body-charts">
                <ul class="charts-song-list charts-song-list-in-box">
-
+                <?php $x=0; ?>
+                <?php foreach ($baihat_xephang_vn as $row): ?>
+                <?php $x++; ?>
                 <li class="item">
                   <div class="charts-song-img">
-                    <img src="dist/img/phia-sau-mot-co-gai.png" class="img-circle" alt="charts-song Image">
+                    <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title">Phía sau một cô gái</a>
-                    <span class="pull-right h4 text-muted col-md-1">1</span>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <span class="pull-right h4 text-muted col-md-1"><?php echo $x; ?></span>
+                    <?php foreach ($nghesi as $i): ?>
+                      <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
                         <span class="charts-song-description">
-                          Soobin Hoàng Sơn
-                        </span>
+                          <?php echo $i->ngheSi ?>
+                        </span>     
+                      <?php endif ?>
+
+                     <?php endforeach ?>
+
 
                   </div>
                 </li>
+                <?php endforeach  ?>     
                 <!-- /.item -->            
               </ul>
             </div>
@@ -126,20 +140,29 @@
               <div class="tab-pane" id="au-my">
                <div class="box-body-charts">
                <ul class="charts-song-list charts-song-list-in-box">
-
+                <?php $y=0; ?>
+                <?php foreach ($baihat_xephang_aumy as $row): ?>
+                <?php $y++; ?>
                 <li class="item">
                   <div class="charts-song-img">
-                    <img src="dist/img/shape-of-you.jpg" class="img-circle" alt="charts-song Image">
+                    <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title">Shape Of You</a>
-                    <span class="pull-right h4 text-muted col-md-1">1</span>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <span class="pull-right h4 text-muted col-md-1"><?php echo $y; ?></span>
+                    <?php foreach ($nghesi as $i): ?>
+                      <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
                         <span class="charts-song-description">
-                          Ed Sheeran
-                        </span>
+                          <?php echo $i->ngheSi ?>
+                        </span>     
+                      <?php endif ?>
+
+                     <?php endforeach ?>
+
 
                   </div>
                 </li>
+                <?php endforeach  ?>     
                 <!-- /.item -->            
               </ul>
             </div>
@@ -155,23 +178,30 @@
               <div class="tab-pane" id="han-quoc">
             <div class="box-body-charts">
                <ul class="charts-song-list charts-song-list-in-box">
-
-
+                <?php $z=0; ?>
+                <?php foreach ($baihat_xephang_hq as $row): ?>
+                <?php $z++; ?>
                 <li class="item">
                   <div class="charts-song-img">
-                    <img src="dist/img/Oh-Hyuk.jpg" class="img-circle" alt="charts-song Image">
+                    <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title">Can’t Love You Anymore</a>
-                    <span class="pull-right h4 text-muted col-md-1">1</span>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <span class="pull-right h4 text-muted col-md-1"><?php echo $z; ?></span>
+                    <?php foreach ($nghesi as $i): ?>
+                      <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
                         <span class="charts-song-description">
-                          IU, Oh Hyuk
-                        </span>
+                          <?php echo $i->ngheSi ?>
+                        </span>     
+                      <?php endif ?>
+
+                     <?php endforeach ?>
+
 
                   </div>
                 </li>
-                <!-- /.item -->
-             
+                <?php endforeach  ?>     
+                <!-- /.item -->            
               </ul>
             </div>
             <!-- /.box-body -->
@@ -188,29 +218,36 @@
 </div>
 
     <div class="row">
-              <!-- TOP TREND -->
+      <!-- TOP TREND -->
       <div class="col-md-3" id="top-trend">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Nghe nhiều nhất</h3>
+              <h3 class="box-title">Bài hát thịnh hành</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" id="box-header-toptrend">
               <ul class="toptrend-list toptrend-list-in-box">
 
-                <?php foreach ($baihat_nghenhieu as $row): ?>
+                <?php foreach ($toptrend as $row): ?>
                   <li class="item">
                     <div class="toptrend-img">
                       <img src=" <?php echo base_url('upload/img/'.$row->imageURL) ?>" alt="toptrend Image">
                     </div>
                     <div class="toptrend-info">
-                      <a href=" <?php echo base_url('upload/music/'.$row->url) ?>" class="toptrend-title"><?php echo $row->tenBaiHat ?></a>
-                          <span class="toptrend-description">
-                            <?php echo 'thảo luận' ?>
-                          </span>
+                      <a href=" <?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="toptrend-title"><?php echo $row->tenBaiHat ?></a>
+
+                    <?php foreach ($nghesi as $i): ?>
+                      <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
+                        <span class="toptrend-description">
+                          <?php echo $i->ngheSi ?>
+                        </span>     
+                      <?php endif ?>
+                     <?php endforeach ?>
+
                     </div>
                   </li>
               <?php endforeach ?>
+
                 <!-- /.item -->               
               </ul>
             </div>

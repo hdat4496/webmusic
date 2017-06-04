@@ -35,6 +35,15 @@ class BaiHat_model extends MY_Model
         $this->db->where('BAIHAT_CHUDE.maBaiHat', $maBaiHat);
 		return $this -> db ->get()->result_array();	
 	}
+
+	public function layDSBaiHatYeuThich($taiKhoan)
+	{
+		$this->db->select('BAIHAT.*');
+        $this->db->from('BAIHAT');
+        $this->db->join('BAIHAT_YEUTHICH', 'BAIHAT.maBaiHat = BAIHAT_YEUTHICH.maBaiHat');
+        $this->db->where('BAIHAT_YEUTHICH.taiKhoan', $taiKhoan);
+		return $this -> db ->get()->result_array();	
+	}
 }
 
  ?>

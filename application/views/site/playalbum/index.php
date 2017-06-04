@@ -1,5 +1,5 @@
     <!-- Main content -->
-    <section class="hbox stretch">
+    <section class="stretch">
 <section class="content" style="background-color: #3b464d;">
   <section class="vbox">
     <section class="w-f-md" id="bjax-target">

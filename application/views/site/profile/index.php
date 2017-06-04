@@ -49,127 +49,36 @@
               <li><a href="#playlistcanhan" data-toggle="tab">Playlist cá nhân</a></li>
             </ul>
             <div class="tab-content">
+
               <div class="active tab-pane" id="baihatyeuthich">
-                <!-- Post -->
+              <?php   
+                $this-> load-> model('BaiHat_model');
+                $baihat_yeuthich = $this-> BaiHat_model->layDSBaiHatYeuThich($user_info->taiKhoan);
+              ?>
+
+              <?php foreach ($baihat_yeuthich as $row): ?>
                 <div class="post">
                   <div class="user-block">
                     <img class="img-circle img-bordered-sm" src="../dist/img/phia-sau-mot-co-gai.png" alt="user image">
                         <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Phía sau một cô gái</a>
+                    <a href="javascript:void(0)" class="charts-song-title"><?php echo $row['tenBaiHat'] ?></a>
                         </span>
                     <span class="description">Soobin Hoàng Sơn</span>
                   </div>
                   <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
 
+                </div>
+                <?php endforeach ?>
                 <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/noi-nay-co-anh.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Nơi này có anh</a>
-                        </span>
-                    <span class="description">Sơn Tùng MTP</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/di-de-tro-ve.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Đi để trở về</a>
-                        </span>
-                    <span class="description">Soobin Hoàng Sơn</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
-
-                 <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/anh-da-quen-voi-co-don.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Anh đã quen với cô đơn</a>
-                        </span>
-                    <span class="description">Soobin Hoàng Sơn</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>                                               
+                                               
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="playlistcanhan">
-               <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/anh-nang-cua-anh.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Ánh nắng của anh</a>
-                        </span>
-                    <span class="description">Đức Phúc</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
 
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/shape-of-you.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">Shape Of You</a>
-                        </span>
-                    <span class="description">  Ed Sheeran</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
 
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../dist/img/Kendrick-Lamar.jpg" alt="user image">
-                        <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title">HUMBLE</a>
-                        </span>
-                    <span class="description">Kendrick Lamar</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                  </ul>
-                </div>
+
+
+
 
                  <!-- Post -->
                 <div class="post">
@@ -186,7 +95,8 @@
                     <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
                     </li>
                   </ul>
-                </div>                          
+                </div> 
+
               </div>
               <!-- /.tab-pane -->
             </div>

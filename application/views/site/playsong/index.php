@@ -1,6 +1,6 @@
    <!-- Content Header (Page header) -->
     <!-- Main content -->
-<section class="hbox stretch">
+<section class="stretch">
 <section class="content" style="background-color: #3b464d;">
   <section class="vbox">
     <section class="w-f-md" id="bjax-target">
@@ -11,8 +11,6 @@
 
         <div class="panel wrapper-lg pos-rlt" style="background-color: #222d32">
         <div class="row pos-rlt">
-
-   
 <div id="background"></div>
 <div id="player">
   <div class="cover"></div>
@@ -50,30 +48,10 @@
 </div>
 <div id="lyric">
   <pre>
-Bài hát: Phía Sau Một Cô Gái - Soobin Hoàng Sơn 
+Bài hát: <?php echo $baihat->tenBaiHat; ?> <br>
+Lời bài hát:
 
-Nhiều khi anh mong được một lần nói ra hết tất cả thay vì, 
-Ngồi lặng im nghe em kể về anh ta bằng đôi mắt lấp lánh 
-Đôi lúc em tránh ánh mắt của anh 
-Vì dường như lúc nào em cũng hiểu thấu lòng anh. 
-Không thể ngắt lời, càng không thể để giọt lệ nào được rơi 
-
-[Chorus] 
-Nên anh lùi bước về sau, để thấy em rõ hơn 
-Để có thể ngắm em từ xa âu yếm hơn 
-Cả nguồn sống bỗng chốc thu bé lại vừa bằng một cô gái 
-Hay anh vẫn sẽ lặng lẽ kế bên 
-Dù không nắm tay nhưng đường chung mãi mãi 
-Và từ ấy ánh mắt anh hồn nhiên, đến lạ. 
-
-[Verse 2] 
-
-Chẳng một ai có thể cản đường trái tim khi đã lỡ yêu rồi 
-Đừng ai can ngăn tôi khuyên tôi buông xuôi vì yêu không có lỗi 
-Ai cũng ước muốn, khao khát được yêu, 
-Được chờ mong tới giờ ai nhắc đưa đón buổi chiều 
-Mỗi sáng thức dậy, được ngắm một người nằm cạnh ngủ say 
-Vì sao anh không thể gặp được em sớm hơn.
+<?php echo $baihat->loiBaiHat; ?>
   </pre>
 </div>
 
@@ -294,10 +272,24 @@ Vì sao anh không thể gặp được em sớm hơn.
 </section>
 </section>
 <!-- /.content -->
+<?php foreach ($nghesi as $key => $value): ?>
+  <?php $casi = $value->ngheSi; ?>
+<?php endforeach ?>
+<?php 
+  $imageURL= base_url('upload/img/').$baihat->imageURL;
+ ?>
 
+ <?php 
+  $url= base_url('upload/music/').$baihat->url;
+ ?>
       <script src="<?php echo public_url()?>js/jquery-1.7.2.min.js"></script>
       <script src="<?php echo public_url()?>js/js.js"></script>
       <script src="<?php echo public_url()?>js/bootstrap.min.js"></script>
       <script src="<?php echo public_url()?>js/app.min.js"></script>
       <script src="<?php echo public_url()?>js/jquery-ui-1.8.17.custom.min.js"></script>
+      <?php echo '<script>var tenbaihat =  "'. $baihat->tenBaiHat .'"; </script>' ?>
+      <?php echo '<script>var casi =  "'. $casi .'"; </script>' ?>
+      <?php echo '<script>var imageURL =  "'. $imageURL .'"; </script>' ?>
+      <?php echo '<script>var url =  "'. $url .'"; </script>' ?>
+
       <script src="<?php echo public_url()?>js/pages/play-song.js"></script>

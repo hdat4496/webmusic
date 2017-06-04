@@ -7,7 +7,7 @@
       </a>
 
       <!-- Header Navbar -->
-      <nav class="navbar navbar-static-top" role="navigation">
+      <nav class="navbar navbar-static-top" style="height: 30px" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="sr-only">Toggle navigation</span>
@@ -54,25 +54,27 @@
           <?php endif; ?>
           </ul>
           </div>
+          <form action="<?php echo base_url('TimKiem') ?>" method="POST" accept-charset="utf-8">
          <div class="col-xs-5 col-xs-offset-2" id="search">
-            <div class="input-group">
-                  <div class="input-group-btn search-panel">
-                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span id="search_concept">Tất cả</span> <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#contains">Bài hát</a></li>
-                        <li><a href="#its_equal">Album</a></li>
-                        <li><a href="#greather_than">Nghệ sĩ</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#all">Tất cả</a></li>
-                      </ul>
-                  </div>
-                  <input type="hidden" name="search_param" value="all" id="search_param">         
-                  <input type="text" class="form-control" name="x" placeholder="Tìm kiếm">
-                  <span class="input-group-btn">
-                      <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>
+            <div class="input-group" style="width: 100%">
+                <div class="form-group">
+                    <select class="form-control" id="timkiem" name='timkiem' style="width: 23%;background-color: #f4f4f4;border-radius: 4px 0px 0px 4px;" >
+                         <option value="baihat">Bài hát</option>
+                         <option value="album">Album</option>
+                         <option value="nghesi">Nghệ sĩ</option>
+                     </select>
+
+                <div class="input-group t-search-box" style="width:77%">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Nhập từ khóa" name="q" >
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="searchbtn" name="searchbtn" type="submit" value="1"><i class="glyphicon glyphicon-search"></i></button>
+ 
+                    </div>
+                </div>
+                </div>      
+
               </div>
           </div>
+         </form>
       </nav>
+

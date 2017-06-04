@@ -33,6 +33,7 @@ class MY_Controller extends CI_Controller
 						$user_info = $this -> TaiKhoan_model -> get_info($user_id_login);
 						$this -> data['user_info']= $user_info;  
 					}
+  
 				}
 		}
 	}

@@ -5807,6 +5807,13 @@ table.text-center th {
   display: block;
   margin-left: 50px;
 }
+
+.description{
+    display: block;
+  margin-left: 50px;
+    color: #999;
+  font-size: 13px;
+}
 .user-block .username {
   font-size: 16px;
   font-weight: 600;
