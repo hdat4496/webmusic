@@ -44,6 +44,36 @@ class BaiHat_model extends MY_Model
         $this->db->where('BAIHAT_YEUTHICH.taiKhoan', $taiKhoan);
 		return $this -> db ->get()->result_array();	
 	}
+
+	public function layDSGoiYBaiHayCuaNgheSi($maNgheSi)
+	{
+		$this->db->select('BAIHAT.*');
+        $this->db->from('BAIHAT');
+        $this->db->join('TRINHBAY', 'BAIHAT.maBaiHat = TRINHBAY.maBaiHat');
+        $this->db->where('TRINHBAY.maCaSi', $maNgheSi);
+        $this->db->limit(10,0);
+		return $this -> db ->get()->result_array();	
+	}
+
+	public function layDSNgheSi($maBaiHat)
+	{
+		$this->db->select('TRINHBAY.maCaSi');
+        $this->db->from('BAIHAT');
+        $this->db->join('TRINHBAY', 'BAIHAT.maBaiHat = TRINHBAY.maBaiHat');
+        $this->db->where('TRINHBAY.maBaiHat', $maBaiHat);
+        $this->db->limit(1,0);
+		return $this -> db ->get()->result_array();	
+	}
+
+	public function kiemTraLuotNgheTrongNgay($maBaiHat)
+	{
+		$this->db->select('LUOTNGHE.*');
+        $this->db->from('LUOTNGHE');
+        $this->db->where('LUOTNGHE.maBaiHat', $maBaiHat);
+        $this->db->where('LUOTNGHE.ngay', date('Y-m-d'));
+		return $this -> db ->get()->result_array();	
+	}
+	
 }
 
  ?>

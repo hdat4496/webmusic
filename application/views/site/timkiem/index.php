@@ -18,7 +18,7 @@
                   <div class="user-block" style="margin-bottom: 5px;">
                     <img class="img-circle img-bordered-sm" src="../dist/img/anh-da-quen-voi-co-don.jpg" alt="user image">
                   <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title" style="margin-top: 10px;"><?php echo $row->tenBaiHat?></a>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title" style="margin-top: 10px;"><?php echo $row->tenBaiHat?></a>
                   </span>
                   <span class="pull-right description text-muted col-md-3"><i class="fa fa-headphones"></i>&nbsp;&nbsp;<?php echo $row->luotNghe ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa  fa-download"> <?php echo $row->luotTai ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> <i class="fa fa-thumbs-o-up">&nbsp;&nbsp; <?php echo $row->luotThich ?></i></span> 
                     <?php foreach ($nghesi as $i): ?>
@@ -73,7 +73,7 @@
                   <div class="user-block" style="margin-bottom: 5px;">
                     <img class="img-circle img-bordered-sm" src="../dist/img/anh-da-quen-voi-co-don.jpg" alt="user image">
                   <span class="username">
-                    <a href="javascript:void(0)" class="charts-song-title" style="margin-top: 10px;"><?php echo $row->tenNgheSi?></a>
+                    <a href="<?php echo base_url('site/ThongTinNgheSi/ThongTin/'.$row->maNgheSi) ?>" class="charts-song-title" style="margin-top: 10px;"><?php echo $row->tenNgheSi?></a>
                   </span>
 
 

@@ -262,7 +262,7 @@ class BaiHat extends MY_Controller
                 //cập nhật vào csdl
                 if($this -> BaiHat_model -> update($maBaiHat,$dataBaiHat)){
                     //tạo nội dung thông báo
-                    $this-> session -> set_flashdata('message','Cập  nhât chủ đề thành công.');
+                    $this-> session -> set_flashdata('message','Cập  nhât bài hát thành công.');
                     //Xóa ảnh bài hát cũ
                     if(file_exists($imageURL_old)) 
                     {
@@ -276,9 +276,9 @@ class BaiHat extends MY_Controller
                     }
                 }
                 else{
-                    $this-> session -> set_flashdata('message','Cập nhật chủ đề không thành công.');
+                    $this-> session -> set_flashdata('message','Cập nhật bài hát không thành công.');
                 }
-                //chuyển tới trang  danh sách chủ đề
+                //chuyển tới trang  danh sách bài hát
                 redirect(admin_url('BaiHat'));
             }
         }

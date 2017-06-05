@@ -204,6 +204,7 @@ Array.prototype.remByVal_trinhbay = function(val) {
 		}, function(data, textStatus, xhr) {
             if(data)
             {
+                    alert("Thêm bài hát thành công");
                     window.location.href = '<?php echo admin_url('BaiHat') ?>'
         }
 		});

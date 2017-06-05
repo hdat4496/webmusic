@@ -1,7 +1,7 @@
    <!-- Content Header (Page header) -->
     <!-- Main content -->
-<section class="stretch">
-<section class="content" style="background-color: #3b464d;">
+<section class="stretch" style="min-height: 576px">
+<section class="content" style="background-color: #3b464d; min-height: 576px;">
   <section class="vbox">
     <section class="w-f-md" id="bjax-target">
       <section class="vbox">
@@ -32,24 +32,41 @@
           <div class="pace"></div>
         </div>
       </div>
+
     </div>
     <div class="progress">
       <div class="slider">
         <div class="loaded"></div>
         <div class="pace"></div>
+
       </div>
       <div class="timer left">0:00</div>
       <div class="right">
         <div class="repeat icon"></div>
         <div class="shuffle icon"></div>
+
       </div>
-    </div>
-  </div>
+<div style="margin-top: 8px;margin-right: 54px">
+
+        <a href="<?php echo base_url('upload/music/').$baihat->url ?>" download="<?php echo $baihat->url ?>"><span class=" icon-right glyphicon glyphicon-download-alt" style="color:#b8c7ce;margin-left: 10px;"></span> </a>
+        <a id="like">
+         <span id = "like_icon" class=" icon-right glyphicon glyphicon-thumbs-up" style="color:#b8c7ce;"></span>
+        </a>
 </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="control">
+</div>
+
 <div id="lyric">
   <pre>
 Bài hát: <?php echo $baihat->tenBaiHat; ?> <br>
 Lời bài hát:
+    <a href="<?php echo base_url('upload/music/').$baihat->url; ?>" download="1111.mp3">sadsd</a>
 
 <?php echo $baihat->loiBaiHat; ?>
   </pre>
@@ -74,6 +91,13 @@ Lời bài hát:
     </div>
     <div class="panel-body" style="background-color: #222d32">
          <article class="media">
+          <?php   $this-> load-> model('BaiHat_model');
+           $DSNgheSi = $this-> BaiHat_model->layDSNgheSi($baihat->maBaiHat);
+           foreach ($DSNgheSi as $key => $value) {
+             $nghesi_goiy= $value['maCaSi'];
+           }
+           $DSBaiHat_goiy = $this-> BaiHat_model->layDSGoiYBaiHayCuaNgheSi($nghesi_goiy);?>
+        <?php foreach ($DSBaiHat_goiy as $row): ?>
         <ul class="list-group list-group-lg">
             <li class="list-group-item">
             <div class="pull-right m-l">
@@ -91,171 +115,15 @@ Lời bài hát:
               
             </div>
           <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
+            <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>" title=""><?php echo $row['tenBaiHat'] ?></a>
+           
+           <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>" download="<?php echo $row['url']?>"> <span class=" icon-right glyphicon glyphicon-download-alt"></span>  
+           </a>          
+            <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>"><span class=" icon-right glyphicon glyphicon-play"></span></a>
           </div>
           </li>
-        </ul>
-
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-      
+        </ul> 
+<?php endforeach ?>
     </article>
        
     </div>
@@ -293,3 +161,5 @@ Lời bài hát:
       <?php echo '<script>var url =  "'. $url .'"; </script>' ?>
 
       <script src="<?php echo public_url()?>js/pages/play-song.js"></script>
+
+      <!-- preview hình -->

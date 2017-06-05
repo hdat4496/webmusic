@@ -1,7 +1,7 @@
 <form action="<?php echo base_url('User/login') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <div class="modal fade" id="myModal"  aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modaldialogdn">
-          <div class="modal-content modaldn">
+          <div class="modal-content modaldn" style="height: 300px;">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h4 class="modal-title" id="myModalLabel">ĐĂNG NHẬP</h4>
@@ -24,9 +24,7 @@
                 </div>
                 <div class="row bodere">
                  <div class="checkbox  col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 40px;">
-                  <label>
-                    <input type="checkbox"> Ghi nhớ tài khoản
-                  </label>
+    
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 quenmatkhau">
                   <p class="noidungqmk"><a href=""> Quên Mật Khẩu?</a>
@@ -37,7 +35,7 @@
           </div>
           <div class="modal-footer modalfooterdn">
             <button name ="login" type="submit" name="submit_dn" class="form-control btndn btn-primary">Đăng Nhập</button>
-            <button class="form-control btndk btn-primary">Đăng Ký</button>
+            
           </div> 
         </div>
       </div>

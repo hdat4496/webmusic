@@ -1,7 +1,7 @@
 <form action="<?php echo base_url('User/register') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modaldialogdk">
-          <div class="modal-content modaldk">
+          <div class="modal-content modaldk" style="height: 480px">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
               <h4 class="modal-title" id="myModalLabel">ĐĂNG KÝ</h4>
@@ -90,7 +90,7 @@
             </div>
             <div class="modal-footer modalfooterdk">
               <button type="submit" name="submit" class="form-control btndk btn-primary">Đăng Ký</button>
-              <button class="form-control btndn btn-primary">Đăng Nhập</button>
+             
               <div class="progress">
                 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 0%;">
                   <span class="sr-only">progress</span>
