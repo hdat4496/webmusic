@@ -45,12 +45,14 @@ class BaiHat_model extends MY_Model
 		return $this -> db ->get()->result_array();	
 	}
 
-	public function layDSGoiYBaiHayCuaNgheSi($maNgheSi)
+	public function layDSGoiYBaiHayCuaNgheSi($maNgheSi,$maBaiHat)
 	{
 		$this->db->select('BAIHAT.*');
         $this->db->from('BAIHAT');
         $this->db->join('TRINHBAY', 'BAIHAT.maBaiHat = TRINHBAY.maBaiHat');
         $this->db->where('TRINHBAY.maCaSi', $maNgheSi);
+        $this->db->where_not_in('BAIHAT.maBaiHat', $maBaiHat);
+        
         $this->db->limit(10,0);
 		return $this -> db ->get()->result_array();	
 	}

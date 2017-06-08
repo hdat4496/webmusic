@@ -8,6 +8,7 @@ class PlaySong extends MY_Controller
 		parent::__construct();
 		$this -> load -> model('BaiHat_model');
 		$this -> load -> model('LuotNghe_model');
+        $this -> load -> model('BaiHatYeuThich_model');   
 
 
 	}
@@ -60,5 +61,62 @@ class PlaySong extends MY_Controller
 		$data['title'] = 'Song';	
 		$this -> load -> view('site/layout',$data);
 	}
+
+	function CapNhatLuotTai()
+	{
+		$maBaiHat = $this -> uri->rsegment(3);
+		$baiHat = $this -> BaiHat_model -> get_info($maBaiHat);
+
+
+		$luotTai= $baiHat->luotTai+1;
+		
+		$dataluottai= array(
+			'luotTai' =>  $luotTai
+			);
+
+		$this-> BaiHat_model -> update($maBaiHat,$dataluottai);
+			
+				redirect(base_url('upload/music/').$baiHat->url);
+			
+
+	}
+
+
+	function CapNhatLuotThich()
+	{
+			$data=$_POST;
+
+		 	$kiemtra = $this -> BaiHatYeuThich_model -> get_info_mutikey($data['taiKhoan'],$data['maBaiHat']);
+ 			$baiHat = $this -> BaiHat_model -> get_info($data['maBaiHat']);           	
+           if(empty($kiemtra))
+           {
+			$dataluotthich= array(
+				'taiKhoan' =>  $data['taiKhoan'],
+				'maBaiHat' => 	$data['maBaiHat']
+				);
+
+           	$this ->  BaiHatYeuThich_model->create($dataluotthich);
+
+			$dataluotthich_update= array(
+				'luotThich' =>  $baiHat->luotThich+1
+				);
+			$this -> BaiHat_model ->update($baiHat->maBaiHat,$dataluotthich_update);
+
+
+           }
+           else{
+
+           	$this ->  BaiHatYeuThich_model->delete_mutikey($data['taiKhoan'],$data['maBaiHat']);
+
+			$dataluotthich_update= array(
+				'luotThich' =>  $baiHat->luotThich-1
+				);
+			$this -> BaiHat_model ->update($baiHat->maBaiHat,$dataluotthich_update);
+
+           }
+			
+
+	}
+
 }
  ?>

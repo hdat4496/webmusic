@@ -1,5 +1,25 @@
-  jQuery(document).ready(function($) {
- 
+$(document).ready(function() {
+
+var hexDigits = new Array
+        ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+
+        var btnLike= ["#b8c7ce","#003bff"];  
+        $('#like').click(function(){
+            var color = $('#like_icon').attr('data-color');
+          
+            if(color == btnLike[0]){
+                $('#like_icon').attr('data-color',btnLike[1]);
+                $('#like_icon').css('color',btnLike[1]);
+            }
+            else if(color == btnLike[1]){
+                $('#like_icon').attr('data-color',btnLike[0]);
+                $('#like_icon').css('color',btnLike[0]);            
+            }
+        }); 
+            
+            
+
         $('#myCarousel').carousel({
                 interval: 5000
         });
@@ -19,23 +39,7 @@
                  var id = $('.item.active').data('slide-number');
                 $('#carousel-text').html($('#slide-content-'+id).html());
         });
-});
-
-  $(document).on('click', '#close-preview', function(){ 
-    $('.image-preview').popover('hide');
-    // Hover befor close the preview
-    $('.image-preview').hover(
-        function () {
-           $('.image-preview').popover('show');
-        }, 
-         function () {
-           $('.image-preview').popover('hide');
-        }
-    );    
-});
-
-$(function() {
-    // Create the close button
+        // Create the close button
     var closebtn = $('<button/>', {
         type:"button",
         text: 'x',
@@ -77,7 +81,20 @@ $(function() {
             $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
         }        
         reader.readAsDataURL(file);
-    });  
+    });
+});
+
+  $(document).on('click', '#close-preview', function(){ 
+    $('.image-preview').popover('hide');
+    // Hover befor close the preview
+    $('.image-preview').hover(
+        function () {
+           $('.image-preview').popover('show');
+        }, 
+         function () {
+           $('.image-preview').popover('hide');
+        }
+    );    
 });
 
 

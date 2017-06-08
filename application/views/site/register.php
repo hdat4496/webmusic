@@ -1,3 +1,4 @@
+<?php if(!isset($user_info)): ?>
 <form action="<?php echo base_url('User/register') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modaldialogdk">
@@ -104,11 +105,11 @@
     </form>
       
 
-<?php if(!isset($user_info)): ?>
+
       <script src="<?php echo public_url()?>js/jquery-1.7.2.min.js"></script>
       <script src="<?php echo public_url()?>js/js.js"></script>
       <script src="<?php echo public_url()?>js/bootstrap.min.js"></script>
-<?php endif; ?>
+
 <!-- preview hình -->
 <script type="text/javascript">
 $(document).ready( function() {
@@ -148,3 +149,4 @@ $(document).ready( function() {
     });   
   });
 </script>
+<?php endif; ?>

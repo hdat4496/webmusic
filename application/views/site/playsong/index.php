@@ -1,5 +1,20 @@
    <!-- Content Header (Page header) -->
     <!-- Main content -->
+  <script language="javascript">
+    function Tangluotthich(){
+            $.post(
+            '/webmusic/site/PlaySong/CapNhatLuotThich/', // URL 
+            {
+              maBaiHat : "<?php echo $baihat->maBaiHat ?>",
+              taiKhoan : "<?php echo $user_info->taiKhoan ?>"
+              },  // Data
+            function(result){ // Success
+
+            }, 
+            'text' // dataTyppe
+            );
+    }
+</script>  
 <section class="stretch" style="min-height: 576px">
 <section class="content" style="background-color: #3b464d; min-height: 576px;">
   <section class="vbox">
@@ -46,13 +61,26 @@
         <div class="shuffle icon"></div>
 
       </div>
-<div style="margin-top: 8px;margin-right: 54px">
+      <!-- <form action="" method="post" accept-charset="utf-8"> -->
+        <div style="margin-top: 8px;margin-right: 54px">
+               <a  href="<?php echo base_url('site/PlaySong/CapNhatLuotTai/').$baihat->maBaiHat?>" download="<?php echo $baihat->url ?>"><span class=" icon-right glyphicon glyphicon-download-alt" style="color:#b8c7ce;margin-left: 10px;"></span> </a>
+          <?php if(isset($user_info)): ?>
+            <?php $this -> load-> model('BaiHatYeuThich_model');?>
+            <?php $kiemtra = $this -> BaiHatYeuThich_model -> get_info_mutikey($user_info->taiKhoan,$baihat->maBaiHat); 
+            ?>
+            <?php if(empty($kiemtra)): ?>
+                <a onclick="Tangluotthich()"  id="like">
+                 <span  id="like_icon" data-color="#b8c7ce" class="icon-right glyphicon glyphicon-thumbs-up" style="color:#b8c7ce;"></span>
+                </a>
+              <?php else: ?>
+                 <a onclick="Tangluotthich()"  id="like">
+                 <span  id="like_icon" data-color="#003bff" class="icon-right glyphicon glyphicon-thumbs-up" style="color:#003bff;"></span>
+                </a>
+              <?php endif ?>
+            <?php endif ?>
+        </div>
+      <!-- </form> -->
 
-        <a href="<?php echo base_url('upload/music/').$baihat->url ?>" download="<?php echo $baihat->url ?>"><span class=" icon-right glyphicon glyphicon-download-alt" style="color:#b8c7ce;margin-left: 10px;"></span> </a>
-        <a id="like">
-         <span id = "like_icon" class=" icon-right glyphicon glyphicon-thumbs-up" style="color:#b8c7ce;"></span>
-        </a>
-</div>
     </div>
 
   </div>
@@ -66,8 +94,6 @@
   <pre>
 Bài hát: <?php echo $baihat->tenBaiHat; ?> <br>
 Lời bài hát:
-    <a href="<?php echo base_url('upload/music/').$baihat->url; ?>" download="1111.mp3">sadsd</a>
-
 <?php echo $baihat->loiBaiHat; ?>
   </pre>
 </div>
@@ -96,7 +122,7 @@ Lời bài hát:
            foreach ($DSNgheSi as $key => $value) {
              $nghesi_goiy= $value['maCaSi'];
            }
-           $DSBaiHat_goiy = $this-> BaiHat_model->layDSGoiYBaiHayCuaNgheSi($nghesi_goiy);?>
+           $DSBaiHat_goiy = $this-> BaiHat_model->layDSGoiYBaiHayCuaNgheSi($nghesi_goiy,$baihat->maBaiHat);?>
         <?php foreach ($DSBaiHat_goiy as $row): ?>
         <ul class="list-group list-group-lg">
             <li class="list-group-item">
@@ -117,7 +143,7 @@ Lời bài hát:
           <div class="clear text-ellipsis">
             <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>" title=""><?php echo $row['tenBaiHat'] ?></a>
            
-           <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>" download="<?php echo $row['url']?>"> <span class=" icon-right glyphicon glyphicon-download-alt"></span>  
+           <a href="<?php echo base_url('site/PlaySong/CapNhatLuotTai/').$row['maBaiHat']?>" download="<?php echo $row['url']?>"> <span class=" icon-right glyphicon glyphicon-download-alt"></span>  
            </a>          
             <a href="<?php echo base_url('site/playsong/play/'.$row['maBaiHat']) ?>"><span class=" icon-right glyphicon glyphicon-play"></span></a>
           </div>
@@ -125,9 +151,9 @@ Lời bài hát:
         </ul> 
 <?php endforeach ?>
     </article>
-       
+    
     </div>
-      
+    
     </div>
     
   </div>
@@ -155,11 +181,15 @@ Lời bài hát:
       <script src="<?php echo public_url()?>js/bootstrap.min.js"></script>
       <script src="<?php echo public_url()?>js/app.min.js"></script>
       <script src="<?php echo public_url()?>js/jquery-ui-1.8.17.custom.min.js"></script>
+
       <?php echo '<script>var tenbaihat =  "'. $baihat->tenBaiHat .'"; </script>' ?>
       <?php echo '<script>var casi =  "'. $casi .'"; </script>' ?>
       <?php echo '<script>var imageURL =  "'. $imageURL .'"; </script>' ?>
       <?php echo '<script>var url =  "'. $url .'"; </script>' ?>
 
       <script src="<?php echo public_url()?>js/pages/play-song.js"></script>
+ <!--Ajax đưa biến lên controller-->
 
-      <!-- preview hình -->
+
+
+

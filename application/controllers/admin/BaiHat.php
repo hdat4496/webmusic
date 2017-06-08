@@ -158,6 +158,7 @@ class BaiHat extends MY_Controller
                     $imageURL= $upload_data['file_name'];
                     $dataBaiHat['imageURL'] = $imageURL;
                 }
+                
                 //Thêm mới vào csdl
                 if($this -> BaiHat_model -> create($dataBaiHat)){
                     //tạo nội dung thông báo

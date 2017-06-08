@@ -1,3 +1,4 @@
+<?php if(!isset($user_info)): ?>
 <form action="<?php echo base_url('User/login') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <div class="modal fade" id="myModal"  aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modaldialogdn">
@@ -41,3 +42,4 @@
       </div>
     </div>
     </form>
+  <?php endif ?>
