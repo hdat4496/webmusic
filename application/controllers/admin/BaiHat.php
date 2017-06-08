@@ -237,6 +237,7 @@ class BaiHat extends MY_Controller
                 );
 
                // Lấy tên file nhạc được upload lên
+               $this -> load -> library('upload_library');
                 $upload_path_audio = './upload/music';
                 $upload_data_audio =$this -> upload_library -> upload($upload_path_audio, 'audio');
                 $url = '';
@@ -255,7 +256,7 @@ class BaiHat extends MY_Controller
                 if(isset($upload_data['file_name']))
                 {
                     $imageURL= $upload_data['file_name'];
-                    $dataNgheSi['imageURL']= $imageURL;
+                    $dataBaiHat['imageURL']= $imageURL;
                     // lấy link hình cũ
                     $imageURL_old='./upload/img/'.$baiHat->imageURL;
                 }

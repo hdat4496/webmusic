@@ -151,7 +151,6 @@ Lời bài hát:
         </ul> 
 <?php endforeach ?>
     </article>
-    
     </div>
     
     </div>

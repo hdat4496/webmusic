@@ -272,4 +272,7 @@
       <script src="<?php echo public_url()?>js/bootstrap.min.js"></script>
       <script src="<?php echo public_url()?>js/app.min.js"></script>
       <script src="<?php echo public_url()?>js/jquery-ui-1.8.17.custom.min.js"></script>
+
+      <?php echo '<script>var dsbaihat =  \''. $json .'\'; </script>' ?>  
+
       <script src="<?php echo public_url()?>js/pages/play-album.js"></script>

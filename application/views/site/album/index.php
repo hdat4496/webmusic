@@ -35,7 +35,7 @@
                 </a> 
               </div>          
                 <div class="caption">
-                    <a href="#" class="song-name">Đã từng vô giá</a>
+                    <a href="<?php echo base_url('site/PlayAlbum/play/AB00000007') ?>">tên</a>
                     <a href="#" class="singer-name">Mr.siro</a>
                 </div>
 

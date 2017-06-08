@@ -4,85 +4,8 @@
 		shuffle = localStorage.shuffle || 'false',
 		continous = true,
 		autoplay = true,
-		playlist = [
-		{
-//tên bài hát
-title: 'Phía sau một cô gái',
-//nghệ sĩ
-artist: 'Soobin Hoàng Sơn',
-//album
-album: 'Soobin vol 1',
-//ảnh đại diện
-cover:'http://localhost:8080/webmusic/upload/img/phia-sau-mot-co-gai.png',
-//đường dẫn tập tin .mp3
-mp3: 'http://localhost:8080/webmusic/upload/music/Phia-Sau-Mot-Co-Gai-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Anh đã quen với cô đơn',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/anh-da-quen-voi-co-don.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Anh-Da-Quen-Voi-Co-Don-Soobin-Hoang-Son.mp3',
-ogg: ''
-},
-
-{
-title: 'Đi để trở về',
-artist: 'Soobin Hoàng Sơn',
-album: 'Soobin vol 1',
-cover:'http://localhost:8080/webmusic/upload/img/di-de-tro-ve.jpg',
-mp3: 'http://localhost:8080/webmusic/upload/music/Di-De-Tro-Ve-Soobin-Hoang-Son.mp3',
-ogg: ''
-}];
-
-
+		playlist = JSON.parse(dsbaihat);
+		
 	// Load playlist
 	for (var i=0; i<playlist.length; i++){
 		var item = playlist[i]; ii = i +1;
