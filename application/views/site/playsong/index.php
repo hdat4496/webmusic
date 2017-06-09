@@ -122,7 +122,7 @@ Lời bài hát:
            foreach ($DSNgheSi as $key => $value) {
              $nghesi_goiy= $value['maCaSi'];
            }
-           $DSBaiHat_goiy = $this-> BaiHat_model->layDSGoiYBaiHayCuaNgheSi($nghesi_goiy,$baihat->maBaiHat);?>
+           $DSBaiHat_goiy = $this-> BaiHat_model->layDSGoiYBaiHatCuaNgheSi($nghesi_goiy,$baihat->maBaiHat);?>
         <?php foreach ($DSBaiHat_goiy as $row): ?>
         <ul class="list-group list-group-lg">
             <li class="list-group-item">

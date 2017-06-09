@@ -45,14 +45,15 @@ class BaiHat_model extends MY_Model
 		return $this -> db ->get()->result_array();	
 	}
 
-	public function layDSGoiYBaiHayCuaNgheSi($maNgheSi,$maBaiHat)
+	public function layDSGoiYBaiHatCuaNgheSi($maNgheSi,$maBaiHat)
 	{
+		$this->db->distinct();
 		$this->db->select('BAIHAT.*');
         $this->db->from('BAIHAT');
         $this->db->join('TRINHBAY', 'BAIHAT.maBaiHat = TRINHBAY.maBaiHat');
         $this->db->where('TRINHBAY.maCaSi', $maNgheSi);
         $this->db->where_not_in('BAIHAT.maBaiHat', $maBaiHat);
-        
+		$this->db->order_by("luotNghe", "desc"); 
         $this->db->limit(10,0);
 		return $this -> db ->get()->result_array();	
 	}
@@ -66,6 +67,9 @@ class BaiHat_model extends MY_Model
         $this->db->limit(1,0);
 		return $this -> db ->get()->result_array();	
 	}
+
+	
+
 
 	public function kiemTraLuotNgheTrongNgay($maBaiHat)
 	{

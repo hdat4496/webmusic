@@ -1,6 +1,6 @@
     <!-- Main content -->
-    <section class="stretch">
-<section class="content" style="background-color: #3b464d;">
+    <section class="stretch" style="min-height: 576px">
+<section class="content" style="background-color: #3b464d;min-height: 576px;">
   <section class="vbox">
     <section class="w-f-md" id="bjax-target">
       <section class="vbox">
@@ -68,188 +68,28 @@
     </div>
     <div class="panel-body" style="background-color: #222d32">
          <article class="media">
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
 
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
+          <?php   $this-> load-> model('Album_model');
+           $DSNgheSi = $this-> Album_model->layDSNgheSiAlbum($album->maAlbum);
 
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
+                      
+           foreach ($DSNgheSi as $key => $value) {
+             $nghesi_goiy= $value['maCaSi'];
+           }
 
+           $DSAlbum_goiy = $this-> Album_model->layDSGoiYAlbumCuaNgheSi($nghesi_goiy,$album->maAlbum);?>
+
+        <?php foreach ($DSAlbum_goiy as $row): ?>
 
         <ul class="list-group list-group-lg">
             <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
+            
           <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
+            <a href="<?php echo base_url('site/PlayAlbum/play/'.$row['maAlbum']) ?>" title=""><?php echo $row['tenAlbum'] ?></a>
           </div>
           </li>
         </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-
-        <ul class="list-group list-group-lg">
-            <li class="list-group-item">
-            <div class="pull-right m-l">
-            <a href="#" class="m-r-sm">
-              <i class="icon-cloud-download"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-plus"></i>
-            </a>
-
-            <a href="#" class="m-r-sm">
-              <i class="icon-close"></i>
-            </a>
-              
-            </div>
-          <div class="clear text-ellipsis">
-            <span>E.T222.M</span>
-            <span class="text-muted"> -- 04:35</span>
-            <span class=" icon-right glyphicon glyphicon-share"></span>
-            <span class=" icon-right glyphicon glyphicon-download-alt"></span>            
-            <span class=" icon-right glyphicon glyphicon-play"></span>
-          </div>
-          </li>
-        </ul>
-      
+        <?php endforeach ?>
     </article>
        
     </div>

@@ -21,7 +21,7 @@
                     <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
                      <span class="pull-right h4 text-muted col-md-1"><?php echo $x; ?></span>                   
                     <?php foreach ($nghesi as $i): ?>
                       <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
@@ -38,9 +38,6 @@
               </ul>
             </div>
             <!-- /.box-body -->
-                <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Nghe tất cả</a>
-                </div>
 
               </div>
             </div>
@@ -69,7 +66,7 @@
                     <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
                      <span class="pull-right h4 text-muted col-md-1"><?php echo $y; ?></span>                   
                     <?php foreach ($nghesi as $i): ?>
                       <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
@@ -89,9 +86,6 @@
               </ul>
             </div>
             <!-- /.box-body -->
-                <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Nghe tất cả</a>
-                </div>
 
               </div>
               <!-- /.tab-pane -->
@@ -121,7 +115,7 @@
                     <img src="<?php echo base_url('upload/img/'.$row->imageURL) ?>" class="img-circle" alt="charts-song Image">
                   </div>
                   <div class="charts-song-info">
-                    <a href="javascript:void(0)" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
+                    <a href="<?php echo base_url('site/playsong/play/'.$row->maBaiHat) ?>" class="charts-song-title"><?php echo $row->tenBaiHat; ?></a>
                      <span class="pull-right h4 text-muted col-md-1"><?php echo $z; ?></span>                   
                     <?php foreach ($nghesi as $i): ?>
                       <?php if ($i->maBaiHat == $row ->maBaiHat): ?>
@@ -141,9 +135,6 @@
               </ul>
             </div>
             <!-- /.box-body -->
-                <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Xem tất cả</a>
-                </div>
 
               </div>
 

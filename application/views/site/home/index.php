@@ -128,10 +128,6 @@
               </ul>
             </div>
             <!-- /.box-body -->
-                <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Nghe tất cả</a>
-                </div>
-
 
               </div>
               <!-- /.tab-pane -->

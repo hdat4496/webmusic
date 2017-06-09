@@ -9,7 +9,7 @@ class PlayAlbum extends MY_Controller
 		parent::__construct();
 		$this -> load -> model('Album_model');
 		$this -> load -> model('LuotNghe_model');
-        $this -> load -> model('BaiHatYeuThich_model');   
+        $this -> load -> model('BaiHatYeuThich_model'); 
 
 
 	}
@@ -43,9 +43,16 @@ class PlayAlbum extends MY_Controller
 			unset($value->luotNghe);
 			unset($value->luotThich);
 			unset($value->luotTai);
+			$value->album = '';
 		}
 
 		$data['json']=json_encode($data_dsbaihat);
+		$data['album']= $album;
+		$dataAlbum = array(
+			'luotNghe' => $album->luotNghe + 1
+		);
+
+		$this -> Album_model ->update($maAlbum,$dataAlbum);
 
 		$data['temp']= 'site/playalbum/index';
 		$data['title'] = 'Album';	
