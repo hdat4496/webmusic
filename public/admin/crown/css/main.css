@@ -27,7 +27,10 @@
 	# Media queries (remove them if you don't want to use responsive layout)
 ==================================================*/
 
-
+.menu_main{
+	width: 450px!important;
+	margin: 20px 30px!important;
+}
 
 /* #Switcher
 ================================================== */

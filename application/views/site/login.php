@@ -27,10 +27,7 @@
                  <div class="checkbox  col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 40px;">
     
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 quenmatkhau">
-                  <p class="noidungqmk"><a href=""> Quên Mật Khẩu?</a>
-                  </p>
-                </div>
+
               </div>
             </form>
           </div>

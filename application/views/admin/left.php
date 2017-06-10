@@ -26,13 +26,13 @@
 			</a>				
 		</li>
 
-		<li class="home">
+		<li class="album">
 			<a  href="<?php echo admin_url('Album')?>" class="current">
 				<span>Album </span>
 			</a>				
 		</li>
 
-		<li class="home">
+		<li class="user">
 			<a  href="<?php echo admin_url('NgheSi')?>" class="current">
 				<span>Nghệ sĩ</span>
 			</a>				
@@ -51,12 +51,6 @@
 					<a href="<?php echo admin_url('NguoiDung')?>">Thành viên</a>
 				</li>
 			</ul>						
-		</li>
-
-		<li class="home">
-			<a  href="<?php echo admin_url('Playlist')?>" class="current">
-				<span>Playlist</span>
-			</a>				
 		</li>
 
 
@@ -78,20 +72,6 @@
 		</li>
 
 
-		<li class="support">
-			<a href="admin/support.html" class="exp inactive">
-				<span>Hỗ trợ và liên hệ</span>
-				<strong>2</strong>
-			</a>
-			<ul class="sub" style="display: none;">
-				<li>
-					<a href="admin/support.html">Hỗ trợ</a>
-				</li>
-				<li>
-					<a href="admin/contact.html">Liên hệ</a>
-				</li>
-			</ul>						
-		</li>
 
 
 	</ul>		

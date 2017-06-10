@@ -25,8 +25,7 @@ class NgheSi extends MY_Controller
         {
             $input['where']['maNgheSi'] = $maNgheSi;
         }
-      $segment = $this->uri->segment(4);
-      pre($segment);
+
         $tenNgheSi = $this->input->get('tenNgheSi');
         if($tenNgheSi)
         {
@@ -55,7 +54,7 @@ class NgheSi extends MY_Controller
         $config['reuse_query_string'] = TRUE;
 
         //khởi tạo các cấu hình trang
-        $this->pagination->initialize($config);    
+        $this-> pagination->initialize($config);    
          
         $segment = $this->uri->segment(4);
         $segment = intval($segment);
