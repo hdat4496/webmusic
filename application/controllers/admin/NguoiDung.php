@@ -18,7 +18,7 @@ class NguoiDung extends MY_Controller
 	function index()
 	{
 
-		//Lấy số lượng bài hát
+		//Lấy số lượng người dùng
 		$total_rows = $this -> TaiKhoan_model-> get_total();
 		$this -> data['total_rows'] = $total_rows;
 
@@ -26,19 +26,18 @@ class NguoiDung extends MY_Controller
 		$this -> load -> library('pagination');
 		$config = array();
 		$config['total_rows'] = $total_rows;// tổng tất cả bài hát
-        $config['base_url']   = admin_url('nguoidung/index'); //link hien thi ra danh sach san pham
+        $config['base_url']   = admin_url('NguoiDung/index'); //link hien thi ra danh sach san pham
         $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
         $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
         $config['next_link']   = 'Trang kế tiếp';
         $config['prev_link']   = 'Trang trước';
+        $config['reuse_query_string'] = TRUE;
 
         //khởi tạo các cấu hình trang
         $this->pagination->initialize($config);    
          
         $segment = $this->uri->segment(4);
         $segment = intval($segment);
-
-        $input = array();
         $input['limit'] = array($config['per_page'], $segment);
 
         //Kiểm tra có thực hiện lọc k

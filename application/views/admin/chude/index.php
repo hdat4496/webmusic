@@ -17,7 +17,7 @@
 				</div>
 			</span>
 			<h6>Danh sách chủ đề</h6>
-		 	<div class="num f12">Tổng số: <b>		<?php echo count($list)?></b></div>
+		 	<div class="num f12">Tổng số: <b>		<?php echo $total_rows?></b></div>
 		</div>
 		
 		<table cellpadding="0" cellspacing="0" width="100%" class="sTable mTable myTable withCheck" id="checkAll">
@@ -41,6 +41,7 @@
 						 </div>
 							
 					     <div class='pagination'>
+					     	<?php echo $this -> pagination -> create_links() ?>
 			             </div>
 					</td>
 				</tr>

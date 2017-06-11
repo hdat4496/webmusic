@@ -22,10 +22,10 @@
 					
 						<tr>
 							<td class="label" style="width:55px;"><label for="filter_maBaiHat">Mã bài hát</label></td>
-							<td class="item"><input name="maBaiHat" value="<?php echo $this -> input ->get('maBaiHat') ?>" id="filter_maBaiHat" type="text" style="width:115px;"></td>
+							<td class="item"><input name="maBaiHat" value="<?php echo $this -> input ->get('maBaiHat') ?>" id="maBaiHat" type="text" style="width:115px;"></td>
 							
 							<td class="label" style="width:65px;"><label for="filter_id">Tên bài hát</label></td>
-							<td class="item" style="width:185px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="filter_tenBaiHat" type="text" style="width:185px;"></td>
+							<td class="item" style="width:185px;"><input name="tenBaiHat" value="<?php echo $this -> input ->get('tenBaiHat') ?>" id="tenBaiHat" type="text" style="width:185px;"></td>
 							
 							<td class="label" style="width:60px;"><label for="filter_status">Quốc gia</label></td>
 							<td class="item">

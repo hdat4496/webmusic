@@ -23,7 +23,7 @@ class NgheSi extends MY_Controller
         $maNgheSi = $this->input->get('maNgheSi');
         if($maNgheSi)
         {
-            $input['where']['maNgheSi'] = $maNgheSi;
+            $input['like'] = array('maNgheSi', $maNgheSi);
         }
 
         $tenNgheSi = $this->input->get('tenNgheSi');

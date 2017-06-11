@@ -17,7 +17,32 @@ class ChuDe extends MY_Controller
 	 */
 	function index()
 	{
-		$list = $this -> ChuDe_model -> get_list();
+
+		$total_rows = $this -> ChuDe_model-> get_total();
+		$this -> data['total_rows'] = $total_rows;
+
+        //load thư viện phân trang
+        $this -> load -> library('pagination');
+        $config = array();
+        $config['total_rows'] = $total_rows;// tổng tất cả bài hát
+        $config['base_url']   = admin_url('ChuDe/index'); //link hien thi ra danh sach nghe si
+        $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
+        $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
+        $config['next_link']   = 'Trang kế tiếp';
+        $config['prev_link']   = 'Trang trước';
+        $config['reuse_query_string'] = TRUE;
+
+        //khởi tạo các cấu hình trang
+        $this-> pagination->initialize($config);    
+         
+        $segment = $this->uri->segment(4);
+        $segment = intval($segment);
+        $input['limit'] = array($config['per_page'], $segment);
+
+		$total = $this -> ChuDe_model -> get_total($input);
+		$this-> data['total'] = $total;
+
+		$list = $this -> ChuDe_model -> get_list($input);
 		$this -> data['list'] = $list;
 
 

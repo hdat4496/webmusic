@@ -62,7 +62,7 @@
 			</a>
 			<ul class="sub" style="display: none;">
 				<li>
-					<a href="<?php echo admin_url('Slide') ?>">Slide</a>
+					<a href="<?php echo admin_url('Slide')?>">Slide</a>
 				</li>
 				<li>
 					<a href="<?php echo admin_url('ChuDe')?>">Chủ đề</a>

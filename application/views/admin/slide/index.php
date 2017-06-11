@@ -59,12 +59,10 @@
 					</a>
 					
 					</td>
-					<td><?php echo $row->thuTuHienThi?></td>
+					<td class="option textC"><?php echo $row->thuTuHienThi?></td>
 					
 					<td class="option textC">
-						 <a title="Xem chi tiết slide" class="tipS" target="_blank" href="<?php echo $row->url?>">
-								<img src="<?php echo public_url('admin/images')?>/icons/color/view.png">
-						 </a>
+
 						 
 						 <a class="tipS" title="Chỉnh sửa" href="<?php echo admin_url('Slide/edit/'.$row->maSlide)?>">
 							<img src="<?php echo public_url('admin/images')?>/icons/color/edit.png">

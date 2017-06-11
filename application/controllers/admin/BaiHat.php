@@ -42,6 +42,8 @@ class BaiHat extends MY_Controller
         {
             $input['where']['maQuocGia'] = $maQuocGia;
         }
+
+
         //Lấy số lượng bài hát
         $total_rows = $this -> BaiHat_model-> get_total($input);
         $this -> data['total_rows'] = $total_rows;
@@ -50,19 +52,18 @@ class BaiHat extends MY_Controller
         $this -> load -> library('pagination');
         $config = array();
         $config['total_rows'] = $total_rows;// tổng tất cả bài hát
-        $config['base_url']   = admin_url('baihat/index'); //link hien thi ra danh sach san pham
+        $config['base_url']   = admin_url('BaiHat/index'); //link hien thi ra danh sach san pham
         $config['per_page']   = 10;//Số lượng bài hát trên 1 trang
         $config['uri_segment'] = 4;//phân đoạn hiển thị số trang trên url
         $config['next_link']   = 'Trang kế tiếp';
         $config['prev_link']   = 'Trang trước';
+        $config['reuse_query_string'] = TRUE;
 
         //khởi tạo các cấu hình trang
-        $this->pagination->initialize($config);    
+        $this-> pagination->initialize($config);    
          
         $segment = $this->uri->segment(4);
         $segment = intval($segment);
-
-        $input = array();
         $input['limit'] = array($config['per_page'], $segment);
 
 
@@ -72,6 +73,7 @@ class BaiHat extends MY_Controller
         
         //Lấy danh sách nghệ sĩ
         $nghesi = $this -> NgheSi_model -> get_list();
+        $this->data['nghesi'] = $nghesi;
 
         //Lấy danh sách quốc gia
         $this-> load-> model('QuocGia_model');
